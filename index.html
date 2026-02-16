@@ -409,16 +409,6 @@
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(8px); }
     }
-    .hero__section-label {
-      font-size: var(--text-caption);
-      font-family: var(--font-mono);
-      color: var(--color-accent);
-      letter-spacing: 0.08em;
-      margin-bottom: var(--space-sm);
-      text-align: center;
-      position: relative;
-      z-index: 1;
-    }
 
     /* ===== Section Title (shared) ===== */
     .section__title {
@@ -431,15 +421,6 @@
     }
     .section__title--accent { color: var(--color-accent); }
     .section__title--primary { color: var(--color-primary); }
-    .section__label {
-      font-size: var(--text-caption);
-      font-family: var(--font-mono);
-      color: var(--color-accent);
-      letter-spacing: 0.08em;
-      margin-bottom: var(--space-sm);
-      text-align: center;
-      display: block;
-    }
     .section__summary {
       font-size: var(--text-body);
       color: var(--color-text-secondary);
@@ -500,89 +481,7 @@
       color: var(--color-text-secondary);
       line-height: 1.7;
     }
-    .layer-card--highlight {
-      border-left: 3px solid var(--color-accent);
-      background: rgba(232, 145, 58, 0.04);
-    }
-
     /* ===== Section 3: Position ===== */
-    .position-diagram {
-      max-width: 800px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: var(--space-md);
-    }
-    .position-zone {
-      width: 100%;
-      padding: var(--space-md);
-      border-radius: var(--radius-card);
-      text-align: center;
-      font-size: var(--text-body);
-      border: 0.5px solid var(--color-border);
-    }
-    .position-zone--erp {
-      background: rgba(134, 134, 139, 0.06);
-      color: var(--color-text-secondary);
-    }
-    .position-zone--saas {
-      background: rgba(134, 134, 139, 0.06);
-      color: var(--color-text-secondary);
-    }
-    .position-zone--dbsheet {
-      background: rgba(232, 145, 58, 0.08);
-      border: 2px solid var(--color-accent);
-      box-shadow: var(--shadow-elevated);
-      padding: var(--space-lg) var(--space-md);
-    }
-    .position-zone--dbsheet .position-zone__title {
-      font-size: var(--text-h2);
-      font-weight: 700;
-      color: var(--color-primary);
-      margin-bottom: var(--space-xs);
-    }
-    .position-zone--excel {
-      background: rgba(134, 134, 139, 0.06);
-      color: var(--color-text-secondary);
-    }
-    .position-zone__title {
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-    .position-arrow {
-      width: 2px;
-      height: 32px;
-      background: var(--color-border);
-      position: relative;
-    }
-    .position-arrow--accent {
-      background: var(--color-accent);
-      height: 4px;
-      width: 48px;
-      border-radius: 2px;
-    }
-    .position-roles {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-sm);
-      max-width: 700px;
-      margin: var(--space-lg) auto 0;
-    }
-    .position-role {
-      display: flex;
-      align-items: flex-start;
-      gap: var(--space-sm);
-      font-size: var(--text-body);
-      color: var(--color-text-primary);
-    }
-    .position-role__icon {
-      width: 20px;
-      height: 20px;
-      flex-shrink: 0;
-      margin-top: 3px;
-      color: var(--color-accent);
-    }
 
     /* ===== Section 4: Non-Substitution ===== */
     .non-sub {
@@ -729,6 +628,14 @@
       height: 32px;
       color: var(--color-accent);
       flex-shrink: 0;
+      display: inline-block; /* ensure transform works reliably on iOS Safari */
+      vertical-align: middle;
+    }
+     @media (max-width: 767px) {
+      .core-value__arrow {
+        transform: rotate(90deg);
+        margin: var(--space-xs) 0;
+      }
     }
     .core-value__is {
       flex: 1;
@@ -761,9 +668,7 @@
       color: var(--color-accent);
       flex-shrink: 0;
     }
-    .risk-item__content {
-      flex: 1;
-    }
+    .risk-item__content { flex: 1; }
     .risk-item__title {
       font-size: var(--text-body-lg);
       font-weight: 600;
@@ -776,116 +681,32 @@
     }
 
     /* ===== Section 8: Excel × AI ===== */
-    .excel-ai {
-      max-width: 900px;
-      margin: 0 auto;
-    }
+    .excel-ai { max-width: 900px; margin: 0 auto; }
     .excel-ai__grid {
       display: flex;
       flex-direction: column;
       gap: var(--space-md);
       margin-bottom: var(--space-lg);
     }
-    @media (min-width: 768px) {
-      .excel-ai__grid {
-        flex-direction: row;
-        gap: var(--space-md);
-      }
-    }
-    .excel-ai__column {
-      flex: 1;
-      border-radius: var(--radius-card);
-      padding: var(--space-md);
-      border: 0.5px solid var(--color-border-light);
-    }
-    .excel-ai__column--excel {
-      background: rgba(27, 58, 92, 0.6);
-    }
-    .excel-ai__column--ai {
-      background: rgba(27, 58, 92, 0.6);
-    }
-    .excel-ai__column-title {
-      font-size: var(--text-h2);
-      font-weight: 600;
-      margin-bottom: var(--space-sm);
-      color: var(--color-text-inverse);
-    }
+    @media (min-width: 768px) { .excel-ai__grid { flex-direction: row; gap: var(--space-md); } }
+    .excel-ai__column { flex: 1; border-radius: var(--radius-card); padding: var(--space-md); border: 0.5px solid var(--color-border-light); }
+    .excel-ai__column--excel { background: rgba(27, 58, 92, 0.6); }
+    .excel-ai__column--ai    { background: rgba(27, 58, 92, 0.6); }
+    .excel-ai__column-title { font-size: var(--text-h2); font-weight: 600; margin-bottom: var(--space-sm); color: var(--color-text-inverse); }
     .excel-ai__column-title span { color: var(--color-accent-light); }
-    .excel-ai__item {
-      font-size: var(--text-body);
-      color: rgba(255,255,255,0.75);
-      padding: 6px 0;
-      border-bottom: 0.5px solid rgba(255,255,255,0.06);
-      display: flex;
-      align-items: center;
-      gap: var(--space-xs);
-    }
+    .excel-ai__item { font-size: var(--text-body); color: rgba(255,255,255,0.75); padding: 6px 0; border-bottom: 0.5px solid rgba(255,255,255,0.06); display: flex; align-items: center; gap: var(--space-xs); }
     .excel-ai__item:last-child { border-bottom: none; }
-    .excel-ai__item-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--color-accent);
-      flex-shrink: 0;
-    }
-    .excel-ai__bridge {
-      text-align: center;
-      padding: var(--space-md);
-    }
-    .excel-ai__bridge-text {
-      font-size: var(--text-body-lg);
-      color: var(--color-accent-light);
-      font-weight: 600;
-    }
-    .excel-ai__conclusion {
-      text-align: center;
-      font-size: var(--text-h2);
-      font-weight: 700;
-      color: var(--color-text-inverse);
-      position: relative;
-      z-index: 1;
-    }
-
+    .excel-ai__item-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--color-accent); flex-shrink: 0; }
+    .excel-ai__bridge { text-align: center; padding: var(--space-md); }
+    .excel-ai__bridge-text { font-size: var(--text-body-lg); color: var(--color-accent-light); font-weight: 600; }
     /* ===== Section 9: Final Message ===== */
-    .final {
-      text-align: center;
-      position: relative;
-      z-index: 1;
-    }
-    .final__main {
-      font-size: var(--text-hero);
-      font-weight: 700;
-      line-height: 1.2;
-      margin-bottom: var(--space-md);
-    }
-    .final__cta {
-      font-size: var(--text-h1);
-      font-weight: 700;
-      color: var(--color-accent);
-      margin-bottom: var(--space-md);
-    }
-    .final__sub {
-      font-size: var(--text-body-lg);
-      opacity: 0.6;
-      margin-bottom: var(--space-lg);
-    }
-    .final__divider {
-      width: 40%;
-      max-width: 300px;
-      height: 0.5px;
-      background: rgba(255,255,255,0.15);
-      margin: var(--space-lg) auto;
-    }
-    .final__tagline {
-      font-size: var(--text-body);
-      opacity: 0.45;
-      letter-spacing: 0.04em;
-      margin-bottom: var(--space-xs);
-    }
-    .final__company {
-      font-size: var(--text-body);
-      opacity: 0.35;
-    }
+    .final { text-align: center; position: relative; z-index: 1; }
+    .final__main { font-size: var(--text-hero); font-weight: 700; line-height: 1.2; margin-bottom: var(--space-md); }
+    .final__cta { font-size: var(--text-h1); font-weight: 700; color: var(--color-accent); margin-bottom: var(--space-md); }
+    .final__sub { font-size: var(--text-body-lg); opacity: 0.6; margin-bottom: var(--space-lg); }
+    .final__divider { width: 40%; max-width: 300px; height: 0.5px; background: rgba(255,255,255,0.15); margin: var(--space-lg) auto; }
+    .final__tagline { font-size: var(--text-body); opacity: 0.45; letter-spacing: 0.04em; margin-bottom: var(--space-xs); }
+    .final__company { font-size: var(--text-body); opacity: 0.35; }
 
     /* ===== Footer ===== */
     .footer {
@@ -902,231 +723,42 @@
     .text-accent { color: var(--color-accent); }
     .text-primary-color { color: var(--color-primary); }
     .text-center { text-align: center; }
-    .mb-0 { margin-bottom: 0; }
-
-    /* ===== Before/After Pattern (Section 3 Position) ===== */
-    .ba-container {
-      max-width: 1000px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-md);
-      align-items: center;
-    }
-    @media (min-width: 768px) {
-      .ba-container {
-        flex-direction: row;
-        align-items: stretch;
-      }
-    }
-    .ba-card {
-      flex: 1;
-      border-radius: var(--radius-card);
-      overflow: hidden;
-      box-shadow: var(--shadow-card);
-      border: 0.5px solid var(--color-border);
-    }
-    .ba-card--after {
-      box-shadow: var(--shadow-elevated);
-      border-left: 3px solid var(--color-accent);
-    }
-    .ba-card__header {
-      padding: var(--space-sm) var(--space-md);
-      font-size: var(--text-h2);
-      font-weight: 600;
-      color: var(--color-text-inverse);
-    }
+    
+    /* ===== Before/After Pattern (base) ===== */
+    .ba-container { max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; gap: var(--space-md); align-items: center; }
+@media (min-width: 768px) { .ba-container { flex-direction: row; align-items: stretch; } }
+    .ba-card { flex: 1; border-radius: var(--radius-card); overflow: hidden; box-shadow: var(--shadow-card); border: 0.5px solid var(--color-border); }
+    .ba-card--after { box-shadow: var(--shadow-elevated); border-left: 3px solid var(--color-accent); }
+    .ba-card__header { padding: var(--space-sm) var(--space-md); font-size: var(--text-h2); font-weight: 600; color: var(--color-text-inverse); }
     .ba-card__header--before { background: var(--color-before); }
-    .ba-card__header--after { background: var(--color-after); }
-    .ba-card__body {
-      padding: 0;
-    }
+    .ba-card__header--after  { background: var(--color-after); }
+    .ba-card__body { padding: 0; }
     .ba-card__body--before { background: var(--color-bg-light); }
-    .ba-card__body--after { background: var(--color-bg-white); }
-    .ba-row {
-      padding: var(--space-sm) var(--space-md);
-      font-size: var(--text-body-lg);
-      border-bottom: 0.5px solid var(--color-border);
-      display: flex;
-      align-items: center;
-      gap: var(--space-xs);
-      min-height: 56px;
-    }
+    .ba-card__body--after  { background: var(--color-bg-white); }
+    .ba-row { padding: var(--space-sm) var(--space-md); font-size: var(--text-body-lg); border-bottom: 0.5px solid var(--color-border); display: flex; align-items: center; gap: var(--space-xs); min-height: 56px; }
     .ba-row:last-child { border-bottom: none; }
     .ba-row--before { color: var(--color-text-secondary); }
-    .ba-row--after { color: var(--color-text-primary); font-weight: 600; }
-    .ba-arrow-col {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: var(--space-md);
-      padding: 0 var(--space-sm);
-    }
-    @media (min-width: 768px) {
-      .ba-arrow-col { display: flex; }
-    }
-    .ba-arrow-icon {
-      width: 24px;
-      height: 24px;
-      color: var(--color-accent);
-    }
-    .ba-message {
-      text-align: center;
-      margin-top: var(--space-lg);
-    }
-    .ba-message__main {
-      font-size: var(--text-body-lg);
-      font-weight: 600;
-      color: var(--color-primary);
-    }
-    .ba-message__sub {
-      font-size: var(--text-body);
-      color: var(--color-text-secondary);
-      margin-top: var(--space-sm);
-    }
+    .ba-row--after  { color: var(--color-text-primary); font-weight: 600; }
+    .ba-arrow-col { display: none; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-md); padding: 0 var(--space-sm); }
+    @media (min-width: 768px) { .ba-arrow-col { display: flex; } }
+    .ba-arrow-icon { width: 24px; height: 24px; color: var(--color-accent); }
+    .ba-message { text-align: center; margin-top: var(--space-lg); }
+    .ba-message__main { font-size: var(--text-body-lg); font-weight: 600; color: var(--color-primary); }
+    .ba-message__sub { font-size: var(--text-body); color: var(--color-text-secondary); margin-top: var(--space-sm); }
 
     /* ===== Three縁 Cards ===== */
-    .en-cards {
-      max-width: 1000px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      align-items: center;
-    }
-    .en-card {
-      width: 100%;
-      background: var(--color-bg-frosted);
-      border: 0.5px solid var(--color-border);
-      border-radius: var(--radius-card);
-      box-shadow: var(--shadow-card);
-      padding: var(--space-md);
-      overflow: hidden;
-    }
-    @supports (backdrop-filter: blur(1px)) {
-      .en-card {
-        backdrop-filter: blur(20px) saturate(180%);
-        -webkit-backdrop-filter: blur(20px) saturate(180%);
-      }
-    }
-    .en-card__label {
-      font-family: var(--font-mono);
-      font-size: var(--text-caption);
-      color: var(--color-accent);
-      letter-spacing: 0.04em;
-    }
-    .en-card__title {
-      font-size: var(--text-h2);
-      font-weight: 600;
-      color: var(--color-text-primary);
-      margin-bottom: var(--space-sm);
-    }
-    .en-card__grid {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-sm);
-    }
-    @media (min-width: 768px) {
-      .en-card__grid {
-        flex-direction: row;
-        align-items: stretch;
-      }
-    }
-    .en-card__side {
-      flex: 1;
-      border-radius: var(--radius-card-inner);
-      padding: var(--space-sm) var(--space-md);
-    }
-    .en-card__side--before {
-      background: rgba(134, 134, 139, 0.08);
-    }
-    .en-card__side--after {
-      background: rgba(27, 58, 92, 0.06);
-      border-left: 3px solid var(--color-accent);
-    }
-    .en-card__side-label {
-      font-size: var(--text-caption);
-      font-weight: 500;
-      margin-bottom: 4px;
-    }
-    .en-card__side--before .en-card__side-label { color: var(--color-before); }
-    .en-card__side--after .en-card__side-label { color: var(--color-after); }
-    .en-card__side-text {
-      font-size: var(--text-body);
-      line-height: 1.6;
-    }
-    .en-card__side--before .en-card__side-text { color: var(--color-text-secondary); }
-    .en-card__side--after .en-card__side-text { color: var(--color-text-primary); font-weight: 600; }
-    .en-card__connector {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: var(--space-xs) 0;
-    }
-    @media (min-width: 768px) {
-      .en-card__connector { padding: 0 var(--space-sm); }
-    }
-    .en-card__wave {
-      width: 36px;
-      height: 24px;
-      color: var(--color-accent);
-    }
-
-    .en-connector {
-      width: 1.5px;
-      height: 32px;
-      border-left: 1.5px dashed var(--color-accent);
-      margin: 0 auto;
-    }
-
-    .en-summary {
-      text-align: center;
-      margin-top: var(--space-lg);
-    }
-    .en-summary__text {
-      font-size: var(--text-h2);
-      font-weight: 700;
-      color: var(--color-primary);
-    }
-
-    /* ===== Focus Styles ===== */
-    :focus-visible {
-      outline: 2px solid var(--color-accent);
-      outline-offset: 3px;
-      border-radius: var(--radius-button);
-    }
-    :focus:not(:focus-visible) {
-      outline: none;
-    }
+    :focus:not(:focus-visible) { outline: none; }
 
     /* ===== Reduced Motion ===== */
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-      }
-      .animate-in,
-      .animate-in--left,
-      .animate-in--right,
-      .animate-in--scale,
-      .animate-in--blur {
-        opacity: 1 !important;
-        transform: none !important;
-        filter: none !important;
-      }
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+      .animate-in, .animate-in--left, .animate-in--right, .animate-in--scale, .animate-in--blur { opacity: 1 !important; transform: none !important; filter: none !important; }
     }
 
     /* ===== Scroll Snap ===== */
     @media (min-width: 1024px) {
-      html {
-        scroll-snap-type: y proximity;
-      }
-      .section--snap {
-        scroll-snap-align: start;
-      }
+      html { scroll-snap-type: y proximity; }
+      .section--snap { scroll-snap-align: start; }
     }
 
     /* ===== Section number indicators ===== */
@@ -1142,6 +774,21 @@
       z-index: 1;
     }
     .section--dark .section__number { color: var(--color-accent-light); }
+
+    /* ===== Demo Area (kept from previous page) ===== */
+    .demo-area {
+      width: 100%;
+      height: 500px;
+      background: #F9F9F9;
+      border: 2px dashed var(--color-border);
+      border-radius: var(--radius-card);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      margin-top: var(--space-md);
+      transition: transform var(--duration-normal) var(--ease-spring);
+      touch-action: manipulation;
+    }
+    .demo-area:active { transform: scale(0.98); }
   </style>
 </head>
 <body>
@@ -1166,13 +813,7 @@
       <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
       <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
     </symbol>
-    <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="20 6 9 17 4 12"/>
-    </symbol>
-    <symbol id="icon-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-    </symbol>
-    <symbol id="icon-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <symbol id="icon-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/>
     </symbol>
     <symbol id="icon-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1202,7 +843,6 @@
     <section id="section-1-nin" class="section section--dark section--snap" aria-labelledby="heading-nin">
       <span class="section__number">01 / 09</span>
       <div class="section__inner" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;">
-        <p class="hero__section-label animate-in--blur">① 認 — 未確定だが存在している</p>
         <h1 id="heading-nin" class="hero__main-copy animate-in--blur" style="transition-delay:0.2s;">
           Excel、まだ<span class="hero__accent">"捨てる側"</span>だと<br>思っていませんか？
         </h1>
@@ -1220,7 +860,6 @@
     <section id="section-2-market" class="section section--light section--snap" aria-labelledby="heading-market" data-concept="市場三層">
       <span class="section__number">02 / 09</span>
       <div class="section__inner">
-        <span class="section__label animate-in">② 思 — 構造の内部</span>
         <h2 id="heading-market" class="section__title animate-in">
           業界構造の<span class="section__title--primary">三層</span>
         </h2>
@@ -1252,7 +891,6 @@
     <section id="section-3-position" class="section section--muted section--snap" aria-labelledby="heading-position" data-concept="立ち位置">
       <span class="section__number">03 / 09</span>
       <div class="section__inner">
-        <span class="section__label animate-in">② 思 → ③ 鳴</span>
         <h2 id="heading-position" class="section__title animate-in">
           <span class="section__title--accent">"脱Excel"</span>ではなく<span class="section__title--primary">"脱・固定業務"</span>
         </h2>
@@ -1293,7 +931,6 @@
     <section id="section-4-non-substitution" class="section section--light section--snap" aria-labelledby="heading-nonsub" data-concept="非代替宣言">
       <span class="section__number">04 / 09</span>
       <div class="section__inner">
-        <span class="section__label animate-in">③ 鳴 — 成形された構造</span>
         <h2 id="heading-nonsub" class="section__title animate-in">
           競争<span class="section__title--accent">しない</span>宣言
         </h2>
@@ -1328,7 +965,6 @@
     <section id="section-5-true-competitor" class="section section--muted section--snap" aria-labelledby="heading-competitor" data-concept="本当の競合">
       <span class="section__number">05 / 09</span>
       <div class="section__inner">
-        <span class="section__label animate-in">③ 鳴</span>
         <h2 id="heading-competitor" class="section__title animate-in">
           本当の<span class="section__title--accent">競合</span>
         </h2>
@@ -1359,7 +995,6 @@
     <section id="section-6-core-value" class="section section--light section--snap" aria-labelledby="heading-core" data-concept="核心価値">
       <span class="section__number">06 / 09</span>
       <div class="section__inner">
-        <span class="section__label animate-in">③ 鳴 — 核心の成形</span>
         <h2 id="heading-core" class="section__title animate-in">
           dbSheetの<span class="section__title--accent">核心価値</span>
         </h2>
@@ -1388,7 +1023,6 @@
     <section id="section-7-management-risk" class="section section--muted section--snap" aria-labelledby="heading-risk" data-concept="経営リスク">
       <span class="section__number">07 / 09</span>
       <div class="section__inner">
-        <span class="section__label animate-in">③ 鳴</span>
         <h2 id="heading-risk" class="section__title animate-in">
           <span class="section__title--accent">経営リスク</span>とは何か
         </h2>
@@ -1431,7 +1065,6 @@
     <section id="section-8-excel-ai" class="section section--dark section--snap" aria-labelledby="heading-excelai" data-concept="Excel×AI">
       <span class="section__number">08 / 09</span>
       <div class="section__inner">
-        <span class="section__label animate-in" style="color:var(--color-accent-light);">④ 示 — 外部への指向</span>
         <h2 id="heading-excelai" class="section__title animate-in" style="color:var(--color-text-inverse);">
           Excel × AI の<span class="text-accent">関係</span>
         </h2>
@@ -1469,7 +1102,6 @@
       <span class="section__number">09 / 09</span>
       <div class="section__inner">
         <div class="final">
-          <p class="hero__section-label animate-in--blur" style="margin-bottom:var(--space-md);">⑬ 継 → 次の ① 認</p>
           <h2 id="heading-final" class="final__main animate-in--blur" style="transition-delay:0.2s;">
             百聞は一見にしかず。
           </h2>
@@ -1479,6 +1111,27 @@
           <p class="final__tagline animate-in" style="transition-delay:1.1s;">dbSheet — 業務を変え続けるための基盤</p>
           <p class="final__company animate-in" style="transition-delay:1.1s;">株式会社NEWCOM</p>
         </div>
+      </div>
+    </section>
+
+    <!-- ===== Section 10: 体験デモ（既存から継承） ===== -->
+    <section id="section-10-taiken" class="section section--light section--snap" aria-labelledby="heading-taiken">
+      <span class="section__number">10 / 10</span>
+      <div class="section__inner text-center">
+        <h2 id="heading-taiken" class="section__title animate-in">触れて、体感する。</h2>
+        <div class="demo-area animate-in" id="demo-box" role="region" aria-label="Interactive Demo Area" style="transition-delay:0.3s;">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="#ccc" style="margin-bottom:16px;">
+            <path d="M9 11.24V7.5C9 6.12 10.12 5 11.5 5S14 6.12 14 7.5v3.74c1.21-.81 2-2.18 2-3.74C16 5.01 13.99 3 11.5 3S7 5.01 7 7.5c0 1.56.79 2.93 2 3.74zM11.5 13c-3.03 0-5.5 2.47-5.5 5.5v.5h11v-.5c0-3.03-2.47-5.5-5.5-5.5z"/>
+          </svg>
+          <h3>CLICK EXPERIENCE</h3>
+          <p style="color:var(--color-text-secondary); margin-top:8px;">ここにデモアプリが表示されます</p>
+          <button id="start-demo-btn" style="margin-top:24px; padding:12px 32px; background:var(--color-primary); color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">
+            Start Demo
+          </button>
+        </div>
+        <p class="text-center animate-in" style="transition-delay:0.5s; color:var(--color-text-secondary); font-size: var(--text-body); margin-top: var(--space-md);">
+          ※ 体験後、スタッフへ感想をお聞かせください
+        </p>
       </div>
     </section>
 
@@ -1532,6 +1185,8 @@
       'section-8-excel-ai': '8',
       'section-9-final-message': '8'
     };
+    // map new demo section to last tab group
+    navMap['section-10-taiken'] = '8';
 
     if ('IntersectionObserver' in window) {
       var navObserver = new IntersectionObserver(function(entries) {
@@ -1558,7 +1213,8 @@
       'section-6-core-value',
       'section-7-management-risk',
       'section-8-excel-ai',
-      'section-9-final-message'
+      'section-9-final-message',
+      'section-10-taiken'
     ];
 
     // Only enable shortcuts on desktop (keyboard likely present)
@@ -1571,9 +1227,7 @@
         if (num >= 1 && num <= 9) {
           e.preventDefault();
           var target = document.getElementById(sectionIds[num - 1]);
-          if (target) {
-            target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
-          }
+          if (target) { target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' }); }
         }
       });
     }
@@ -1584,9 +1238,7 @@
         e.preventDefault();
         var href = link.getAttribute('href');
         var target = document.querySelector(href);
-        if (target) {
-          target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
-        }
+        if (target) { target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' }); }
       });
     });
 
@@ -1610,6 +1262,19 @@
       document.documentElement.style.setProperty('--duration-slow', '0.2s');
       document.documentElement.style.setProperty('--duration-normal', '0.15s');
       document.documentElement.style.setProperty('--duration-fast', '0.1s');
+    }
+
+    // ===== Demo: start button action =====
+    var demoBtn = document.getElementById('start-demo-btn');
+    if (demoBtn) {
+      demoBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var area = document.getElementById('demo-box');
+        if (area) {
+          area.innerHTML = '<div style="text-align:center;"><h3 class="text-primary-color">体験モード起動中...</h3><p style="margin-top:16px;">（ここに実際のWebアプリ/iframeを展開します）</p><div style="margin-top:24px; color:var(--color-accent);">Loading...</div></div>';
+          area.style.backgroundColor = '#FFFFFF';
+        }
+      });
     }
 
   })();
