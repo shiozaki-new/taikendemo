@@ -10,6 +10,16 @@
     :root{
       --color-primary:#0F2640; --color-accent:#E8913A; --color-bg:#F5F5F7; --color-white:#fff;
       --text:#1D1D1F; --text-2:#6E6E73; --radius:12px; --shadow:0 6px 24px rgba(0,0,0,.08);
+      /* dbSheet-like palette (picked from screenshot, near colors) */
+      --db-frame:#D9E1EA;           /* ウィンドウ外枠の淡い青灰 */
+      --db-bar:#E6EDF6;             /* コントロールバーの薄青 */
+      --db-bar-border:#C4CFDC;      /* バーの境界線 */
+      --db-blue:#5B7EA6;            /* テキスト/アイコン用の青灰 */
+      --db-leftpane:#E7EEF7;        /* 左ペイン背景 */
+      --db-btn-yellow:#F7D774;      /* 黄色ボタン */
+      --db-btn-yellow-hover:#F3CC57;/* 黄色ボタン hover */
+      --db-btn-gray:#F3F6FA;        /* 薄灰ボタン */
+      --db-btn-border:#BFCAD6;      /* ボタン枠 */
     }
     *{box-sizing:border-box}
     html{font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP", sans-serif;}
@@ -63,6 +73,18 @@
     .toast.show{opacity:1;transform:none}
     footer{padding:24px 16px;text-align:center;color:var(--text-2)}
     a.btn-link{display:inline-block;text-decoration:none}
+
+    /* ===== dbSheet Control bar & Menu bar ===== */
+    .db-shell{border:1px solid var(--db-bar-border); border-radius:10px; overflow:hidden; box-shadow:var(--shadow); background:var(--db-frame)}
+    .db-controlbar{display:flex; align-items:center; justify-content:space-between; gap:12px; background:var(--db-bar); border-bottom:1px solid var(--db-bar-border); padding:8px 10px}
+    .db-ctrl-left,.db-ctrl-right{display:flex; align-items:center; gap:8px; color:#2f3f57}
+    .db-ctrl-title{font-weight:700; color:var(--db-blue)}
+    .db-ctrl-btn{appearance:none; border:1px solid var(--db-btn-border); background:var(--db-btn-gray); color:#2b3b52; border-radius:8px; padding:8px 12px; font-weight:600}
+    .db-ctrl-btn--accent{background:var(--db-btn-yellow); border-color:#E3C35C}
+    .db-ctrl-btn--accent:hover{background:var(--db-btn-yellow-hover)}
+    .db-menubar{display:flex; align-items:center; gap:10px; background:#F2F6FB; border-bottom:1px solid var(--db-bar-border); padding:6px 10px}
+    .db-menu-item{padding:6px 10px; border-radius:6px; color:#2b3b52; font-weight:600}
+    .db-menu-item.is-active{background:#E9F0FA; outline:1px solid var(--db-bar-border)}
 
     /* ===== Excel-like chrome ===== */
     :root{ --excel-green:#107C41; --excel-green-dark:#0E6C39; --excel-border:#D6D6D6; --excel-grid:#E6E6E6; }
@@ -146,15 +168,33 @@
       <div class="card">
         <h2>現場の入力（Excelライク）</h2>
         <div class="body">
-          <div class="toolbar">
-            <button class="btn btn--accent" id="saveBtn">保存（同期）</button>
-            <button class="btn btn--ghost" id="resetBtn">クリア</button>
-            <button class="btn" id="seedBtn">サンプル投入</button>
-            <a class="btn btn-link btn--ghost" id="csvBtn" href="#">CSV出力</a>
-            <span class="status" style="margin-left:auto">
-              <span class="dot" id="syncDot"></span>
-              <span class="muted" id="syncText">未保存</span>
-            </span>
+          <div class="db-shell" style="margin-bottom:12px">
+            <div class="db-controlbar">
+              <div class="db-ctrl-left">
+                <span class="db-ctrl-title">2022 dbSC_CData_Salesforce_営業_売上</span>
+                <button class="db-ctrl-btn">終了</button>
+                <button class="db-ctrl-btn">表示</button>
+                <button class="db-ctrl-btn">ヘルプ</button>
+              </div>
+              <div class="db-ctrl-right">
+                <button class="db-ctrl-btn db-ctrl-btn--accent" id="saveBtn">登録/更新</button>
+                <button class="db-ctrl-btn" id="resetBtn">データクリア</button>
+                <span class="muted">User: demouser1</span>
+                <span class="status" style="margin-left:4px">
+                  <span class="dot" id="syncDot"></span>
+                  <span class="muted" id="syncText">未保存</span>
+                </span>
+              </div>
+            </div>
+            <div class="db-menubar">
+              <span class="db-menu-item is-active">案件</span>
+              <span class="db-menu-item">登録/更新</span>
+              <span class="db-menu-item">案件レビュー詳細</span>
+              <span class="db-menu-item">実績情報</span>
+              <span class="db-menu-item">ツール</span>
+              <span class="db-menu-item">ヘルプ</span>
+              <span style="margin-left:auto" class="muted">ズーム: 85</span>
+            </div>
           </div>
 
           <div class="excel-window" role="region" aria-label="Excel-like grid">
