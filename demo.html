@@ -54,7 +54,10 @@
     .status{display:flex;align-items:center;gap:8px}
     .dot{width:10px;height:10px;border-radius:50%;background:#bbb}
     .dot.is-on{background:#2ecc71}
-    .json-view{font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;white-space:pre-wrap;background:#0b1020;color:#cfe8ff;border-radius:8px;padding:12px;line-height:1.5;max-height:300px;overflow:auto}
+    .code-view, .json-view{font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;white-space:pre-wrap;background:#0b1020;color:#cfe8ff;border-radius:8px;padding:12px;line-height:1.5;max-height:300px;overflow:auto}
+    .tabs{display:flex;gap:8px;margin-bottom:8px}
+    .tab{appearance:none;border:1px solid rgba(255,255,255,.2);background:#12203a;color:#cfe8ff;padding:6px 10px;border-radius:8px;cursor:pointer;font-weight:600}
+    .tab.is-active{background:#1b2e52;border-color:transparent}
     .toast{position:fixed;bottom:16px;right:16px;background:#0F2640;color:#fff;padding:10px 14px;border-radius:10px;opacity:0;transform:translateY(8px);transition:.25s}
     .toast.show{opacity:1;transform:none}
     footer{padding:24px 16px;text-align:center;color:var(--text-2)}
@@ -120,8 +123,13 @@
       <div class="card">
         <h2>組織に残る形（構造化データ）</h2>
         <div class="body">
-          <div class="muted" style="margin-bottom:8px">保存で擬似DBに反映（localStorage）。JSON を確認できます。</div>
-          <div class="json-view" id="jsonView" aria-live="polite">[]</div>
+          <div class="muted" style="margin-bottom:8px">保存で擬似DBに反映（localStorage）。SQL/JSON プレビューを切替できます。</div>
+          <div class="tabs" role="tablist">
+            <button class="tab is-active" data-tab="sql" role="tab" aria-selected="true">SQL</button>
+            <button class="tab" data-tab="json" role="tab" aria-selected="false">JSON</button>
+          </div>
+          <div class="code-view" id="sqlView" aria-live="polite"></div>
+          <div class="code-view" id="jsonView" aria-live="polite" hidden>[]</div>
         </div>
       </div>
     </div>
@@ -140,6 +148,7 @@
     var KEY = 'dbsheet_demo_v1';
     var tbody = document.getElementById('tbody');
     var jsonView = document.getElementById('jsonView');
+    var sqlView = document.getElementById('sqlView');
     var grand = document.getElementById('grandTotal');
     var syncDot = document.getElementById('syncDot');
     var syncText = document.getElementById('syncText');
@@ -197,7 +206,7 @@
       var rows = readTable();
       var payload = { savedAt: new Date().toISOString(), rows: rows };
       localStorage.setItem(KEY, JSON.stringify(payload));
-      jsonView.textContent = JSON.stringify(payload, null, 2);
+      renderPreviews(rows);
       markSaved();
       showToast('保存しました（擬似同期）');
     }
@@ -218,6 +227,37 @@
       ];
       renderFromData(sample);
       markDirty();
+    }
+
+    function toSQL(rows){
+      var lines = [];
+      lines.push('-- Preview (not executed)');
+      lines.push('CREATE TABLE IF NOT EXISTS demo_items (');
+      lines.push('  id INTEGER PRIMARY KEY,');
+      lines.push('  item TEXT NOT NULL,');
+      lines.push('  qty INTEGER NOT NULL,');
+      lines.push('  price INTEGER NOT NULL,');
+      lines.push('  amount INTEGER NOT NULL');
+      lines.push(');');
+      if(!rows || rows.length===0){
+        lines.push('-- (no rows)');
+        return lines.join('\n');
+      }
+      lines.push('BEGIN;');
+      rows.forEach(function(r, idx){
+        var esc = String(r.item||'').replace(/'/g, "''");
+        lines.push("INSERT INTO demo_items (id, item, qty, price, amount) VALUES ("+(idx+1)+", '"+esc+"', "+(Number(r.qty)||0)+", "+(Number(r.price)||0)+", "+(Number(r.amount)||0)+");");
+      });
+      lines.push('COMMIT;');
+      return lines.join('\n');
+    }
+
+    function renderPreviews(rows){
+      // JSON
+      var payload = { savedAt: new Date().toISOString(), rows: rows };
+      jsonView.textContent = JSON.stringify(payload, null, 2);
+      // SQL
+      sqlView.textContent = toSQL(rows);
     }
 
     function toCSV(rows){
@@ -248,12 +288,22 @@
     document.getElementById('resetBtn').addEventListener('click', reset);
     document.getElementById('seedBtn').addEventListener('click', seed);
     document.getElementById('csvBtn').addEventListener('click', function(e){ e.preventDefault(); downloadCSV(); });
-    tbody.addEventListener('input', function(e){ if(e.target.matches('[contenteditable]')){ markDirty(); readTable(); }});
+    tbody.addEventListener('input', function(e){ if(e.target.matches('[contenteditable]')){ markDirty(); var rows = readTable(); renderPreviews(rows); }});
+
+    // tabs
+    document.querySelectorAll('.tab').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        document.querySelectorAll('.tab').forEach(function(b){ b.classList.remove('is-active'); b.setAttribute('aria-selected','false'); });
+        btn.classList.add('is-active'); btn.setAttribute('aria-selected','true');
+        var isSQL = btn.getAttribute('data-tab') === 'sql';
+        sqlView.hidden = !isSQL; jsonView.hidden = isSQL;
+      });
+    });
 
     // init
     var saved = localStorage.getItem(KEY);
     if(saved){
-      try{ var data = JSON.parse(saved); jsonView.textContent = JSON.stringify(data, null, 2); renderFromData(data.rows||[]); }
+      try{ var data = JSON.parse(saved); renderFromData(data.rows||[]); renderPreviews(data.rows||[]); }
       catch(_){ renderFromData([]); }
     } else {
       renderFromData([]);
