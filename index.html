@@ -1,1004 +1,1618 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="description" content="dbSheet - 業務を固定するためのシステムではなく、業務を変え続けるための基盤。脱Excelではなく脱・固定業務を実現します。">
-    <meta name="theme-color" content="#0F2640">
-    <meta name="format-detection" content="telephone=no">
-    <title>dbSheet | 業務を変え続けるための基盤</title>
-    
-    <!-- 
-      【実装ノート: フォントについて】
-      実装基本設定書 §3.1 に基づき、本番環境では Inter (base64) と Noto Sans JP (サブセット) を
-      ここに埋め込む必要があります。
-      レビュー用として、一時的にGoogle Fontsを使用しています。本番化の際は削除してください。
-    -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-
-    <style>
-        /* =========================================
-           0. Design Tokens (出力デザイン仕様書.md 準拠)
-           ========================================= */
-        :root {
-            /* Colors: Primary */
-            --color-primary: #1B3A5C;
-            --color-primary-light: #2A5A8C;
-            --color-primary-dark: #0F2640;
-            
-            /* Colors: Accent */
-            --color-accent: #E8913A;
-            --color-accent-light: #F5B870;
-
-            /* Colors: Neutral & Backgrounds */
-            --color-bg-white: #FFFFFF;
-            --color-bg-light: #F5F5F7; /* Apple Light Gray */
-            --color-bg-frosted: rgba(255, 255, 255, 0.72);
-            --color-bg-frosted-dark: rgba(15, 38, 64, 0.78);
-            
-            /* Colors: Text */
-            --color-text-primary: #1D1D1F; /* Apple Black */
-            --color-text-secondary: #6E6E73; /* Apple Gray */
-            --color-text-inverse: #FFFFFF;
-
-            /* Colors: Semantic */
-            --color-before: #86868B;
-            --color-after: #1B3A5C;
-            --color-border: rgba(0, 0, 0, 0.06);
-            --color-border-light: rgba(255, 255, 255, 0.12);
-
-            /* Typography (Apple System Stack + Fallback) */
-            --font-family-base: "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Inter", "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
-            --font-family-mono: "SF Mono", "JetBrains Mono", monospace;
-
-            /* Font Sizes (Desktop Default - will override in media queries) */
-            --text-hero: 3.5rem;   /* 56px */
-            --text-h1: 2.5rem;     /* 40px */
-            --text-h2: 1.75rem;    /* 28px */
-            --text-body-lg: 1.375rem; /* 22px */
-            --text-body: 1.125rem;    /* 18px */
-            --text-caption: 0.875rem; /* 14px */
-
-            /* Spacing */
-            --space-xs: 8px;
-            --space-sm: 16px;
-            --space-md: 32px;
-            --space-lg: 64px;
-            --space-xl: 120px;
-
-            /* Shadows (Layered - macOS Style) */
-            --shadow-card: 
-                0 0.5px 0 rgba(0,0,0,0.05), 
-                0 4px 16px rgba(0,0,0,0.06), 
-                0 8px 32px rgba(0,0,0,0.04);
-            --shadow-elevated: 
-                0 0.5px 0 rgba(0,0,0,0.06), 
-                0 8px 24px rgba(0,0,0,0.08), 
-                0 20px 48px rgba(0,0,0,0.06);
-            --shadow-frosted:
-                0 0.5px 0 rgba(0,0,0,0.04), 
-                inset 0 0.5px 0 rgba(255,255,255,0.2);
-
-            /* Radius */
-            --radius-card: 16px;
-            --radius-card-inner: 12px;
-            --radius-pill: 9999px;
-
-            /* Animation (Spring Physics) */
-            --ease-spring: cubic-bezier(0.2, 0.9, 0.3, 1.0);
-            --ease-smooth: cubic-bezier(0.4, 0.0, 0.2, 1.0);
-            --duration-fast: 0.25s;
-            --duration-normal: 0.4s;
-            --duration-slow: 0.8s;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="format-detection" content="telephone=no, email=no, address=no">
+  <title>dbSheet — Excel業務を変え続けるための基盤 | 株式会社NEWCOM</title>
+  <meta name="description" content="dbSheetは、Excelの使いやすさを活かしながら、データの蓄積・共有・改善サイクルを実現する業務基盤です。脱Excelではなく、脱・固定業務へ。">
+  <meta name="keywords" content="dbSheet,Excel,業務改善,データベース,DX,脱Excel,NEWCOM">
+  <meta name="author" content="株式会社NEWCOM">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.newcom07.jp/dbsheet/lp/exhibition/">
+  <meta name="geo.region" content="JP">
+  <meta name="geo.placename" content="Japan">
+  <meta http-equiv="content-language" content="ja">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="dbSheet — Excel業務を変え続けるための基盤">
+  <meta property="og:description" content="Excelの自由さを活かしたまま、データの蓄積・共有・改善サイクルを実現。AI時代に最後まで残る思考のインターフェイス。">
+  <meta property="og:url" content="https://www.newcom07.jp/dbsheet/lp/exhibition/">
+  <meta property="og:site_name" content="dbSheet | 株式会社NEWCOM">
+  <meta property="og:locale" content="ja_JP">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="dbSheet — Excel業務を変え続けるための基盤">
+  <meta name="twitter:description" content="脱Excelではなく、脱・固定業務。Excelの使いやすさを活かしたデータ基盤。">
+  <meta name="theme-color" content="#0F2640">
+  <meta name="msapplication-TileColor" content="#0F2640">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F2640'/%3E%3Ctext x='16' y='22' font-family='sans-serif' font-size='16' font-weight='700' fill='%23E8913A' text-anchor='middle'%3Ed%3C/text%3E%3C/svg%3E">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "dbSheet",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Windows",
+    "description": "Excelの操作性を維持しながらデータベース連携を実現する業務基盤ソリューション。脱Excelではなく脱・固定業務を目指し、データの蓄積・共有・改善サイクルにより企業の変化耐性を構築する。",
+    "offers": { "@type": "Offer", "availability": "https://schema.org/InStock" },
+    "provider": {
+      "@type": "Organization",
+      "name": "株式会社NEWCOM",
+      "url": "https://www.newcom07.jp/",
+      "address": { "@type": "PostalAddress", "addressCountry": "JP" }
+    },
+    "featureList": ["Excel連携データベース","業務改善サイクル自動化","属人化解消","AI連携基盤","ガバナンス強化"]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "dbSheetとは何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "dbSheetは、Excelの操作性を維持しながらデータベース連携を実現する業務基盤ソリューションです。脱Excelではなく脱・固定業務を目指し、現場の思考プロセスを止めることなく、データの蓄積・共有・改善サイクルを実現します。"
         }
+      },
+      {
+        "@type": "Question",
+        "name": "dbSheetを導入するとExcelの操作は変わりますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "操作は変わりません。構造だけが変わります。現場担当者はこれまで通りExcelで思考・入力・試行錯誤を行いながら、裏側でデータベースと連携し、判断が経営資産として蓄積されるようになります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "dbSheetの導入効果は何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "導入効果は3段階で現れます。第一に現場のExcel業務がDB接続で止まらなくなり、第二に現場と経営のデータが自然につながり、第三に企業全体が外部の変化に強い体質（変化耐性）を獲得します。"
+        }
+      }
+    ]
+  }
+  </script>
+  <style>
+    /* ===== CSS Reset ===== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+    body {
+      font-family: 'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+      overscroll-behavior-y: none;
+    }
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+    ul, ol { list-style: none; }
 
-        /* =========================================
-           1. Reset & Base (実装基本設定.md 準拠)
-           ========================================= */
-        *, *::before, *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-tap-highlight-color: transparent;
-        }
+    /* ===== CSS Custom Properties (Design Tokens) ===== */
+    :root {
+      --color-primary: #1B3A5C;
+      --color-primary-light: #2A5A8C;
+      --color-primary-dark: #0F2640;
+      --color-accent: #E8913A;
+      --color-accent-light: #F5B870;
+      --color-bg-white: #FFFFFF;
+      --color-bg-light: #F5F5F7;
+      --color-bg-frosted: rgba(255, 255, 255, 0.72);
+      --color-bg-frosted-dark: rgba(15, 38, 64, 0.78);
+      --color-text-primary: #1D1D1F;
+      --color-text-secondary: #6E6E73;
+      --color-text-inverse: #FFFFFF;
+      --color-border: rgba(0, 0, 0, 0.06);
+      --color-border-light: rgba(255, 255, 255, 0.12);
+      --color-before: #86868B;
+      --color-after: #1B3A5C;
 
-        html {
-            font-size: 16px;
-            scroll-behavior: smooth;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            height: 100%;
-        }
+      --font-primary: 'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
+      --font-mono: 'SF Mono', 'JetBrains Mono', 'Source Code Pro', 'Menlo', 'Consolas', monospace;
 
-        body {
-            font-family: var(--font-family-base);
-            color: var(--color-text-primary);
-            background-color: var(--color-bg-white);
-            line-height: 1.6;
-            letter-spacing: 0.02em;
-            overflow-x: hidden;
-            width: 100%;
-            -webkit-text-size-adjust: 100%;
-            overscroll-behavior-y: none; /* Pull-to-refresh防止 */
-        }
+      --text-hero: clamp(28px, 6vw, 56px);
+      --text-h1: clamp(24px, 4.5vw, 40px);
+      --text-h2: clamp(20px, 3.5vw, 28px);
+      --text-body-lg: clamp(16px, 2.5vw, 22px);
+      --text-body: clamp(15px, 2vw, 18px);
+      --text-caption: clamp(12px, 1.5vw, 14px);
 
-        /* SVG Utility */
-        svg {
-            display: block;
-            fill: currentColor;
-            pointer-events: none;
-        }
+      --space-xs: 8px;
+      --space-sm: 12px;
+      --space-md: 24px;
+      --space-lg: 48px;
+      --space-xl: 80px;
 
-        /* =========================================
-           2. Components (Atomic / Molecule)
-           ========================================= */
-        /* Buttons & Pills */
-        .pill-nav {
-            padding: 8px 16px;
-            border-radius: var(--radius-pill);
-            color: var(--color-text-inverse);
-            text-decoration: none;
-            font-size: var(--text-caption);
-            font-weight: 500;
-            transition: background-color var(--duration-fast) var(--ease-smooth), transform 0.1s var(--ease-spring);
-            letter-spacing: 0.04em;
-            position: relative;
-            background: transparent;
-        }
-        
-        /* Active State (Segmented Control style) */
-        .pill-nav.active {
-            background-color: rgba(232, 145, 58, 0.2); /* Accent 20% */
-            color: var(--color-accent);
-        }
-        
-        /* Cards */
-        .card {
-            background: var(--color-bg-light);
-            border: 0.5px solid var(--color-border);
-            border-radius: var(--radius-card);
-            box-shadow: var(--shadow-card);
-            overflow: hidden;
-            will-change: transform;
-        }
-        
-        .card-frosted {
-            background: var(--color-bg-frosted);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border: 0.5px solid var(--color-border);
-            border-radius: var(--radius-card);
-            box-shadow: var(--shadow-card);
-        }
+      --grid-columns: 4;
+      --grid-gutter: 16px;
+      --content-max-width: 100%;
+      --content-padding: 20px;
 
-        /* Fallback for backdrop-filter */
-        @supports not (backdrop-filter: blur(1px)) {
-            .card-frosted, header {
-                background: rgba(255, 255, 255, 0.95);
-            }
-        }
+      --shadow-card: 0 0.5px 0 rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.06), 0 8px 32px rgba(0,0,0,0.04);
+      --shadow-elevated: 0 0.5px 0 rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.08), 0 20px 48px rgba(0,0,0,0.06);
+      --shadow-frosted: 0 0.5px 0 rgba(0,0,0,0.04), inset 0 0.5px 0 rgba(255,255,255,0.2);
 
-        /* Text Highlights */
-        .highlight-accent { color: var(--color-accent); }
-        .highlight-primary { color: var(--color-primary); }
+      --radius-card: 16px;
+      --radius-card-inner: 12px;
+      --radius-button: 10px;
+      --radius-pill: 9999px;
 
-        /* =========================================
-           3. Layout & Sections
-           ========================================= */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 56px;
-            z-index: 1000;
-            background: var(--color-bg-frosted-dark);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border-bottom: 0.5px solid var(--color-border-light);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 var(--space-md);
-            /* iOS Fix */
-            transform: translateZ(0); 
-        }
+      --ease-spring: cubic-bezier(0.2, 0.9, 0.3, 1.0);
+      --ease-smooth: cubic-bezier(0.4, 0.0, 0.2, 1.0);
+      --duration-fast: 0.25s;
+      --duration-normal: 0.4s;
+      --duration-slow: 0.6s;
 
-        .header-logo {
-            font-weight: 700;
-            font-size: 1.25rem;
-            color: var(--color-text-inverse);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            letter-spacing: 0.02em;
-        }
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --safe-left: env(safe-area-inset-left, 0px);
+      --safe-right: env(safe-area-inset-right, 0px);
+    }
 
-        .header-nav {
-            display: flex;
-            gap: var(--space-xs);
-        }
+    @media (min-width: 768px) {
+      :root {
+        --space-sm: 16px;
+        --space-md: 32px;
+        --space-lg: 64px;
+        --space-xl: 100px;
+        --grid-columns: 8;
+        --grid-gutter: 20px;
+        --content-padding: 32px;
+      }
+    }
+    @media (min-width: 1024px) {
+      :root {
+        --grid-columns: 12;
+        --grid-gutter: 24px;
+        --content-max-width: 1200px;
+        --content-padding: 40px;
+      }
+    }
+    @media (min-width: 1440px) {
+      :root { --content-max-width: 1440px; }
+    }
+    @media (min-width: 1920px) {
+      :root { --space-xl: 120px; }
+    }
 
-        /* Progress Bar (Mobile Enhancement) */
-        .scroll-progress {
-            position: fixed;
-            top: 56px;
-            left: 0;
-            height: 2px;
-            background: var(--color-accent);
-            width: 0%;
-            z-index: 999;
-            transition: width 0.1s linear;
-        }
+    /* ===== Skip Link ===== */
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--color-accent);
+      color: var(--color-text-inverse);
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--radius-button);
+      z-index: 200;
+      font-size: var(--text-caption);
+    }
+    .skip-link:focus { top: var(--space-xs); }
 
-        section {
-            width: 100%;
-            min-height: 100vh; /* Default Desktop */
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: var(--space-lg) var(--space-md);
-            /* Scroll Snap (Weak) */
-            scroll-snap-align: start;
-        }
+    /* ===== Header ===== */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 56px;
+      padding-top: var(--safe-top);
+      background: rgba(15, 38, 64, 0.92);
+      border-bottom: 0.5px solid var(--color-border-light);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-left: calc(var(--safe-left) + var(--content-padding));
+      padding-right: calc(var(--safe-right) + var(--content-padding));
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+    }
+    @supports (backdrop-filter: blur(1px)) {
+      .header {
+        background: var(--color-bg-frosted-dark);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+      }
+    }
+    .header__logo {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--color-text-inverse);
+      letter-spacing: -0.01em;
+      flex-shrink: 0;
+    }
+    .header__logo-accent {
+      color: var(--color-accent);
+    }
+    .header__nav {
+      display: none;
+      gap: var(--space-md);
+      align-items: center;
+    }
+    @media (min-width: 768px) {
+      .header__nav { display: flex; }
+    }
+    .nav__link {
+      font-size: var(--text-caption);
+      color: var(--color-text-inverse);
+      letter-spacing: 0.04em;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      transition: background var(--duration-fast) var(--ease-smooth);
+      position: relative;
+      white-space: nowrap;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .nav__link:hover {
+        background: rgba(232, 145, 58, 0.15);
+      }
+    }
+    @media (hover: none) {
+      .nav__link:active {
+        background: rgba(232, 145, 58, 0.25);
+      }
+    }
+    .nav__link--active {
+      background: rgba(232, 145, 58, 0.2);
+      color: var(--color-accent-light);
+    }
+    .nav__shortcut {
+      font-size: 10px;
+      opacity: 0.4;
+      margin-left: 4px;
+      font-family: var(--font-mono);
+    }
+    @media (max-width: 1023px) {
+      .nav__shortcut { display: none; }
+    }
 
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+    /* ===== Section Base ===== */
+    .section {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: calc(56px + var(--space-lg)) var(--content-padding) var(--space-lg);
+      position: relative;
+      overflow: hidden;
+    }
+    @media (min-width: 1024px) {
+      .section { padding-top: calc(56px + var(--space-xl)); padding-bottom: var(--space-xl); }
+    }
+    .section__inner {
+      width: 100%;
+      max-width: var(--content-max-width);
+      margin: 0 auto;
+    }
 
-        /* --- Section 1: 認 (Recognition) --- */
-        #section-nin {
-            background-color: var(--color-primary-dark);
-            /* Breathing Background */
-            background-image: radial-gradient(circle at center, #1B3A5C 0%, #0F2640 70%);
-            background-size: 200% 200%;
-            animation: breath 15s ease infinite;
-            color: var(--color-text-inverse);
-            text-align: center;
-        }
+    /* ===== Dark Section ===== */
+    .section--dark {
+      background: var(--color-primary-dark);
+      color: var(--color-text-inverse);
+    }
+    .section--dark::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 120%;
+      height: 120%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(ellipse at center, rgba(27, 58, 92, 0.4) 0%, transparent 70%);
+      pointer-events: none;
+    }
 
-        @keyframes breath {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+    /* ===== Light Section ===== */
+    .section--light {
+      background: var(--color-bg-white);
+      color: var(--color-text-primary);
+    }
+    .section--muted {
+      background: var(--color-bg-light);
+      color: var(--color-text-primary);
+    }
 
-        .hero-title {
-            font-size: var(--text-hero);
-            font-weight: 700;
-            line-height: 1.2;
-            letter-spacing: -0.01em;
-            margin-bottom: var(--space-md);
-        }
+    /* ===== Animation States ===== */
+    .animate-in {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    .animate-in--left {
+      opacity: 0;
+      transform: translateX(-60px);
+    }
+    .animate-in--right {
+      opacity: 0;
+      transform: translateX(60px);
+    }
+    .animate-in--scale {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    .animate-in--blur {
+      opacity: 0;
+      transform: translateY(30px);
+      filter: blur(8px);
+    }
+    .animate-in.is-visible,
+    .animate-in--left.is-visible,
+    .animate-in--right.is-visible,
+    .animate-in--scale.is-visible,
+    .animate-in--blur.is-visible {
+      opacity: 1;
+      transform: translateY(0) translateX(0) scale(1);
+      filter: blur(0);
+      transition: opacity var(--duration-slow) var(--ease-spring),
+                  transform var(--duration-slow) var(--ease-spring),
+                  filter var(--duration-slow) var(--ease-spring);
+    }
 
-        .hero-sub {
-            font-size: var(--text-body-lg);
-            opacity: 0.8;
-            max-width: 800px;
-        }
+    /* ===== Section 1: 認 (Hero) ===== */
+    .hero__main-copy {
+      font-size: var(--text-hero);
+      font-weight: 700;
+      text-align: center;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      position: relative;
+      z-index: 1;
+    }
+    .hero__accent { color: var(--color-accent); }
+    .hero__sub-copy {
+      font-size: var(--text-body-lg);
+      text-align: center;
+      opacity: 0.6;
+      margin-top: var(--space-md);
+      line-height: 1.6;
+      position: relative;
+      z-index: 1;
+    }
+    .hero__scroll-hint {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      z-index: 1;
+    }
+    .hero__scroll-text {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.35;
+    }
+    .hero__chevron {
+      width: 24px;
+      height: 24px;
+      opacity: 0.5;
+      animation: bounce 2.5s ease-in-out infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(8px); }
+    }
+    .hero__section-label {
+      font-size: var(--text-caption);
+      font-family: var(--font-mono);
+      color: var(--color-accent);
+      letter-spacing: 0.08em;
+      margin-bottom: var(--space-sm);
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
 
-        .scroll-hint {
-            position: absolute;
-            bottom: 32px;
-            animation: bounce 2.5s ease-in-out infinite;
-            opacity: 0.6;
-            color: var(--color-text-inverse);
-        }
+    /* ===== Section Title (shared) ===== */
+    .section__title {
+      font-size: var(--text-h1);
+      font-weight: 600;
+      text-align: center;
+      line-height: 1.3;
+      margin-bottom: var(--space-lg);
+      letter-spacing: -0.01em;
+    }
+    .section__title--accent { color: var(--color-accent); }
+    .section__title--primary { color: var(--color-primary); }
+    .section__label {
+      font-size: var(--text-caption);
+      font-family: var(--font-mono);
+      color: var(--color-accent);
+      letter-spacing: 0.08em;
+      margin-bottom: var(--space-sm);
+      text-align: center;
+      display: block;
+    }
+    .section__summary {
+      font-size: var(--text-body);
+      color: var(--color-text-secondary);
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto var(--space-lg);
+      line-height: 1.7;
+    }
+    .section--dark .section__summary { color: rgba(255,255,255,0.55); }
 
-        /* --- Section 2: 構造 (Structure) --- */
-        #section-kouzou {
-            background-color: var(--color-bg-white);
-        }
+    /* ===== Section 2: Market Three Layers ===== */
+    .layers {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    @media (min-width: 768px) {
+      .layers { flex-direction: row; gap: var(--space-md); }
+    }
+    .layer-card {
+      flex: 1;
+      background: var(--color-bg-frosted);
+      border: 0.5px solid var(--color-border);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-card);
+      padding: var(--space-md);
+      position: relative;
+      overflow: hidden;
+    }
+    @supports (backdrop-filter: blur(1px)) {
+      .layer-card {
+        backdrop-filter: blur(12px) saturate(150%);
+        -webkit-backdrop-filter: blur(12px) saturate(150%);
+      }
+    }
+    .layer-card__number {
+      font-family: var(--font-mono);
+      font-size: var(--text-caption);
+      color: var(--color-accent);
+      margin-bottom: var(--space-xs);
+      letter-spacing: 0.04em;
+    }
+    .layer-card__title {
+      font-size: var(--text-h2);
+      font-weight: 600;
+      margin-bottom: var(--space-sm);
+      color: var(--color-text-primary);
+    }
+    .layer-card__products {
+      font-size: var(--text-body);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-sm);
+    }
+    .layer-card__traits {
+      font-size: var(--text-caption);
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+    }
+    .layer-card--highlight {
+      border-left: 3px solid var(--color-accent);
+      background: rgba(232, 145, 58, 0.04);
+    }
 
-        .section-title {
-            font-size: var(--text-h1);
-            font-weight: 600;
-            text-align: center;
-            margin-bottom: var(--space-lg);
-            color: var(--color-text-primary);
-        }
+    /* ===== Section 3: Position ===== */
+    .position-diagram {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-md);
+    }
+    .position-zone {
+      width: 100%;
+      padding: var(--space-md);
+      border-radius: var(--radius-card);
+      text-align: center;
+      font-size: var(--text-body);
+      border: 0.5px solid var(--color-border);
+    }
+    .position-zone--erp {
+      background: rgba(134, 134, 139, 0.06);
+      color: var(--color-text-secondary);
+    }
+    .position-zone--saas {
+      background: rgba(134, 134, 139, 0.06);
+      color: var(--color-text-secondary);
+    }
+    .position-zone--dbsheet {
+      background: rgba(232, 145, 58, 0.08);
+      border: 2px solid var(--color-accent);
+      box-shadow: var(--shadow-elevated);
+      padding: var(--space-lg) var(--space-md);
+    }
+    .position-zone--dbsheet .position-zone__title {
+      font-size: var(--text-h2);
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: var(--space-xs);
+    }
+    .position-zone--excel {
+      background: rgba(134, 134, 139, 0.06);
+      color: var(--color-text-secondary);
+    }
+    .position-zone__title {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .position-arrow {
+      width: 2px;
+      height: 32px;
+      background: var(--color-border);
+      position: relative;
+    }
+    .position-arrow--accent {
+      background: var(--color-accent);
+      height: 4px;
+      width: 48px;
+      border-radius: 2px;
+    }
+    .position-roles {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      max-width: 700px;
+      margin: var(--space-lg) auto 0;
+    }
+    .position-role {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      font-size: var(--text-body);
+      color: var(--color-text-primary);
+    }
+    .position-role__icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      margin-top: 3px;
+      color: var(--color-accent);
+    }
 
-        .structure-grid {
-            display: flex;
-            align-items: stretch;
-            justify-content: center;
-            gap: var(--space-md);
-            width: 100%;
-        }
+    /* ===== Section 4: Non-Substitution ===== */
+    .non-sub {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .non-sub__cards {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      margin-bottom: var(--space-lg);
+    }
+    @media (min-width: 768px) {
+      .non-sub__cards { flex-direction: row; }
+    }
+    .non-sub__card {
+      flex: 1;
+      background: var(--color-bg-frosted);
+      border: 0.5px solid var(--color-border);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-card);
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+    @supports (backdrop-filter: blur(1px)) {
+      .non-sub__card {
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+    }
+    .non-sub__product {
+      font-size: var(--text-h2);
+      font-weight: 600;
+      color: var(--color-text-primary);
+    }
+    .non-sub__label {
+      font-size: var(--text-body);
+      color: var(--color-text-secondary);
+    }
+    .non-sub__x {
+      width: 32px;
+      height: 32px;
+      color: var(--color-before);
+      opacity: 0.5;
+    }
+    .non-sub__message {
+      font-size: var(--text-body-lg);
+      color: var(--color-primary);
+      font-weight: 600;
+      margin-top: var(--space-md);
+    }
 
-        .structure-card {
-            flex: 5; /* 40% */
-            max-width: 480px;
-            display: flex;
-            flex-direction: column;
-        }
+    /* ===== Section 5: True Competitors ===== */
+    .competitors {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+    @media (min-width: 768px) {
+      .competitors { grid-template-columns: 1fr 1fr; }
+    }
+    .competitor-card {
+      background: var(--color-bg-white);
+      border: 0.5px solid var(--color-border);
+      border-left: 3px solid var(--color-accent);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-card);
+      padding: var(--space-md);
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+    }
+    .competitor-card__icon {
+      width: 24px;
+      height: 24px;
+      color: var(--color-accent);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .competitor-card__text {
+      font-size: var(--text-body-lg);
+      font-weight: 500;
+      color: var(--color-text-primary);
+    }
 
-        .card-header {
-            padding: var(--space-sm) var(--space-md);
-            color: white;
-            font-size: var(--text-h2);
-            font-weight: 600;
-            text-align: center;
-        }
-        .bg-before { background-color: var(--color-before); }
-        .bg-after { background-color: var(--color-after); }
+    /* ===== Section 6: Core Value ===== */
+    .core-values {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+    .core-value-row {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-sm);
+      text-align: center;
+    }
+    @media (min-width: 768px) {
+      .core-value-row {
+        flex-direction: row;
+        text-align: left;
+        gap: var(--space-md);
+      }
+    }
+    .core-value__not {
+      flex: 1;
+      font-size: var(--text-body-lg);
+      color: var(--color-text-secondary);
+      position: relative;
+    }
+    .core-value__not::after {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 1px;
+      background: var(--color-before);
+      opacity: 0.3;
+      position: absolute;
+      top: 50%;
+    }
+    @media (min-width: 768px) {
+      .core-value__not::after { display: block; }
+    }
+    .core-value__not span {
+      background: var(--color-bg-white);
+      padding-right: var(--space-sm);
+      position: relative;
+      z-index: 1;
+    }
+    .section--muted .core-value__not span {
+      background: var(--color-bg-light);
+    }
+    .core-value__arrow {
+      width: 32px;
+      height: 32px;
+      color: var(--color-accent);
+      flex-shrink: 0;
+    }
+    .core-value__is {
+      flex: 1;
+      font-size: var(--text-h2);
+      font-weight: 700;
+      color: var(--color-primary);
+    }
 
-        .card-body {
-            background: var(--color-bg-light);
-            flex-grow: 1;
-            padding: 0;
-            border-top: none;
-        }
-        .structure-card.after .card-body {
-            background: var(--color-bg-white);
-            border-left: 3px solid var(--color-accent);
-        }
+    /* ===== Section 7: Management Risk ===== */
+    .risks {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .risk-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      padding: var(--space-md);
+      background: var(--color-bg-white);
+      border-radius: var(--radius-card);
+      border: 0.5px solid var(--color-border);
+      box-shadow: var(--shadow-card);
+    }
+    .risk-item__icon {
+      width: 28px;
+      height: 28px;
+      color: var(--color-accent);
+      flex-shrink: 0;
+    }
+    .risk-item__content {
+      flex: 1;
+    }
+    .risk-item__title {
+      font-size: var(--text-body-lg);
+      font-weight: 600;
+      color: var(--color-text-primary);
+      margin-bottom: 4px;
+    }
+    .risk-item__desc {
+      font-size: var(--text-body);
+      color: var(--color-text-secondary);
+    }
 
-        .comparison-row {
-            padding: var(--space-md);
-            border-bottom: 0.5px solid var(--color-border);
-            min-height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: var(--text-body-lg);
-            text-align: center;
-        }
-        .comparison-row:last-child { border-bottom: none; }
-        
-        .arrow-column {
-            flex: 2; /* 20% */
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            align-items: center;
-            padding: 60px 0;
-            color: var(--color-accent);
-        }
+    /* ===== Section 8: Excel × AI ===== */
+    .excel-ai {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .excel-ai__grid {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      margin-bottom: var(--space-lg);
+    }
+    @media (min-width: 768px) {
+      .excel-ai__grid {
+        flex-direction: row;
+        gap: var(--space-md);
+      }
+    }
+    .excel-ai__column {
+      flex: 1;
+      border-radius: var(--radius-card);
+      padding: var(--space-md);
+      border: 0.5px solid var(--color-border-light);
+    }
+    .excel-ai__column--excel {
+      background: rgba(27, 58, 92, 0.6);
+    }
+    .excel-ai__column--ai {
+      background: rgba(27, 58, 92, 0.6);
+    }
+    .excel-ai__column-title {
+      font-size: var(--text-h2);
+      font-weight: 600;
+      margin-bottom: var(--space-sm);
+      color: var(--color-text-inverse);
+    }
+    .excel-ai__column-title span { color: var(--color-accent-light); }
+    .excel-ai__item {
+      font-size: var(--text-body);
+      color: rgba(255,255,255,0.75);
+      padding: 6px 0;
+      border-bottom: 0.5px solid rgba(255,255,255,0.06);
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+    .excel-ai__item:last-child { border-bottom: none; }
+    .excel-ai__item-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      flex-shrink: 0;
+    }
+    .excel-ai__bridge {
+      text-align: center;
+      padding: var(--space-md);
+    }
+    .excel-ai__bridge-text {
+      font-size: var(--text-body-lg);
+      color: var(--color-accent-light);
+      font-weight: 600;
+    }
+    .excel-ai__conclusion {
+      text-align: center;
+      font-size: var(--text-h2);
+      font-weight: 700;
+      color: var(--color-text-inverse);
+      position: relative;
+      z-index: 1;
+    }
 
-        .key-message {
-            margin-top: var(--space-lg);
-            text-align: center;
-        }
-        .key-message p {
-            font-size: var(--text-body-lg);
-            font-weight: 600;
-            color: var(--color-primary);
-            margin-bottom: var(--space-xs);
-        }
+    /* ===== Section 9: Final Message ===== */
+    .final {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .final__main {
+      font-size: var(--text-hero);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: var(--space-md);
+    }
+    .final__cta {
+      font-size: var(--text-h1);
+      font-weight: 700;
+      color: var(--color-accent);
+      margin-bottom: var(--space-md);
+    }
+    .final__sub {
+      font-size: var(--text-body-lg);
+      opacity: 0.6;
+      margin-bottom: var(--space-lg);
+    }
+    .final__divider {
+      width: 40%;
+      max-width: 300px;
+      height: 0.5px;
+      background: rgba(255,255,255,0.15);
+      margin: var(--space-lg) auto;
+    }
+    .final__tagline {
+      font-size: var(--text-body);
+      opacity: 0.45;
+      letter-spacing: 0.04em;
+      margin-bottom: var(--space-xs);
+    }
+    .final__company {
+      font-size: var(--text-body);
+      opacity: 0.35;
+    }
 
-        /* --- Section 3: 縁 (Nexus) --- */
-        #section-en {
-            background-color: var(--color-bg-light);
-            /* Subtle Background Pattern */
-            background-image: 
-                radial-gradient(circle at 10% 10%, rgba(27, 58, 92, 0.03) 0%, transparent 40%),
-                radial-gradient(circle at 90% 90%, rgba(232, 145, 58, 0.03) 0%, transparent 40%);
-        }
+    /* ===== Footer ===== */
+    .footer {
+      background: var(--color-primary-dark);
+      color: var(--color-text-inverse);
+      text-align: center;
+      padding: var(--space-md) var(--content-padding);
+      font-size: var(--text-caption);
+      opacity: 0.4;
+      border-top: 0.5px solid var(--color-border-light);
+    }
 
-        .nexus-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: var(--space-md);
-            width: 100%;
-            max-width: 1000px;
-            position: relative;
-        }
+    /* ===== Utility ===== */
+    .text-accent { color: var(--color-accent); }
+    .text-primary-color { color: var(--color-primary); }
+    .text-center { text-align: center; }
+    .mb-0 { margin-bottom: 0; }
 
-        /* Connector Line (Vertical Dashed) */
-        .nexus-connect-line {
-            position: absolute;
-            left: 50%;
-            top: 20px;
-            height: 0%; /* Animate this */
-            width: 2px;
-            border-left: 2px dashed var(--color-accent);
-            transform: translateX(-50%);
-            z-index: 0;
-            opacity: 0.5;
-            transition: height 0.8s ease-out;
-        }
-        .visible .nexus-connect-line { height: 95%; }
+    /* ===== Before/After Pattern (Section 3 Position) ===== */
+    .ba-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      align-items: center;
+    }
+    @media (min-width: 768px) {
+      .ba-container {
+        flex-direction: row;
+        align-items: stretch;
+      }
+    }
+    .ba-card {
+      flex: 1;
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      border: 0.5px solid var(--color-border);
+    }
+    .ba-card--after {
+      box-shadow: var(--shadow-elevated);
+      border-left: 3px solid var(--color-accent);
+    }
+    .ba-card__header {
+      padding: var(--space-sm) var(--space-md);
+      font-size: var(--text-h2);
+      font-weight: 600;
+      color: var(--color-text-inverse);
+    }
+    .ba-card__header--before { background: var(--color-before); }
+    .ba-card__header--after { background: var(--color-after); }
+    .ba-card__body {
+      padding: 0;
+    }
+    .ba-card__body--before { background: var(--color-bg-light); }
+    .ba-card__body--after { background: var(--color-bg-white); }
+    .ba-row {
+      padding: var(--space-sm) var(--space-md);
+      font-size: var(--text-body-lg);
+      border-bottom: 0.5px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      min-height: 56px;
+    }
+    .ba-row:last-child { border-bottom: none; }
+    .ba-row--before { color: var(--color-text-secondary); }
+    .ba-row--after { color: var(--color-text-primary); font-weight: 600; }
+    .ba-arrow-col {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-md);
+      padding: 0 var(--space-sm);
+    }
+    @media (min-width: 768px) {
+      .ba-arrow-col { display: flex; }
+    }
+    .ba-arrow-icon {
+      width: 24px;
+      height: 24px;
+      color: var(--color-accent);
+    }
+    .ba-message {
+      text-align: center;
+      margin-top: var(--space-lg);
+    }
+    .ba-message__main {
+      font-size: var(--text-body-lg);
+      font-weight: 600;
+      color: var(--color-primary);
+    }
+    .ba-message__sub {
+      font-size: var(--text-body);
+      color: var(--color-text-secondary);
+      margin-top: var(--space-sm);
+    }
 
-        .nexus-card {
-            z-index: 1;
-            padding: var(--space-md);
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: var(--space-sm);
-            /* Glassmorphism */
-            background: var(--color-bg-frosted);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-        }
+    /* ===== Three縁 Cards ===== */
+    .en-cards {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      align-items: center;
+    }
+    .en-card {
+      width: 100%;
+      background: var(--color-bg-frosted);
+      border: 0.5px solid var(--color-border);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-card);
+      padding: var(--space-md);
+      overflow: hidden;
+    }
+    @supports (backdrop-filter: blur(1px)) {
+      .en-card {
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+      }
+    }
+    .en-card__label {
+      font-family: var(--font-mono);
+      font-size: var(--text-caption);
+      color: var(--color-accent);
+      letter-spacing: 0.04em;
+    }
+    .en-card__title {
+      font-size: var(--text-h2);
+      font-weight: 600;
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-sm);
+    }
+    .en-card__grid {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    @media (min-width: 768px) {
+      .en-card__grid {
+        flex-direction: row;
+        align-items: stretch;
+      }
+    }
+    .en-card__side {
+      flex: 1;
+      border-radius: var(--radius-card-inner);
+      padding: var(--space-sm) var(--space-md);
+    }
+    .en-card__side--before {
+      background: rgba(134, 134, 139, 0.08);
+    }
+    .en-card__side--after {
+      background: rgba(27, 58, 92, 0.06);
+      border-left: 3px solid var(--color-accent);
+    }
+    .en-card__side-label {
+      font-size: var(--text-caption);
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    .en-card__side--before .en-card__side-label { color: var(--color-before); }
+    .en-card__side--after .en-card__side-label { color: var(--color-after); }
+    .en-card__side-text {
+      font-size: var(--text-body);
+      line-height: 1.6;
+    }
+    .en-card__side--before .en-card__side-text { color: var(--color-text-secondary); }
+    .en-card__side--after .en-card__side-text { color: var(--color-text-primary); font-weight: 600; }
+    .en-card__connector {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-xs) 0;
+    }
+    @media (min-width: 768px) {
+      .en-card__connector { padding: 0 var(--space-sm); }
+    }
+    .en-card__wave {
+      width: 36px;
+      height: 24px;
+      color: var(--color-accent);
+    }
 
-        .nexus-header-row {
-            display: flex;
-            align-items: baseline;
-            gap: var(--space-sm);
-            margin-bottom: var(--space-xs);
-        }
-        .nexus-num {
-            font-family: var(--font-family-mono);
-            color: var(--color-accent);
-            font-weight: 700;
-        }
-        .nexus-title {
-            font-size: var(--text-h2);
-            font-weight: 600;
-            color: var(--color-primary);
-        }
+    .en-connector {
+      width: 1.5px;
+      height: 32px;
+      border-left: 1.5px dashed var(--color-accent);
+      margin: 0 auto;
+    }
 
-        .nexus-content-grid {
-            display: grid;
-            grid-template-columns: 45% 10% 45%;
-            align-items: center;
-        }
+    .en-summary {
+      text-align: center;
+      margin-top: var(--space-lg);
+    }
+    .en-summary__text {
+      font-size: var(--text-h2);
+      font-weight: 700;
+      color: var(--color-primary);
+    }
 
-        .nexus-col {
-            padding: var(--space-sm);
-            border-radius: var(--radius-card-inner);
-            font-size: var(--text-body);
-            min-height: 80px;
-            display: flex;
-            align-items: center;
-        }
-        .nexus-before {
-            background: rgba(134, 134, 139, 0.08);
-            color: var(--color-text-secondary);
-        }
-        .nexus-after {
-            background: rgba(27, 58, 92, 0.06);
-            color: var(--color-text-primary);
-            font-weight: 600;
-            border-left: 3px solid var(--color-accent);
-        }
-        .nexus-connector {
-            display: flex;
-            justify-content: center;
-            color: var(--color-accent);
-        }
+    /* ===== Focus Styles ===== */
+    :focus-visible {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 3px;
+      border-radius: var(--radius-button);
+    }
+    :focus:not(:focus-visible) {
+      outline: none;
+    }
 
-        /* --- Section 4: CTA (Speech Background) --- */
-        #section-demo {
-            background-color: var(--color-primary-dark);
-            background-image: radial-gradient(circle at center, #1B3A5C 0%, #0F2640 80%);
-            background-size: 200% 200%;
-            animation: breath 15s ease infinite;
-            color: var(--color-text-inverse);
-            text-align: center;
-        }
+    /* ===== Reduced Motion ===== */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .animate-in,
+      .animate-in--left,
+      .animate-in--right,
+      .animate-in--scale,
+      .animate-in--blur {
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+      }
+    }
 
-        .cta-text {
-            font-size: var(--text-h1);
-            color: var(--color-accent);
-            font-weight: 700;
-            margin: var(--space-md) 0;
-            transition: transform 0.2s var(--ease-spring);
-        }
-        
-        .logo-placeholder {
-            font-weight: 700;
-            font-size: 1.5rem;
-            letter-spacing: 0.05em;
-            opacity: 0.9;
-        }
+    /* ===== Scroll Snap ===== */
+    @media (min-width: 1024px) {
+      html {
+        scroll-snap-type: y proximity;
+      }
+      .section--snap {
+        scroll-snap-align: start;
+      }
+    }
 
-        /* --- Section 5: 体験 (Experience) --- */
-        #section-taiken {
-            background-color: var(--color-bg-white);
-            justify-content: flex-start;
-            padding-top: 100px;
-            min-height: 100vh; /* Allow grow */
-            height: auto;
-            scroll-snap-stop: always;
-        }
-
-        .demo-placeholder {
-            width: 100%;
-            max-width: 1200px;
-            min-height: 480px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: var(--color-text-secondary);
-            border: 1px solid var(--color-border);
-            background: var(--color-bg-frosted);
-            backdrop-filter: blur(20px);
-            border-radius: var(--radius-card);
-            margin-top: var(--space-md);
-            position: relative;
-            overflow: hidden;
-            box-shadow: var(--shadow-elevated);
-            touch-action: manipulation;
-            transition: transform 0.3s var(--ease-spring), box-shadow 0.3s var(--ease-smooth);
-        }
-
-        .demo-icon {
-            width: 80px;
-            height: 80px;
-            margin-bottom: var(--space-sm);
-            color: var(--color-border);
-            opacity: 0.8;
-        }
-
-        /* =========================================
-           4. Mobile Enhancements (実装基本設定 §2 & §9)
-           ========================================= */
-        
-        /* 4.1 Responsive Typography via clamp() */
-        @media (max-width: 1023px) {
-            :root {
-                --text-hero: clamp(2.5rem, 6vw, 3.5rem);
-                --text-h1: clamp(2rem, 5vw, 2.5rem);
-                --text-h2: 1.25rem;
-                --text-body-lg: 1.125rem;
-            }
-        }
-
-        /* 4.2 Layout Adjustments */
-        @media (max-width: 767px) {
-            /* 100svh for Mobile Address Bar */
-            section {
-                min-height: 100svh;
-                padding: 80px 16px; /* Header space */
-            }
-
-            /* Header: Logo only on mobile default */
-            .header-nav { display: none; }
-            .header-logo { width: 100%; justify-content: center; }
-
-            /* Structure: Column Stack */
-            .structure-grid {
-                flex-direction: column;
-            }
-            .structure-card { max-width: 100%; flex: 1; }
-            .arrow-column {
-                padding: 10px;
-                flex-direction: row;
-                gap: 20px;
-                transform: rotate(90deg); /* Downwards */
-            }
-            .comparison-row { min-height: 60px; padding: 16px; font-size: var(--text-body); }
-
-            /* Nexus: Column Stack inside Card */
-            .nexus-content-grid {
-                grid-template-columns: 1fr;
-                gap: 16px;
-                text-align: center;
-            }
-            .nexus-connector {
-                transform: rotate(90deg);
-                padding: 10px 0;
-            }
-            .nexus-connect-line { display: none; } /* Remove complicated line on mobile */
-            
-            /* Nexus Card Connection (Simple Dotted Line) */
-            .nexus-wrapper::after {
-                content: "";
-                position: absolute;
-                left: 50%;
-                top: 0;
-                bottom: 0;
-                width: 2px;
-                border-left: 2px dotted var(--color-border);
-                z-index: 0;
-            }
-        }
-
-        /* 4.3 Tactile Physics (触りたくなる演出) */
-        @media (hover: none) {
-            /* Tap feedback (Scale down) */
-            .card:active, .nexus-card:active, .demo-placeholder:active {
-                transform: scale(0.97);
-                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            }
-            .cta-text:active {
-                transform: scale(0.95);
-                opacity: 0.8;
-            }
-            
-            /* Shimmer Effect on appear */
-            .structure-card::after, .nexus-card::after {
-                content: "";
-                position: absolute;
-                top: 0;
-                left: -100%;
-                width: 50%;
-                height: 100%;
-                background: linear-gradient(
-                    to right,
-                    transparent 0%,
-                    rgba(255, 255, 255, 0.4) 50%,
-                    transparent 100%
-                );
-                transform: skewX(-25deg);
-                pointer-events: none;
-            }
-            
-            .visible .structure-card::after, 
-            .visible .nexus-card::after {
-                animation: shimmer 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-                animation-delay: 0.5s;
-            }
-        }
-
-        @keyframes shimmer {
-            0% { left: -100%; }
-            100% { left: 200%; }
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
-        }
-
-        /* =========================================
-           5. Animations (Intersection Observer)
-           ========================================= */
-        .fade-up {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity var(--duration-slow) var(--ease-smooth),
-                        transform var(--duration-slow) var(--ease-spring);
-        }
-        .fade-in {
-            opacity: 0;
-            transition: opacity var(--duration-slow) var(--ease-smooth);
-        }
-        .blur-in {
-            filter: blur(8px);
-            transition: filter var(--duration-slow) var(--ease-smooth);
-        }
-
-        .visible {
-            opacity: 1;
-            transform: translateY(0);
-            filter: blur(0);
-        }
-
-        /* Delays */
-        .delay-1 { transition-delay: 0.2s; }
-        .delay-2 { transition-delay: 0.4s; }
-        .delay-3 { transition-delay: 0.6s; }
-        .delay-4 { transition-delay: 0.8s; }
-        .delay-5 { transition-delay: 1.0s; }
-
-    </style>
+    /* ===== Section number indicators ===== */
+    .section__number {
+      position: absolute;
+      top: calc(56px + var(--space-md));
+      right: var(--content-padding);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--color-accent);
+      opacity: 0.4;
+      letter-spacing: 0.08em;
+      z-index: 1;
+    }
+    .section--dark .section__number { color: var(--color-accent-light); }
+  </style>
 </head>
 <body>
+  <a href="#main-content" class="skip-link">本文へスキップ</a>
 
-    <!-- Header (Fixed, Frosted) -->
-    <header>
-        <div class="header-logo">
-            <!-- SVG Placeholder Logo -->
-            <svg width="28" height="28" viewBox="0 0 24 24">
-                <rect x="2" y="2" width="9" height="9" fill="#2A5A8C" rx="2"/>
-                <rect x="13" y="2" width="9" height="9" fill="#1B3A5C" rx="2"/>
-                <rect x="2" y="13" width="9" height="9" fill="#1B3A5C" rx="2"/>
-                <rect x="13" y="13" width="9" height="9" fill="#0F2640" rx="2"/>
-            </svg>
-            dbSheet
-        </div>
-        <nav class="header-nav">
-            <a href="#section-nin" class="pill-nav" data-target="section-nin">認</a>
-            <a href="#section-kouzou" class="pill-nav" data-target="section-kouzou">構造</a>
-            <a href="#section-en" class="pill-nav" data-target="section-en">縁</a>
-            <a href="#section-demo" class="pill-nav" data-target="section-demo">デモ</a>
-            <a href="#section-taiken" class="pill-nav" data-target="section-taiken">体験</a>
-        </nav>
-    </header>
+  <!-- SVG Sprites (hidden) -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9"/>
+    </symbol>
+    <symbol id="icon-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="5" y1="12" x2="19" y2="12"/>
+      <polyline points="12 5 19 12 12 19"/>
+    </symbol>
+    <symbol id="icon-wave" viewBox="0 0 36 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <path d="M2 12c3-6 6-6 9 0s6 6 9 0 6-6 9 0"/>
+    </symbol>
+    <symbol id="icon-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+    </symbol>
+    <symbol id="icon-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+      <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+    </symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 6 9 17 4 12"/>
+    </symbol>
+    <symbol id="icon-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+    </symbol>
+    <symbol id="icon-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/>
+    </symbol>
+    <symbol id="icon-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/>
+    </symbol>
+    <symbol id="icon-cpu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/>
+    </symbol>
+  </svg>
 
-    <!-- Scroll Progress -->
-    <div class="scroll-progress" id="scroll-progress"></div>
+  <header class="header" role="banner">
+    <div class="header__logo">
+      <span class="header__logo-accent">db</span>Sheet
+    </div>
+    <nav class="header__nav" aria-label="セクションナビゲーション">
+      <a href="#section-1-nin" class="nav__link" data-nav="1">認<span class="nav__shortcut">1</span></a>
+      <a href="#section-2-market" class="nav__link" data-nav="2">構造<span class="nav__shortcut">2-3</span></a>
+      <a href="#section-4-non-substitution" class="nav__link" data-nav="4">宣言<span class="nav__shortcut">4-5</span></a>
+      <a href="#section-6-core-value" class="nav__link" data-nav="6">核心<span class="nav__shortcut">6-7</span></a>
+      <a href="#section-8-excel-ai" class="nav__link" data-nav="8">展望<span class="nav__shortcut">8-9</span></a>
+    </nav>
+  </header>
 
-    <!-- Section 1: 認 (Recognition) -->
-    <section id="section-nin">
-        <div class="container">
-            <h1 class="hero-title fade-up blur-in">
-                Excel、まだ<br>
-                <span class="highlight-accent">"捨てる側"</span>だと思っていませんか？
-            </h1>
-            <p class="hero-sub fade-up delay-2">
-                AI時代に最初に捨てるべきものではなく、<br>
-                最後まで残る "思考のインターフェイス"
-            </p>
-        </div>
-        <div class="scroll-hint fade-in delay-5">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-        </div>
+  <main id="main-content">
+
+    <!-- ===== Section 1: 認 ===== -->
+    <section id="section-1-nin" class="section section--dark section--snap" aria-labelledby="heading-nin">
+      <span class="section__number">01 / 09</span>
+      <div class="section__inner" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;">
+        <p class="hero__section-label animate-in--blur">① 認 — 未確定だが存在している</p>
+        <h1 id="heading-nin" class="hero__main-copy animate-in--blur" style="transition-delay:0.2s;">
+          Excel、まだ<span class="hero__accent">"捨てる側"</span>だと<br>思っていませんか？
+        </h1>
+        <p class="hero__sub-copy animate-in" style="transition-delay:0.7s;">
+          AI時代に最初に捨てるべきものではなく、<br>最後まで残る"思考のインターフェイス"
+        </p>
+      </div>
+      <div class="hero__scroll-hint animate-in" style="transition-delay:1.4s;">
+        <span class="hero__scroll-text">scroll</span>
+        <svg class="hero__chevron"><use href="#icon-chevron-down"/></svg>
+      </div>
     </section>
 
-    <!-- Section 2: 構造 (Structure) -->
-    <section id="section-kouzou">
-        <div class="container">
-            <h2 class="section-title fade-up">
-                "脱Excel"ではなく<br>
-                <span class="highlight-primary">"脱・固定業務"</span>
-            </h2>
-
-            <div class="structure-grid">
-                <!-- Before Card -->
-                <div class="card structure-card fade-up delay-1">
-                    <div class="card-header bg-before">Before</div>
-                    <div class="card-body">
-                        <div class="comparison-row">仮説立て</div>
-                        <div class="comparison-row">業務判断</div>
-                        <div class="comparison-row">曖昧な条件</div>
-                    </div>
-                </div>
-
-                <!-- Arrows -->
-                <div class="arrow-column fade-in delay-2">
-                    <svg width="32" height="32" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <svg width="32" height="32" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <svg width="32" height="32" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div>
-
-                <!-- After Card -->
-                <div class="card structure-card after fade-up delay-3">
-                    <div class="card-header bg-after">After (dbSheet)</div>
-                    <div class="card-body">
-                        <div class="comparison-row"><strong>思考の自由</strong></div>
-                        <div class="comparison-row"><strong>データの蓄積</strong></div>
-                        <div class="comparison-row"><strong>改善の循環</strong></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="key-message fade-up delay-4">
-                <p>「操作は変わらない。構造だけが変わる。」</p>
-                <span style="font-size: var(--text-caption); color: var(--color-text-secondary);">
-                    Excelの自由さを活かしたまま、データの蓄積・共有・改善サイクルを実現
-                </span>
-            </div>
+    <!-- ===== Section 2: 思 — 市場構造 ===== -->
+    <section id="section-2-market" class="section section--light section--snap" aria-labelledby="heading-market" data-concept="市場三層">
+      <span class="section__number">02 / 09</span>
+      <div class="section__inner">
+        <span class="section__label animate-in">② 思 — 構造の内部</span>
+        <h2 id="heading-market" class="section__title animate-in">
+          業界構造の<span class="section__title--primary">三層</span>
+        </h2>
+        <p class="section__summary animate-in">AIにより開発速度は加速し、SaaSは高機能化した。しかし業務は整理されず、判断は構造化されず、改善は蓄積されていない。</p>
+        <div class="layers">
+          <div class="layer-card animate-in" style="transition-delay:0.3s;">
+            <div class="layer-card__number">① ERP・基幹層</div>
+            <div class="layer-card__title">SAP / Oracle</div>
+            <div class="layer-card__products">フルスクラッチ基幹</div>
+            <div class="layer-card__traits">高額・重い・全体最適志向<br>変更コストが高い</div>
+          </div>
+          <div class="layer-card animate-in" style="transition-delay:0.5s;">
+            <div class="layer-card__number">② SaaS特化層</div>
+            <div class="layer-card__title">Salesforce / kintone</div>
+            <div class="layer-card__products">業務特化クラウド</div>
+            <div class="layer-card__traits">速い・パッケージ前提<br>業務を型に合わせる</div>
+          </div>
+          <div class="layer-card animate-in" style="transition-delay:0.7s;">
+            <div class="layer-card__number">③ 現場Excel層</div>
+            <div class="layer-card__title">Excel / Access</div>
+            <div class="layer-card__products">個人管理ファイル</div>
+            <div class="layer-card__traits">柔軟・速い・属人化<br>組織に残らない</div>
+          </div>
         </div>
+      </div>
     </section>
 
-    <!-- Section 3: 縁 (Nexus) -->
-    <section id="section-en">
-        <div class="container">
-            <h2 class="section-title fade-up">dbSheetがつなぐ、3つの<span class="highlight-accent">"縁"</span></h2>
-            
-            <div class="nexus-wrapper">
-                <div class="nexus-connect-line"></div>
+    <!-- ===== Section 3: 思 — 立ち位置 ===== -->
+    <section id="section-3-position" class="section section--muted section--snap" aria-labelledby="heading-position" data-concept="立ち位置">
+      <span class="section__number">03 / 09</span>
+      <div class="section__inner">
+        <span class="section__label animate-in">② 思 → ③ 鳴</span>
+        <h2 id="heading-position" class="section__title animate-in">
+          <span class="section__title--accent">"脱Excel"</span>ではなく<span class="section__title--primary">"脱・固定業務"</span>
+        </h2>
+        <p class="section__summary animate-in">dbSheetは①でも②でもない。③現場層と②SaaS層の間に存在する。</p>
 
-                <!-- 1. 第一縁: 現場のツール -->
-                <div class="nexus-card fade-up delay-1">
-                    <div class="nexus-header-row">
-                        <span class="nexus-num">第一縁</span>
-                        <span class="nexus-title">現場が止まらない</span>
-                    </div>
-                    <div class="nexus-content-grid">
-                        <div class="nexus-col nexus-before">
-                            Excelが孤立し、入力が最新でも共有されない
-                        </div>
-                        <div class="nexus-connector">
-                            <svg width="48" height="24" viewBox="0 0 48 24" stroke="currentColor" fill="none" stroke-width="2">
-                                <path d="M2 12 C12 12, 12 2, 24 12 C36 22, 36 12, 46 12" />
-                            </svg>
-                        </div>
-                        <div class="nexus-col nexus-after">
-                            DB接続により常に最新・整合性のあるデータで判断できる
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 2. 第二縁: 社内の中央と現場 -->
-                <div class="nexus-card fade-up delay-2">
-                    <div class="nexus-header-row">
-                        <span class="nexus-num">第二縁</span>
-                        <span class="nexus-title">現場と経営がつながる</span>
-                    </div>
-                    <div class="nexus-content-grid">
-                        <div class="nexus-col nexus-before">
-                            現場の柔軟性と経営の統制が対立する
-                        </div>
-                        <div class="nexus-connector">
-                            <svg width="48" height="24" viewBox="0 0 48 24" stroke="currentColor" fill="none" stroke-width="2">
-                                <path d="M2 12 C12 12, 12 2, 24 12 C36 22, 36 12, 46 12" />
-                            </svg>
-                        </div>
-                        <div class="nexus-col nexus-after">
-                            現場には使いやすいツール、経営には正確なDBとして同居
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 3. 第三縁: 対クライアント -->
-                <div class="nexus-card fade-up delay-3">
-                    <div class="nexus-header-row">
-                        <span class="nexus-num">第三縁</span>
-                        <span class="nexus-title">変化に強い会社になる</span>
-                    </div>
-                    <div class="nexus-content-grid">
-                        <div class="nexus-col nexus-before">
-                            内部が固定化し、外部の変化に対応できない
-                        </div>
-                        <div class="nexus-connector">
-                            <svg width="48" height="24" viewBox="0 0 48 24" stroke="currentColor" fill="none" stroke-width="2">
-                                <path d="M2 12 C12 12, 12 2, 24 12 C36 22, 36 12, 46 12" />
-                            </svg>
-                        </div>
-                        <div class="nexus-col nexus-after">
-                            内部循環を武器に、固まっていない外部要望にも即応答できる
-                        </div>
-                    </div>
-                </div>
+        <div class="ba-container">
+          <div class="ba-card animate-in--left" style="transition-delay:0.3s;">
+            <div class="ba-card__header ba-card__header--before">Before — Excel単体</div>
+            <div class="ba-card__body ba-card__body--before">
+              <div class="ba-row ba-row--before">思考・入力・試行錯誤</div>
+              <div class="ba-row ba-row--before">データは個人に閉じる</div>
+              <div class="ba-row ba-row--before">判断が組織に残らない</div>
             </div>
-
-            <div class="key-message fade-up delay-5">
-                <p>この循環が、企業の <span class="highlight-accent">"変化耐性"</span> になる。</p>
+          </div>
+          <div class="ba-arrow-col">
+            <svg class="ba-arrow-icon animate-in--scale" style="transition-delay:0.7s;"><use href="#icon-arrow-right"/></svg>
+            <svg class="ba-arrow-icon animate-in--scale" style="transition-delay:0.9s;"><use href="#icon-arrow-right"/></svg>
+            <svg class="ba-arrow-icon animate-in--scale" style="transition-delay:1.1s;"><use href="#icon-arrow-right"/></svg>
+          </div>
+          <div class="ba-card ba-card--after animate-in--right" style="transition-delay:0.5s;">
+            <div class="ba-card__header ba-card__header--after">After — dbSheet連携</div>
+            <div class="ba-card__body ba-card__body--after">
+              <div class="ba-row ba-row--after">思考はそのまま</div>
+              <div class="ba-row ba-row--after">データが蓄積・循環する</div>
+              <div class="ba-row ba-row--after">判断が経営資産になる</div>
             </div>
+          </div>
         </div>
+
+        <div class="ba-message animate-in" style="transition-delay:1.3s;">
+          <p class="ba-message__main">操作は変わらない。構造だけが変わる。</p>
+          <p class="ba-message__sub">Excelの自由さを活かしたまま、データの蓄積・共有・改善サイクルを実現</p>
+        </div>
+      </div>
     </section>
 
-    <!-- Section 4: CTA (Speech Context) -->
-    <section id="section-demo">
-        <div class="container">
-            <h2 class="hero-title fade-up blur-in">百聞は一見にしかず。</h2>
-            <div class="cta-text fade-up delay-2">今すぐ、デモで体感</div>
-            <p class="hero-sub fade-up delay-3" style="opacity: 0.7;">
-                お近くのスタッフにお声がけください
-            </p>
-            
-            <div style="margin-top: 64px; border-top: 1px solid rgba(255,255,255,0.15); width: 100px;"></div>
-            
-            <div class="fade-in delay-4" style="margin-top: 32px; opacity: 0.5;">
-                <p class="logo-placeholder">dbSheet</p>
-                <p style="font-size: 0.9rem; margin-top:8px;">業務を変え続けるための基盤</p>
-                <p style="font-size: 0.8rem; margin-top:4px;">株式会社NEWCOM</p>
+    <!-- ===== Section 4: 鳴 — 非代替宣言 ===== -->
+    <section id="section-4-non-substitution" class="section section--light section--snap" aria-labelledby="heading-nonsub" data-concept="非代替宣言">
+      <span class="section__number">04 / 09</span>
+      <div class="section__inner">
+        <span class="section__label animate-in">③ 鳴 — 成形された構造</span>
+        <h2 id="heading-nonsub" class="section__title animate-in">
+          競争<span class="section__title--accent">しない</span>宣言
+        </h2>
+        <p class="section__summary animate-in">dbSheetは、既存の大手製品の代替ではない。戦う場所が違う。</p>
+
+        <div class="non-sub">
+          <div class="non-sub__cards">
+            <div class="non-sub__card animate-in" style="transition-delay:0.3s;">
+              <svg class="non-sub__x"><use href="#icon-x"/></svg>
+              <div class="non-sub__product">SAP</div>
+              <div class="non-sub__label">の代替ではない</div>
             </div>
+            <div class="non-sub__card animate-in" style="transition-delay:0.5s;">
+              <svg class="non-sub__x"><use href="#icon-x"/></svg>
+              <div class="non-sub__product">Salesforce</div>
+              <div class="non-sub__label">の代替ではない</div>
+            </div>
+            <div class="non-sub__card animate-in" style="transition-delay:0.7s;">
+              <svg class="non-sub__x"><use href="#icon-x"/></svg>
+              <div class="non-sub__product">kintone</div>
+              <div class="non-sub__label">の代替ではない</div>
+            </div>
+          </div>
+          <p class="non-sub__message animate-in" style="transition-delay:0.9s;">
+            dbSheetは、現場Excel層とSaaS特化層の<span class="text-accent">間</span>に存在する
+          </p>
         </div>
+      </div>
     </section>
 
-    <!-- Section 5: 体験 (Click Demo Placeholder) -->
-    <section id="section-taiken">
-        <div class="container">
-            <h2 class="section-title fade-up">触れて、体感する。</h2>
-            
-            <!-- Click Demo Area -->
-            <div class="demo-placeholder fade-up delay-2" id="demo-area">
-                <div class="demo-icon">
-                    <!-- Touch Icon -->
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M9 11.24V7.5C9 6.12 10.12 5 11.5 5S14 6.12 14 7.5v3.74c1.21-.81 2-2.18 2-3.74C16 5.01 13.99 3 11.5 3S7 5.01 7 7.5c0 1.56.79 2.93 2 3.74zM11.5 13c-3.03 0-5.5 2.47-5.5 5.5v.5h11v-.5c0-3.03-2.47-5.5-5.5-5.5z"/>
-                    </svg>
-                </div>
-                <h3 style="margin-bottom: 8px;">Click Experience Zone</h3>
-                <p>ここに実際のクリックデモコンテンツが表示されます</p>
-                <div style="margin-top: 24px;">
-                    <button style="padding: 12px 24px; border: none; background: var(--color-primary); color: white; border-radius: 8px; cursor: pointer; font-family:inherit;">
-                        Start Demo (Test)
-                    </button>
-                </div>
-            </div>
+    <!-- ===== Section 5: 鳴 — 本当の競合 ===== -->
+    <section id="section-5-true-competitor" class="section section--muted section--snap" aria-labelledby="heading-competitor" data-concept="本当の競合">
+      <span class="section__number">05 / 09</span>
+      <div class="section__inner">
+        <span class="section__label animate-in">③ 鳴</span>
+        <h2 id="heading-competitor" class="section__title animate-in">
+          本当の<span class="section__title--accent">競合</span>
+        </h2>
+        <p class="section__summary animate-in">dbSheetが戦う相手は、他社製品ではない。企業の内部に潜む構造的課題である。</p>
 
-            <p class="fade-in delay-3" style="margin-top: 32px; color: var(--color-text-secondary); font-size: 0.9rem;">
-                ※ 体験後、お気軽にスタッフへお声がけください
-            </p>
+        <div class="competitors">
+          <div class="competitor-card animate-in" style="transition-delay:0.3s;">
+            <svg class="competitor-card__icon"><use href="#icon-alert"/></svg>
+            <div class="competitor-card__text">放置されたExcel</div>
+          </div>
+          <div class="competitor-card animate-in" style="transition-delay:0.5s;">
+            <svg class="competitor-card__icon"><use href="#icon-alert"/></svg>
+            <div class="competitor-card__text">部署ごとの分断</div>
+          </div>
+          <div class="competitor-card animate-in" style="transition-delay:0.7s;">
+            <svg class="competitor-card__icon"><use href="#icon-alert"/></svg>
+            <div class="competitor-card__text">変えられない業務</div>
+          </div>
+          <div class="competitor-card animate-in" style="transition-delay:0.9s;">
+            <svg class="competitor-card__icon"><use href="#icon-alert"/></svg>
+            <div class="competitor-card__text">AIを活かせない状態</div>
+          </div>
         </div>
+      </div>
     </section>
 
-    <!-- JavaScript (実装基本設定.md 準拠) -->
-    <script>
-        (function() {
-            // DOMContentLoaded
-            document.addEventListener('DOMContentLoaded', () => {
-                
-                // 1. Intersection Observer for Animations
-                const observerOptions = {
-                    root: null,
-                    rootMargin: '0px',
-                    threshold: 0.15
-                };
+    <!-- ===== Section 6: 鳴 — 核心価値 ===== -->
+    <section id="section-6-core-value" class="section section--light section--snap" aria-labelledby="heading-core" data-concept="核心価値">
+      <span class="section__number">06 / 09</span>
+      <div class="section__inner">
+        <span class="section__label animate-in">③ 鳴 — 核心の成形</span>
+        <h2 id="heading-core" class="section__title animate-in">
+          dbSheetの<span class="section__title--accent">核心価値</span>
+        </h2>
 
-                const observer = new IntersectionObserver((entries, obs) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('visible');
-                            obs.unobserve(entry.target); // Play once
-                        }
-                    });
-                }, observerOptions);
+        <div class="core-values">
+          <div class="core-value-row animate-in" style="transition-delay:0.3s;">
+            <div class="core-value__not"><span>脱Excelではない</span></div>
+            <svg class="core-value__arrow"><use href="#icon-arrow-right"/></svg>
+            <div class="core-value__is">脱・固定業務</div>
+          </div>
+          <div class="core-value-row animate-in" style="transition-delay:0.5s;">
+            <div class="core-value__not"><span>IT刷新ではない</span></div>
+            <svg class="core-value__arrow"><use href="#icon-arrow-right"/></svg>
+            <div class="core-value__is">変化耐性の獲得</div>
+          </div>
+          <div class="core-value-row animate-in" style="transition-delay:0.7s;">
+            <div class="core-value__not"><span>ツール導入ではない</span></div>
+            <svg class="core-value__arrow"><use href="#icon-arrow-right"/></svg>
+            <div class="core-value__is">経営リスクの低減</div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-                const animatedElements = document.querySelectorAll('.fade-up, .fade-in, .blur-in, .structure-card, .nexus-card');
-                animatedElements.forEach(el => observer.observe(el));
+    <!-- ===== Section 7: 鳴 — 経営リスク ===== -->
+    <section id="section-7-management-risk" class="section section--muted section--snap" aria-labelledby="heading-risk" data-concept="経営リスク">
+      <span class="section__number">07 / 09</span>
+      <div class="section__inner">
+        <span class="section__label animate-in">③ 鳴</span>
+        <h2 id="heading-risk" class="section__title animate-in">
+          <span class="section__title--accent">経営リスク</span>とは何か
+        </h2>
+        <p class="section__summary animate-in">Excelを使っていることが問題なのではない。思考・判断が個人で止まり、組織資産になっていないことが問題である。</p>
 
-                // 2. Navigation Active State
-                const navLinks = document.querySelectorAll('.pill-nav');
-                const sections = document.querySelectorAll('section');
+        <div class="risks">
+          <div class="risk-item animate-in" style="transition-delay:0.3s;">
+            <svg class="risk-item__icon"><use href="#icon-lock"/></svg>
+            <div class="risk-item__content">
+              <div class="risk-item__title">業務が変えられなくなるリスク</div>
+              <div class="risk-item__desc">業務プロセスが固定化し、環境変化に対応できない状態</div>
+            </div>
+          </div>
+          <div class="risk-item animate-in" style="transition-delay:0.5s;">
+            <svg class="risk-item__icon"><use href="#icon-alert"/></svg>
+            <div class="risk-item__content">
+              <div class="risk-item__title">現場判断が属人化するリスク</div>
+              <div class="risk-item__desc">判断が個人に依存し、会議で消え、組織に残らない状態</div>
+            </div>
+          </div>
+          <div class="risk-item animate-in" style="transition-delay:0.7s;">
+            <svg class="risk-item__icon"><use href="#icon-refresh"/></svg>
+            <div class="risk-item__content">
+              <div class="risk-item__title">改善が循環しないリスク</div>
+              <div class="risk-item__desc">改善が仕組みに戻らず、同じ課題が繰り返される状態</div>
+            </div>
+          </div>
+          <div class="risk-item animate-in" style="transition-delay:0.9s;">
+            <svg class="risk-item__icon"><use href="#icon-cpu"/></svg>
+            <div class="risk-item__content">
+              <div class="risk-item__title">AI導入が成果に繋がらないリスク</div>
+              <div class="risk-item__desc">AIは整った業務を速くするが、整っていない業務は整えない</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-                const navObserver = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            const id = entry.target.getAttribute('id');
-                            navLinks.forEach(link => {
-                                // Toggle active class based on data-target match
-                                if (link.dataset.target === id) {
-                                    link.classList.add('active');
-                                } else {
-                                    link.classList.remove('active');
-                                }
-                            });
-                        }
-                    });
-                }, { threshold: 0.5 });
+    <!-- ===== Section 8: 示 — Excel × AI ===== -->
+    <section id="section-8-excel-ai" class="section section--dark section--snap" aria-labelledby="heading-excelai" data-concept="Excel×AI">
+      <span class="section__number">08 / 09</span>
+      <div class="section__inner">
+        <span class="section__label animate-in" style="color:var(--color-accent-light);">④ 示 — 外部への指向</span>
+        <h2 id="heading-excelai" class="section__title animate-in" style="color:var(--color-text-inverse);">
+          Excel × AI の<span class="text-accent">関係</span>
+        </h2>
+        <p class="section__summary animate-in">両者は競合ではない。役割が異なる。</p>
 
-                sections.forEach(section => navObserver.observe(section));
+        <div class="excel-ai">
+          <div class="excel-ai__grid">
+            <div class="excel-ai__column excel-ai__column--excel animate-in--left" style="transition-delay:0.3s;">
+              <div class="excel-ai__column-title"><span>Excel</span>が強い領域</div>
+              <div class="excel-ai__item"><span class="excel-ai__item-dot"></span>仮説構築</div>
+              <div class="excel-ai__item"><span class="excel-ai__item-dot"></span>条件変更</div>
+              <div class="excel-ai__item"><span class="excel-ai__item-dot"></span>判断途中経過</div>
+              <div class="excel-ai__item"><span class="excel-ai__item-dot"></span>曖昧な業務設計</div>
+            </div>
+            <div class="excel-ai__bridge animate-in--scale" style="transition-delay:0.5s;">
+              <svg width="36" height="24" style="color:var(--color-accent);margin:0 auto;"><use href="#icon-wave"/></svg>
+            </div>
+            <div class="excel-ai__column excel-ai__column--ai animate-in--right" style="transition-delay:0.3s;">
+              <div class="excel-ai__column-title"><span>AI</span>が強い領域</div>
+              <div class="excel-ai__item"><span class="excel-ai__item-dot"></span>パターン抽出</div>
+              <div class="excel-ai__item"><span class="excel-ai__item-dot"></span>大量処理</div>
+              <div class="excel-ai__item"><span class="excel-ai__item-dot"></span>要約</div>
+              <div class="excel-ai__item"><span class="excel-ai__item-dot"></span>抽象化</div>
+            </div>
+          </div>
+          <div class="excel-ai__bridge animate-in" style="transition-delay:0.7s;">
+            <p class="excel-ai__bridge-text">dbSheetは両者を繋ぐ基盤である</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-                // 3. Scroll Progress Bar
-                const progressBar = document.getElementById('scroll-progress');
-                
-                const updateProgress = () => {
-                    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-                    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                    const scrolled = (winScroll / height) * 100;
-                    if(progressBar) progressBar.style.width = scrolled + "%";
-                };
+    <!-- ===== Section 9: 示 — 最終メッセージ ===== -->
+    <section id="section-9-final-message" class="section section--dark section--snap" aria-labelledby="heading-final">
+      <span class="section__number">09 / 09</span>
+      <div class="section__inner">
+        <div class="final">
+          <p class="hero__section-label animate-in--blur" style="margin-bottom:var(--space-md);">⑬ 継 → 次の ① 認</p>
+          <h2 id="heading-final" class="final__main animate-in--blur" style="transition-delay:0.2s;">
+            百聞は一見にしかず。
+          </h2>
+          <p class="final__cta animate-in--scale" style="transition-delay:0.5s;">今すぐ、デモで体感</p>
+          <p class="final__sub animate-in" style="transition-delay:0.8s;">お近くのスタッフにお声がけください</p>
+          <div class="final__divider animate-in" style="transition-delay:1.0s;"></div>
+          <p class="final__tagline animate-in" style="transition-delay:1.1s;">dbSheet — 業務を変え続けるための基盤</p>
+          <p class="final__company animate-in" style="transition-delay:1.1s;">株式会社NEWCOM</p>
+        </div>
+      </div>
+    </section>
 
-                window.addEventListener('scroll', () => {
-                    // Simple debounce via requestAnimationFrame
-                    window.requestAnimationFrame(updateProgress);
-                }, { passive: true });
+  </main>
 
-                // 4. Keyboard Shortcuts (1-5) - Staff Operation
-                document.addEventListener('keydown', (e) => {
-                    // Check if input/textarea is not focused
-                    if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+  <footer class="footer">
+    &copy; 株式会社NEWCOM. All rights reserved.
+  </footer>
 
-                    const map = { 
-                        '1': 'section-nin', 
-                        '2': 'section-kouzou', 
-                        '3': 'section-en', 
-                        '4': 'section-demo', 
-                        '5': 'section-taiken' 
-                    };
-                    
-                    if (map[e.key]) {
-                        const el = document.getElementById(map[e.key]);
-                        if (el) el.scrollIntoView({ behavior: 'smooth' });
-                    }
-                });
-                
-                // 5. Placeholder Interaction (Simple JS Toggle)
-                const demoArea = document.getElementById('demo-area');
-                const demoBtn = demoArea.querySelector('button');
-                
-                if(demoBtn) {
-                    demoBtn.addEventListener('click', (e) => {
-                        e.stopPropagation(); // prevent card active effect
-                        demoArea.style.backgroundColor = 'var(--color-bg-white)';
-                        demoArea.innerHTML = `
-                            <div style="text-align:center; animation: fade-in 0.5s;">
-                                <svg width="64" height="64" viewBox="0 0 24 24" fill="var(--color-accent)" style="margin:0 auto 16px;">
-                                    <path d="M12 2C6.48 2 2 6.48 2 12s4-6 10-6 10 6 10 6 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                                </svg>
-                                <h3 style="color:var(--color-primary);">体験モード起動</h3>
-                                <p style="color:var(--color-text-secondary); margin-top:8px;">
-                                    実際の製品デモがここに展開されます。<br>
-                                    (iframe / WebApp container)
-                                </p>
-                            </div>
-                        `;
-                    });
-                }
+  <script>
+  (function() {
+    'use strict';
+
+    var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // ===== Intersection Observer: Scroll Animations =====
+    if ('IntersectionObserver' in window && !prefersReducedMotion) {
+      var animateElements = document.querySelectorAll('.animate-in, .animate-in--left, .animate-in--right, .animate-in--scale, .animate-in--blur');
+      var animObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            var el = entry.target;
+            var delay = el.style.transitionDelay || '0s';
+            el.style.transitionDelay = delay;
+            el.classList.add('is-visible');
+            animObserver.unobserve(el);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+      animateElements.forEach(function(el) { animObserver.observe(el); });
+    } else {
+      // No animations: show everything
+      document.querySelectorAll('.animate-in, .animate-in--left, .animate-in--right, .animate-in--scale, .animate-in--blur').forEach(function(el) {
+        el.classList.add('is-visible');
+        el.style.transitionDuration = '0s';
+      });
+    }
+
+    // ===== Navigation: Active State =====
+    var sections = document.querySelectorAll('section[id]');
+    var navLinks = document.querySelectorAll('.nav__link');
+    var navMap = {
+      'section-1-nin': '1',
+      'section-2-market': '2',
+      'section-3-position': '2',
+      'section-4-non-substitution': '4',
+      'section-5-true-competitor': '4',
+      'section-6-core-value': '6',
+      'section-7-management-risk': '6',
+      'section-8-excel-ai': '8',
+      'section-9-final-message': '8'
+    };
+
+    if ('IntersectionObserver' in window) {
+      var navObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            var navId = navMap[entry.target.id];
+            navLinks.forEach(function(link) {
+              link.classList.toggle('nav__link--active', link.getAttribute('data-nav') === navId);
             });
-        })();
-    </script>
+          }
+        });
+      }, { threshold: 0.3 });
+
+      sections.forEach(function(section) { navObserver.observe(section); });
+    }
+
+    // ===== Keyboard Shortcuts =====
+    var sectionIds = [
+      'section-1-nin',
+      'section-2-market',
+      'section-3-position',
+      'section-4-non-substitution',
+      'section-5-true-competitor',
+      'section-6-core-value',
+      'section-7-management-risk',
+      'section-8-excel-ai',
+      'section-9-final-message'
+    ];
+
+    // Only enable shortcuts on desktop (keyboard likely present)
+    if (window.matchMedia('(min-width: 768px)').matches) {
+      document.addEventListener('keydown', function(e) {
+        // Ignore if user is typing in an input
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+        var num = parseInt(e.key, 10);
+        if (num >= 1 && num <= 9) {
+          e.preventDefault();
+          var target = document.getElementById(sectionIds[num - 1]);
+          if (target) {
+            target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+          }
+        }
+      });
+    }
+
+    // ===== Smooth scroll for nav links =====
+    navLinks.forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        var href = link.getAttribute('href');
+        var target = document.querySelector(href);
+        if (target) {
+          target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+        }
+      });
+    });
+
+    // ===== Performance: will-change management =====
+    if ('IntersectionObserver' in window && !prefersReducedMotion) {
+      var perfObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.style.willChange = 'transform, opacity';
+          } else {
+            entry.target.style.willChange = 'auto';
+          }
+        });
+      }, { rootMargin: '200px 0px' });
+
+      document.querySelectorAll('.section').forEach(function(s) { perfObserver.observe(s); });
+    }
+
+    // ===== Low-performance device detection =====
+    if (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2) {
+      document.documentElement.style.setProperty('--duration-slow', '0.2s');
+      document.documentElement.style.setProperty('--duration-normal', '0.15s');
+      document.documentElement.style.setProperty('--duration-fast', '0.1s');
+    }
+
+  })();
+  </script>
 </body>
 </html>
-```
