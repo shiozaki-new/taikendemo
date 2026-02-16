@@ -94,6 +94,34 @@
     .excel-sheets{display:flex; align-items:center; gap:8px}
     .sheet{padding:4px 10px; border:1px solid var(--excel-border); border-bottom:2px solid var(--excel-green); border-radius:6px 6px 0 0; background:#fff; font-weight:600}
     .excel-ready{color:#666; font-size:12px}
+
+    /* ===== Left navigation pane (tree) ===== */
+    .excel-workarea{display:grid; grid-template-columns:260px 1fr; gap:0; min-height:420px; border-top:1px solid var(--excel-border)}
+    .nav-pane{background:#f2f5f8; border-right:1px solid var(--excel-border); overflow:auto}
+    .nav-header{display:flex; align-items:center; justify-content:space-between; padding:8px 10px; font-weight:600; color:#334}
+    .tree{list-style:none; padding:6px 8px}
+    .tree li{padding:6px 6px; border-radius:6px; color:#222}
+    .tree li:hover{background:#e7eef7}
+    .tree .muted{color:#667}
+    .tree .indent{padding-left:14px}
+
+    /* ===== Zoom (status bar) ===== */
+    .zoom{display:flex; align-items:center; gap:8px}
+    .zoom input[type=range]{appearance:none; width:120px; height:4px; background:#ddd; border-radius:999px; outline:none}
+    .zoom input[type=range]::-webkit-slider-thumb{appearance:none; width:14px; height:14px; border-radius:50%; background:#3a7; border:2px solid #fff; box-shadow:0 0 0 1px #3a7}
+    .zoom-val{min-width:44px; text-align:right; color:#444; font-variant-numeric:tabular-nums}
+
+    /* canvas scaling for zoom (visual only) */
+    :root{ --zoom: 1 }
+    .excel-canvas{transform: scale(var(--zoom)); transform-origin: top left}
+    .canvas-wrap{width:100%; overflow:auto}
+
+    /* ===== Context menu (visual) ===== */
+    .ctx-menu{position:fixed; z-index:9999; background:#fff; border:1px solid rgba(0,0,0,.15); border-radius:8px; box-shadow:0 10px 28px rgba(0,0,0,.18); min-width:200px; padding:6px 6px; display:none}
+    .ctx-item{padding:8px 10px; border-radius:6px; display:flex; align-items:center; justify-content:space-between; color:#222}
+    .ctx-item:hover{background:#e7eef7}
+    .ctx-sep{height:1px; background:#e5e5e5; margin:6px 0}
+    .ctx-kbd{color:#667; font-size:11px}
   </style>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F2640'/%3E%3Ctext x='16' y='21' font-family='sans-serif' font-size='14' font-weight='700' fill='%23E8913A' text-anchor='middle'%3Ed%3C/text%3E%3C/svg%3E">
 </head>
@@ -149,30 +177,48 @@
               <span class="fx">fx</span>
               <input id="formulaInput" class="formula-input" aria-label="数式バー" placeholder="セルの内容">
             </div>
-            <div class="excel-grid">
-              <table class="excel-table" aria-label="体験用テーブル">
-                <thead>
-                  <tr>
-                    <th class="row-header"> </th>
-                    <th class="col-item">A</th>
-                    <th class="col-qty">B</th>
-                    <th class="col-price">C</th>
-                    <th class="col-amount">D</th>
-                    <th class="col-amount">E</th>
-                  </tr>
-                </thead>
-                <tbody id="tbody"></tbody>
-                <tfoot>
-                  <tr>
-                    <td class="row-header" style="text-align:right">Σ</td>
-                    <td colspan="4" style="text-align:right">合計</td>
-                    <td id="grandTotal">0</td>
-                  </tr>
-                </tfoot>
-              </table>
+            <div class="excel-workarea">
+              <aside class="nav-pane" aria-label="ナビゲーション">
+                <div class="nav-header">作業ウィンドウ<span class="muted">（ダミー）</span></div>
+                <ul class="tree" role="tree">
+                  <li role="treeitem">Top</li>
+                  <li role="treeitem">予算入力</li>
+                  <li role="treeitem">個人</li>
+                  <li role="treeitem">集計/ワークフロー</li>
+                  <li class="muted indent" role="treeitem">— 承認の待機</li>
+                  <li role="treeitem">案件進捗</li>
+                  <li role="treeitem">SFA連携</li>
+                  <li role="treeitem">メンテ</li>
+                </ul>
+              </aside>
+              <div class="excel-grid canvas-wrap">
+                <div class="excel-canvas">
+                  <table class="excel-table" aria-label="体験用テーブル">
+                    <thead>
+                      <tr>
+                        <th class="row-header"> </th>
+                        <th class="col-item">A</th>
+                        <th class="col-qty">B</th>
+                        <th class="col-price">C</th>
+                        <th class="col-amount">D</th>
+                        <th class="col-amount">E</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tbody"></tbody>
+                    <tfoot>
+                      <tr>
+                        <td class="row-header" style="text-align:right">Σ</td>
+                        <td colspan="4" style="text-align:right">合計</td>
+                        <td id="grandTotal">0</td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
             </div>
             <div class="excel-status">
               <div class="excel-sheets"><span class="sheet">Sheet1</span></div>
+              <div class="zoom"><span class="muted">ズーム</span><input id="zoomRange" type="range" min="50" max="200" value="100"><span id="zoomVal" class="zoom-val">100%</span></div>
               <div class="excel-ready">Ready</div>
             </div>
           </div>
@@ -213,6 +259,7 @@
     var syncDot = document.getElementById('syncDot');
     var syncText = document.getElementById('syncText');
     var toast = document.getElementById('toast');
+    var zoomRange = null, zoomVal = null;
 
     function yen(n){
       var v = Number(n||0);
@@ -343,6 +390,12 @@
       setTimeout(function(){ toast.classList.remove('show'); }, 1600);
     }
 
+    // visual zoom
+    function applyZoom(pct){
+      document.documentElement.style.setProperty('--zoom', (pct/100).toString());
+      if(zoomVal){ zoomVal.textContent = pct + '%'; }
+    }
+
     // events
     document.getElementById('saveBtn').addEventListener('click', save);
     document.getElementById('resetBtn').addEventListener('click', reset);
@@ -373,6 +426,18 @@
       }
     });
 
+    // context menu (visual only)
+    var ctx = document.createElement('div');
+    ctx.className = 'ctx-menu';
+    ctx.innerHTML = '\n  <div class="ctx-item">コピー<span class="ctx-kbd">Ctrl+C</span></div>\n  <div class="ctx-item">貼り付け<span class="ctx-kbd">Ctrl+V</span></div>\n  <div class="ctx-sep"></div>\n  <div class="ctx-item">行の挿入</div>\n  <div class="ctx-item">行の削除</div>\n  <div class="ctx-sep"></div>\n  <div class="ctx-item">セルの書式設定...</div>\n';
+    document.body.appendChild(ctx);
+    function showCtx(x,y){ ctx.style.left = x+'px'; ctx.style.top = y+'px'; ctx.style.display = 'block'; }
+    function hideCtx(){ ctx.style.display = 'none'; }
+    document.addEventListener('click', hideCtx);
+    document.querySelector('.canvas-wrap').addEventListener('contextmenu', function(e){
+      e.preventDefault(); showCtx(e.pageX, e.pageY);
+    });
+
     // tabs
     document.querySelectorAll('.tab').forEach(function(btn){
       btn.addEventListener('click', function(){
@@ -390,6 +455,14 @@
       catch(_){ renderFromData([]); }
     } else {
       renderFromData([]);
+    }
+
+    // init zoom controls after DOM is ready
+    zoomRange = document.getElementById('zoomRange');
+    zoomVal = document.getElementById('zoomVal');
+    if(zoomRange){
+      zoomRange.addEventListener('input', function(){ applyZoom(Number(zoomRange.value)||100); });
+      applyZoom(Number(zoomRange.value)||100);
     }
   })();
   </script>
