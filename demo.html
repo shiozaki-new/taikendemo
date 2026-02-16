@@ -30,11 +30,26 @@
     .btn{appearance:none;border:0;border-radius:10px;background:var(--color-primary);color:#fff;font-weight:600;padding:10px 14px;cursor:pointer}
     .btn--ghost{background:#fff;color:var(--color-primary);border:1px solid rgba(0,0,0,.1)}
     .btn--accent{background:var(--color-accent)}
+    /* table base */
+    .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:10px}
     table{width:100%;border-collapse:collapse;border:1px solid rgba(0,0,0,.08)}
-    th,td{border-bottom:1px solid rgba(0,0,0,.06);padding:10px 8px;text-align:left}
+    th,td{border-bottom:1px solid rgba(0,0,0,.06);padding:10px 8px;text-align:left;vertical-align:top}
     thead th{background:#F3F5F8;font-size:12px;color:#374151}
     tbody td[contenteditable="true"]{background:#fff8f1}
     tfoot td{font-weight:700}
+    /* responsive behavior on small screens: keep column widths and allow horizontal scroll */
+    table{table-layout:fixed}
+    th,td{white-space:nowrap}
+    .col-index{width:44px}
+    .col-item{min-width:180px;white-space:normal}
+    .col-qty{width:88px}
+    .col-price{width:120px}
+    .col-amount{width:120px}
+    td.col-qty, td.col-price, td.col-amount{text-align:right}
+    /* ensure a minimum total width so columns don't collapse on mobile */
+    @media(max-width: 767px){
+      table{min-width:560px}
+    }
     .muted{color:var(--text-2);font-size:12px}
     .status{display:flex;align-items:center;gap:8px}
     .dot{width:10px;height:10px;border-radius:50%;background:#bbb}
@@ -78,14 +93,15 @@
             </span>
           </div>
 
+          <div class="table-scroll">
           <table aria-label="体験用テーブル">
             <thead>
               <tr>
-                <th style="width:36px">#</th>
-                <th>品目</th>
-                <th style="width:100px">数量</th>
-                <th style="width:120px">単価 (¥)</th>
-                <th style="width:140px">金額 (¥)</th>
+                <th class="col-index">#</th>
+                <th class="col-item">品目</th>
+                <th class="col-qty">数量</th>
+                <th class="col-price">単価 (¥)</th>
+                <th class="col-amount">金額 (¥)</th>
               </tr>
             </thead>
             <tbody id="tbody"></tbody>
@@ -96,6 +112,7 @@
               </tr>
             </tfoot>
           </table>
+          </div>
           <p class="muted" style="margin-top:8px">セルは直接編集できます。数量と単価は数値、金額は自動計算。</p>
         </div>
       </div>
@@ -135,7 +152,7 @@
 
     function rowTemplate(i, data){
       var d = data || { item:'', qty:'', price:'', amount:0 };
-      return '\n<tr data-row="'+i+'">\n  <td>'+i+'</td>\n  <td contenteditable="true" data-k="item">'+escapeHtml(d.item)+'</td>\n  <td contenteditable="true" data-k="qty">'+escapeHtml(d.qty)+'</td>\n  <td contenteditable="true" data-k="price">'+escapeHtml(d.price)+'</td>\n  <td data-k="amount">'+yen(d.amount)+'</td>\n</tr>';
+      return '\n<tr data-row="'+i+'">\n  <td class="col-index">'+i+'</td>\n  <td class="col-item" contenteditable="true" data-k="item">'+escapeHtml(d.item)+'</td>\n  <td class="col-qty" contenteditable="true" data-k="qty">'+escapeHtml(d.qty)+'</td>\n  <td class="col-price" contenteditable="true" data-k="price">'+escapeHtml(d.price)+'</td>\n  <td class="col-amount" data-k="amount">'+yen(d.amount)+'</td>\n</tr>';
     }
 
     function escapeHtml(s){
@@ -245,4 +262,3 @@
   </script>
 </body>
 </html>
-
