@@ -62,6 +62,38 @@
     .toast.show{opacity:1;transform:none}
     footer{padding:24px 16px;text-align:center;color:var(--text-2)}
     a.btn-link{display:inline-block;text-decoration:none}
+
+    /* ===== Excel-like chrome ===== */
+    :root{ --excel-green:#107C41; --excel-green-dark:#0E6C39; --excel-border:#D6D6D6; --excel-grid:#E6E6E6; }
+    .excel-window{border:1px solid var(--excel-border); border-radius:8px; overflow:hidden; background:#fff; display:flex; flex-direction:column}
+    .excel-titlebar{display:flex; align-items:center; justify-content:space-between; gap:8px; background:var(--excel-green); color:#fff; padding:6px 10px}
+    .excel-titlebar .left{display:flex; align-items:center; gap:8px}
+    .excel-appdot{width:18px;height:18px;border-radius:4px;background:#0B5C32; display:inline-block}
+    .excel-title{font-weight:600}
+    .excel-window-controls{display:flex; gap:8px}
+    .excel-ctrl{width:10px;height:10px;border-radius:50%; background:rgba(255,255,255,.7)}
+    .excel-tabs{display:flex; gap:12px; background:#f4f6f8; border-bottom:1px solid var(--excel-border); padding:6px 10px}
+    .excel-tab{font-weight:600; color:#333}
+    .excel-tab.is-active{color:var(--excel-green)}
+    .excel-ribbon{display:flex; gap:16px; padding:8px 10px; border-bottom:1px solid var(--excel-border); background:#fff}
+    .rib-group{border-right:1px solid #eee; padding-right:12px}
+    .rib-title{font-size:10px; color:#666; margin-top:6px}
+    .excel-formula{display:flex; align-items:center; gap:8px; padding:6px 10px; border-bottom:1px solid var(--excel-border); background:#f8f9fb}
+    .name-box{width:64px; padding:6px 8px; border:1px solid var(--excel-border); border-radius:4px; background:#fff}
+    .fx{font-weight:700; color:#555}
+    .formula-input{flex:1; min-width:0; padding:6px 8px; border:1px solid var(--excel-border); border-radius:4px; background:#fff}
+    .excel-grid{overflow:auto; background:#fff}
+    .excel-table{width:100%; border-collapse:separate; border-spacing:0}
+    .excel-table th, .excel-table td{border:1px solid var(--excel-grid); padding:6px 8px; font-size:14px}
+    .excel-table thead th{position:sticky; top:0; z-index:2; background:#F3F3F3; text-align:center; font-weight:600}
+    .row-header{background:#F3F3F3; text-align:center; position:sticky; left:0; z-index:1}
+    .cell{background:#fff}
+    .cell[contenteditable="true"]:focus{outline:none}
+    .active-cell{outline:2px solid #1a73e8; outline-offset:-2px; background:#fff}
+    .excel-status{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:6px 10px; border-top:1px solid var(--excel-border); background:#fafafa}
+    .excel-sheets{display:flex; align-items:center; gap:8px}
+    .sheet{padding:4px 10px; border:1px solid var(--excel-border); border-bottom:2px solid var(--excel-green); border-radius:6px 6px 0 0; background:#fff; font-weight:600}
+    .excel-ready{color:#666; font-size:12px}
   </style>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F2640'/%3E%3Ctext x='16' y='21' font-family='sans-serif' font-size='14' font-weight='700' fill='%23E8913A' text-anchor='middle'%3Ed%3C/text%3E%3C/svg%3E">
 </head>
@@ -96,25 +128,53 @@
             </span>
           </div>
 
-          <div class="table-scroll">
-          <table aria-label="体験用テーブル">
-            <thead>
-              <tr>
-                <th class="col-index">#</th>
-                <th class="col-item">品目</th>
-                <th class="col-qty">数量</th>
-                <th class="col-price">単価 (¥)</th>
-                <th class="col-amount">金額 (¥)</th>
-              </tr>
-            </thead>
-            <tbody id="tbody"></tbody>
-            <tfoot>
-              <tr>
-                <td colspan="4" style="text-align:right">合計</td>
-                <td id="grandTotal">0</td>
-              </tr>
-            </tfoot>
-          </table>
+          <div class="excel-window" role="region" aria-label="Excel-like grid">
+            <div class="excel-titlebar">
+              <div class="left"><span class="excel-appdot"></span><span class="excel-title">体験デモ.xlsx - Excel</span></div>
+              <div class="excel-window-controls"><span class="excel-ctrl"></span><span class="excel-ctrl"></span><span class="excel-ctrl"></span></div>
+            </div>
+            <div class="excel-tabs"><span class="excel-tab is-active">ホーム</span><span class="excel-tab">挿入</span><span class="excel-tab">データ</span><span class="excel-tab">表示</span></div>
+            <div class="excel-ribbon">
+              <div class="rib-group">
+                <div style="display:flex; gap:6px"><button class="btn btn--ghost">貼り付け</button><button class="btn btn--ghost">コピー</button></div>
+                <div class="rib-title">クリップボード</div>
+              </div>
+              <div class="rib-group">
+                <div style="display:flex; gap:6px"><button class="btn btn--ghost">B</button><button class="btn btn--ghost">I</button><button class="btn btn--ghost">U</button></div>
+                <div class="rib-title">フォント</div>
+              </div>
+            </div>
+            <div class="excel-formula">
+              <input id="nameBox" class="name-box" value="A1" aria-label="セル名" readonly>
+              <span class="fx">fx</span>
+              <input id="formulaInput" class="formula-input" aria-label="数式バー" placeholder="セルの内容">
+            </div>
+            <div class="excel-grid">
+              <table class="excel-table" aria-label="体験用テーブル">
+                <thead>
+                  <tr>
+                    <th class="row-header"> </th>
+                    <th class="col-item">A</th>
+                    <th class="col-qty">B</th>
+                    <th class="col-price">C</th>
+                    <th class="col-amount">D</th>
+                    <th class="col-amount">E</th>
+                  </tr>
+                </thead>
+                <tbody id="tbody"></tbody>
+                <tfoot>
+                  <tr>
+                    <td class="row-header" style="text-align:right">Σ</td>
+                    <td colspan="4" style="text-align:right">合計</td>
+                    <td id="grandTotal">0</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+            <div class="excel-status">
+              <div class="excel-sheets"><span class="sheet">Sheet1</span></div>
+              <div class="excel-ready">Ready</div>
+            </div>
           </div>
           <p class="muted" style="margin-top:8px">セルは直接編集できます。数量と単価は数値、金額は自動計算。</p>
         </div>
@@ -161,7 +221,7 @@
 
     function rowTemplate(i, data){
       var d = data || { item:'', qty:'', price:'', amount:0 };
-      return '\n<tr data-row="'+i+'">\n  <td class="col-index">'+i+'</td>\n  <td class="col-item" contenteditable="true" data-k="item">'+escapeHtml(d.item)+'</td>\n  <td class="col-qty" contenteditable="true" data-k="qty">'+escapeHtml(d.qty)+'</td>\n  <td class="col-price" contenteditable="true" data-k="price">'+escapeHtml(d.price)+'</td>\n  <td class="col-amount" data-k="amount">'+yen(d.amount)+'</td>\n</tr>';
+      return '\n<tr data-row="'+i+'">\n  <td class="row-header">'+i+'</td>\n  <td class="cell col-item" contenteditable="true" data-k="item">'+escapeHtml(d.item)+'</td>\n  <td class="cell col-qty" contenteditable="true" data-k="qty">'+escapeHtml(d.qty)+'</td>\n  <td class="cell col-price" contenteditable="true" data-k="price">'+escapeHtml(d.price)+'</td>\n  <td class="cell col-amount" data-k="amount">'+yen(d.amount)+'</td>\n  <td class="cell" contenteditable="false" style="background:#fafafa"></td>\n</tr>';
     }
 
     function escapeHtml(s){
@@ -288,7 +348,30 @@
     document.getElementById('resetBtn').addEventListener('click', reset);
     document.getElementById('seedBtn').addEventListener('click', seed);
     document.getElementById('csvBtn').addEventListener('click', function(e){ e.preventDefault(); downloadCSV(); });
-    tbody.addEventListener('input', function(e){ if(e.target.matches('[contenteditable]')){ markDirty(); var rows = readTable(); renderPreviews(rows); }});
+    tbody.addEventListener('input', function(e){ if(e.target.matches('[contenteditable]')){ markDirty(); var rows = readTable(); renderPreviews(rows); updateFormulaFromCell(e.target); }});
+
+    // selection + formula bar
+    var activeCell = null;
+    var nameBox = document.getElementById('nameBox');
+    var formulaInput = document.getElementById('formulaInput');
+    function colLetter(idx){ return String.fromCharCode('A'.charCodeAt(0) + idx); }
+    function updateSelection(td){
+      if(activeCell){ activeCell.classList.remove('active-cell'); }
+      activeCell = td; activeCell.classList.add('active-cell');
+      var tr = td.parentElement; var row = Number(tr.getAttribute('data-row'))||1;
+      var cellIndex = Array.prototype.indexOf.call(tr.children, td) - 1; // exclude row-header
+      nameBox.value = colLetter(cellIndex) + row;
+      formulaInput.value = td.getAttribute('data-k') ? td.textContent : '';
+    }
+    function updateFormulaFromCell(td){ if(td===activeCell){ formulaInput.value = td.textContent; } }
+    tbody.addEventListener('click', function(e){ if(e.target.matches('.cell')){ updateSelection(e.target); }});
+    formulaInput.addEventListener('keydown', function(e){
+      if(e.key==='Enter' && activeCell && activeCell.isContentEditable){
+        e.preventDefault();
+        activeCell.textContent = formulaInput.value;
+        markDirty(); var rows = readTable(); renderPreviews(rows);
+      }
+    });
 
     // tabs
     document.querySelectorAll('.tab').forEach(function(btn){
