@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>dbSheet 体験デモ | 株式会社NEWCOM</title>
+  <meta name="description" content="Excelの操作性を保ったまま、データが蓄積・共有・循環するイメージを体験できます。">
+  <meta name="robots" content="noindex, nofollow">
+  <style>
+    :root{
+      --color-primary:#0F2640; --color-accent:#E8913A; --color-bg:#F5F5F7; --color-white:#fff;
+      --text:#1D1D1F; --text-2:#6E6E73; --radius:12px; --shadow:0 6px 24px rgba(0,0,0,.08);
+    }
+    *{box-sizing:border-box}
+    html{font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP", sans-serif;}
+    body{margin:0;background:var(--color-bg);color:var(--text)}
+    header{position:sticky;top:0;background:var(--color-primary);color:#fff;padding:12px 16px;z-index:10}
+    header .wrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+    header a{color:#fff;text-decoration:none}
+    .wrap{max-width:1100px;margin:0 auto;padding:24px 16px}
+    .hero{background:linear-gradient(180deg, #0F2640 0%, #173553 100%);color:#fff;border-radius:16px;padding:24px;box-shadow:var(--shadow)}
+    .hero h1{margin:0 0 8px;font-size:24px}
+    .hero p{margin:0;color:rgba(255,255,255,.75)}
+    .grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:20px}
+    @media(min-width:860px){.grid{grid-template-columns:1.1fr .9fr}}
+    .card{background:var(--color-white);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+    .card h2{margin:0;padding:14px 16px;background:#173553;color:#fff;font-size:16px}
+    .card .body{padding:16px}
+    .toolbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+    .btn{appearance:none;border:0;border-radius:10px;background:var(--color-primary);color:#fff;font-weight:600;padding:10px 14px;cursor:pointer}
+    .btn--ghost{background:#fff;color:var(--color-primary);border:1px solid rgba(0,0,0,.1)}
+    .btn--accent{background:var(--color-accent)}
+    table{width:100%;border-collapse:collapse;border:1px solid rgba(0,0,0,.08)}
+    th,td{border-bottom:1px solid rgba(0,0,0,.06);padding:10px 8px;text-align:left}
+    thead th{background:#F3F5F8;font-size:12px;color:#374151}
+    tbody td[contenteditable="true"]{background:#fff8f1}
+    tfoot td{font-weight:700}
+    .muted{color:var(--text-2);font-size:12px}
+    .status{display:flex;align-items:center;gap:8px}
+    .dot{width:10px;height:10px;border-radius:50%;background:#bbb}
+    .dot.is-on{background:#2ecc71}
+    .json-view{font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;white-space:pre-wrap;background:#0b1020;color:#cfe8ff;border-radius:8px;padding:12px;line-height:1.5;max-height:300px;overflow:auto}
+    .toast{position:fixed;bottom:16px;right:16px;background:#0F2640;color:#fff;padding:10px 14px;border-radius:10px;opacity:0;transform:translateY(8px);transition:.25s}
+    .toast.show{opacity:1;transform:none}
+    footer{padding:24px 16px;text-align:center;color:var(--text-2)}
+    a.btn-link{display:inline-block;text-decoration:none}
+  </style>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F2640'/%3E%3Ctext x='16' y='21' font-family='sans-serif' font-size='14' font-weight='700' fill='%23E8913A' text-anchor='middle'%3Ed%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div><strong>db</strong><span style="color:var(--color-accent);font-weight:700">Sheet</span> 体験デモ</div>
+      <nav>
+        <a href="index.html">戻る（LPへ）</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <section class="hero">
+      <h1>操作はそのまま、構造だけが変わる</h1>
+      <p>左でExcelライクに入力 → 右で“DBに貯まる姿”を確認。保存はローカルのみ（擬似DB）。</p>
+    </section>
+
+    <div class="grid">
+      <div class="card">
+        <h2>現場の入力（Excelライク）</h2>
+        <div class="body">
+          <div class="toolbar">
+            <button class="btn btn--accent" id="saveBtn">保存（同期）</button>
+            <button class="btn btn--ghost" id="resetBtn">クリア</button>
+            <button class="btn" id="seedBtn">サンプル投入</button>
+            <a class="btn btn-link btn--ghost" id="csvBtn" href="#">CSV出力</a>
+            <span class="status" style="margin-left:auto">
+              <span class="dot" id="syncDot"></span>
+              <span class="muted" id="syncText">未保存</span>
+            </span>
+          </div>
+
+          <table aria-label="体験用テーブル">
+            <thead>
+              <tr>
+                <th style="width:36px">#</th>
+                <th>品目</th>
+                <th style="width:100px">数量</th>
+                <th style="width:120px">単価 (¥)</th>
+                <th style="width:140px">金額 (¥)</th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4" style="text-align:right">合計</td>
+                <td id="grandTotal">0</td>
+              </tr>
+            </tfoot>
+          </table>
+          <p class="muted" style="margin-top:8px">セルは直接編集できます。数量と単価は数値、金額は自動計算。</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>組織に残る形（構造化データ）</h2>
+        <div class="body">
+          <div class="muted" style="margin-bottom:8px">保存で擬似DBに反映（localStorage）。JSON を確認できます。</div>
+          <div class="json-view" id="jsonView" aria-live="polite">[]</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">保存しました（擬似同期）</div>
+
+  <footer>
+    dbSheet — 業務を変え続けるための基盤（デモはローカル動作のみ）
+  </footer>
+
+  <script>
+  (function(){
+    'use strict';
+    var ROWS = 6;
+    var KEY = 'dbsheet_demo_v1';
+    var tbody = document.getElementById('tbody');
+    var jsonView = document.getElementById('jsonView');
+    var grand = document.getElementById('grandTotal');
+    var syncDot = document.getElementById('syncDot');
+    var syncText = document.getElementById('syncText');
+    var toast = document.getElementById('toast');
+
+    function yen(n){
+      var v = Number(n||0);
+      return v.toLocaleString('ja-JP');
+    }
+
+    function rowTemplate(i, data){
+      var d = data || { item:'', qty:'', price:'', amount:0 };
+      return '\n<tr data-row="'+i+'">\n  <td>'+i+'</td>\n  <td contenteditable="true" data-k="item">'+escapeHtml(d.item)+'</td>\n  <td contenteditable="true" data-k="qty">'+escapeHtml(d.qty)+'</td>\n  <td contenteditable="true" data-k="price">'+escapeHtml(d.price)+'</td>\n  <td data-k="amount">'+yen(d.amount)+'</td>\n</tr>';
+    }
+
+    function escapeHtml(s){
+      return String(s).replace(/[&<>"']/g,function(c){return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c])});
+    }
+
+    function readTable(){
+      var out = []; var total = 0;
+      tbody.querySelectorAll('tr').forEach(function(tr){
+        var item = tr.querySelector('[data-k="item"]').textContent.trim();
+        var qty = Number(tr.querySelector('[data-k="qty"]').textContent.replace(/,/g,''))||0;
+        var price = Number(tr.querySelector('[data-k="price"]').textContent.replace(/,/g,''))||0;
+        var amount = qty*price; total += amount;
+        tr.querySelector('[data-k="amount"]').textContent = yen(amount);
+        if(item || qty || price){ out.push({item:item, qty:qty, price:price, amount:amount}); }
+      });
+      grand.textContent = yen(total);
+      return out;
+    }
+
+    function markDirty(){
+      syncDot.classList.remove('is-on');
+      syncText.textContent = '未保存';
+    }
+
+    function markSaved(){
+      syncDot.classList.add('is-on');
+      syncText.textContent = '保存済み';
+    }
+
+    function renderFromData(rows){
+      tbody.innerHTML = '';
+      for(var i=1;i<=ROWS;i++){
+        tbody.insertAdjacentHTML('beforeend', rowTemplate(i, rows[i-1]));
+      }
+      readTable();
+      markSaved();
+      if(!rows || rows.length===0) markDirty();
+    }
+
+    function save(){
+      var rows = readTable();
+      var payload = { savedAt: new Date().toISOString(), rows: rows };
+      localStorage.setItem(KEY, JSON.stringify(payload));
+      jsonView.textContent = JSON.stringify(payload, null, 2);
+      markSaved();
+      showToast('保存しました（擬似同期）');
+    }
+
+    function reset(){
+      localStorage.removeItem(KEY);
+      renderFromData([]);
+      jsonView.textContent = '[]';
+      markDirty();
+      showToast('初期化しました');
+    }
+
+    function seed(){
+      var sample = [
+        {item:'部品A', qty:5, price:1200},
+        {item:'部品B', qty:2, price:4500},
+        {item:'治具C', qty:1, price:18800}
+      ];
+      renderFromData(sample);
+      markDirty();
+    }
+
+    function toCSV(rows){
+      var head = ['品目','数量','単価','金額'];
+      var lines = [head.join(',')];
+      rows.forEach(function(r){ lines.push([r.item,r.qty,r.price,r.amount].join(',')); });
+      return lines.join('\n');
+    }
+
+    function downloadCSV(){
+      var rows = readTable();
+      var csv = toCSV(rows);
+      var blob = new Blob(['\uFEFF'+csv], {type:'text/csv'});
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url; a.download = 'dbsheet-demo.csv';
+      document.body.appendChild(a); a.click();
+      setTimeout(function(){ URL.revokeObjectURL(url); a.remove(); }, 0);
+    }
+
+    function showToast(msg){
+      toast.textContent = msg; toast.classList.add('show');
+      setTimeout(function(){ toast.classList.remove('show'); }, 1600);
+    }
+
+    // events
+    document.getElementById('saveBtn').addEventListener('click', save);
+    document.getElementById('resetBtn').addEventListener('click', reset);
+    document.getElementById('seedBtn').addEventListener('click', seed);
+    document.getElementById('csvBtn').addEventListener('click', function(e){ e.preventDefault(); downloadCSV(); });
+    tbody.addEventListener('input', function(e){ if(e.target.matches('[contenteditable]')){ markDirty(); readTable(); }});
+
+    // init
+    var saved = localStorage.getItem(KEY);
+    if(saved){
+      try{ var data = JSON.parse(saved); jsonView.textContent = JSON.stringify(data, null, 2); renderFromData(data.rows||[]); }
+      catch(_){ renderFromData([]); }
+    } else {
+      renderFromData([]);
+    }
+  })();
+  </script>
+</body>
+</html>
+
