@@ -22,7 +22,8 @@
     .hero h1{margin:0 0 8px;font-size:24px}
     .hero p{margin:0;color:rgba(255,255,255,.75)}
     .grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:20px}
-    @media(min-width:860px){.grid{grid-template-columns:1.1fr .9fr}}
+    /* 常に縦積み（上: Excelライク、下: 構造化データ） */
+    @media(min-width:860px){.grid{grid-template-columns:1fr}}
     .card{background:var(--color-white);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
     .card h2{margin:0;padding:14px 16px;background:#173553;color:#fff;font-size:16px}
     .card .body{padding:16px}
