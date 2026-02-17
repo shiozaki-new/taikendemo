@@ -2,1005 +2,2702 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="format-detection" content="telephone=no, email=no, address=no">
-<title>dbSheet — Excel業務を変え続けるための基盤 | 株式会社NEWCOM</title>
-<meta name="description" content="dbSheetは、Excelの使いやすさを活かしながら、データの蓄積・共有・改善サイクルを実現する業務基盤です。脱Excelではなく、脱・固定業務へ。">
-<meta name="keywords" content="dbSheet,Excel,業務改善,データベース,DX,脱Excel,NEWCOM">
-<meta name="author" content="株式会社NEWCOM">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="https://www.newcom07.jp/dbsheet/lp/exhibition/">
-<meta name="geo.region" content="JP">
-<meta http-equiv="content-language" content="ja">
-<meta property="og:type" content="website">
-<meta property="og:title" content="dbSheet — Excel業務を変え続けるための基盤">
-<meta property="og:description" content="Excelの自由さを活かしたまま、データの蓄積・共有・改善サイクルを実現。AI時代に最後まで残る思考のインターフェイス。">
-<meta property="og:url" content="https://www.newcom07.jp/dbsheet/lp/exhibition/">
-<meta property="og:site_name" content="dbSheet | 株式会社NEWCOM">
-<meta property="og:locale" content="ja_JP">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="dbSheet — Excel業務を変え続けるための基盤">
-<meta name="twitter:description" content="脱Excelではなく、脱・固定業務。Excelの使いやすさを活かしたデータ基盤。">
-<meta name="theme-color" content="#0F2640">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F2640'/%3E%3Ctext x='16' y='22' text-anchor='middle' fill='white' font-size='16' font-weight='700' font-family='system-ui'%3Edb%3C/text%3E%3C/svg%3E">
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"SoftwareApplication","name":"dbSheet","applicationCategory":"BusinessApplication","operatingSystem":"Windows","description":"Excelの操作性を維持しながらデータベース連携を実現する業務基盤ソリューション。脱Excelではなく脱・固定業務を目指し、データの蓄積・共有・改善サイクルにより企業の変化耐性を構築する。","offers":{"@type":"Offer","availability":"https://schema.org/InStock"},"provider":{"@type":"Organization","name":"株式会社NEWCOM","url":"https://www.newcom07.jp/","address":{"@type":"PostalAddress","addressCountry":"JP"}},"featureList":["Excel連携データベース","業務改善サイクル自動化","属人化解消","AI連携基盤","ガバナンス強化"]}
-</script>
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"dbSheetとは何ですか？","acceptedAnswer":{"@type":"Answer","text":"dbSheetは、Excelの操作性を維持しながらデータベース連携を実現する業務基盤ソリューションです。脱Excelではなく脱・固定業務を目指し、現場の思考プロセスを止めることなく、データの蓄積・共有・改善サイクルを実現します。"}},{"@type":"Question","name":"dbSheetを導入するとExcelの操作は変わりますか？","acceptedAnswer":{"@type":"Answer","text":"操作は変わりません。構造だけが変わります。現場担当者はこれまで通りExcelで思考・入力・試行錯誤を行いながら、裏側でデータベースと連携し、判断が経営資産として蓄積されるようになります。"}},{"@type":"Question","name":"dbSheetの導入効果は何ですか？","acceptedAnswer":{"@type":"Answer","text":"導入効果は3段階で現れます。第一に現場のExcel業務がDB接続で止まらなくなり、第二に現場と経営のデータが自然につながり、第三に企業全体が外部の変化に強い体質（変化耐性）を獲得します。"}}]}
-</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>dbSheet — 業務を変え続けるための基盤</title>
+<meta name="description" content="dbSheetは、AI時代において業務を固定してしまうリスクを防ぎ、現場判断を組織資産へ変換する基盤です。">
 <style>
-/* ===== CSS Reset ===== */
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%}
-body{font-family:'Inter','Noto Sans JP',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue','Hiragino Kaku Gothic ProN','Hiragino Sans','Yu Gothic','Meiryo',sans-serif;font-size:var(--text-body);line-height:1.6;color:var(--color-text-primary);background:var(--color-bg-white);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden;overscroll-behavior-y:none}
-img,svg{display:block;max-width:100%}
-a{color:inherit;text-decoration:none}
-button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
-ul,ol{list-style:none}
-
-/* ===== Design Tokens ===== */
-:root{
---color-primary:#1B3A5C;--color-primary-light:#2A5A8C;--color-primary-dark:#0F2640;
---color-accent:#E8913A;--color-accent-light:#F5B870;
---color-bg-white:#FFFFFF;--color-bg-light:#F5F5F7;
---color-bg-frosted:rgba(255,255,255,0.72);--color-bg-frosted-dark:rgba(15,38,64,0.78);
---color-text-primary:#1D1D1F;--color-text-secondary:#6E6E73;--color-text-inverse:#FFFFFF;
---color-border:rgba(0,0,0,0.06);--color-border-light:rgba(255,255,255,0.12);
---color-before:#86868B;--color-after:#1B3A5C;
---color-success:#30A46C;--color-warning:#E5484D;--color-info:#3B82F6;
---font-mono:'SF Mono','JetBrains Mono','Source Code Pro','Menlo','Consolas',monospace;
---text-hero:clamp(28px,6vw,56px);--text-h1:clamp(24px,4.5vw,40px);--text-h2:clamp(20px,3.5vw,28px);
---text-body-lg:clamp(16px,2.5vw,22px);--text-body:clamp(15px,2vw,18px);--text-caption:clamp(12px,1.5vw,14px);
---space-xs:8px;--space-sm:12px;--space-md:24px;--space-lg:48px;--space-xl:80px;
---shadow-card:0 0.5px 0 rgba(0,0,0,0.05),0 4px 16px rgba(0,0,0,0.06),0 8px 32px rgba(0,0,0,0.04);
---shadow-elevated:0 0.5px 0 rgba(0,0,0,0.06),0 8px 24px rgba(0,0,0,0.08),0 20px 48px rgba(0,0,0,0.06);
---shadow-frosted:0 0.5px 0 rgba(0,0,0,0.04),inset 0 0.5px 0 rgba(255,255,255,0.2);
---radius-card:16px;--radius-card-inner:12px;--radius-button:10px;--radius-pill:9999px;
---ease-spring:cubic-bezier(0.2,0.9,0.3,1.0);--ease-smooth:cubic-bezier(0.4,0.0,0.2,1.0);
---duration-fast:0.25s;--duration-normal:0.4s;--duration-slow:0.6s;
---content-padding:20px;--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px);
-}
-@media(min-width:768px){:root{--space-sm:16px;--space-md:32px;--space-lg:64px;--space-xl:100px;--content-padding:32px}}
-@media(min-width:1024px){:root{--content-padding:40px}}
-@media(min-width:1440px){:root{--text-hero:64px;--text-h1:48px;--text-h2:32px;--text-body-lg:24px;--text-body:20px;--text-caption:15px;--space-lg:72px;--space-xl:120px}}
-@media(min-width:1920px){:root{--text-hero:76px;--text-h1:56px;--text-h2:38px;--text-body-lg:28px;--text-body:22px;--text-caption:16px;--space-md:40px;--space-lg:80px;--space-xl:140px}}
-
-/* ===== Skip Link ===== */
-.skip-link{position:absolute;top:-100%;left:50%;transform:translateX(-50%);background:var(--color-accent);color:var(--color-text-inverse);padding:var(--space-xs) var(--space-sm);border-radius:var(--radius-button);z-index:200;font-size:var(--text-caption)}
-.skip-link:focus{top:var(--space-xs)}
-
-/* ===== Mobile BR ===== */
-.sp-br{display:none}
-@media(max-width:767px){.sp-br{display:inline}}
-
-/* ===== Header ===== */
-.header{position:fixed;top:0;left:0;right:0;height:56px;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 var(--content-padding);padding-top:var(--safe-top);background:rgba(15,38,64,0.92);border-bottom:0.5px solid var(--color-border-light);-webkit-transform:translateZ(0);transform:translateZ(0)}
-@supports(backdrop-filter:blur(1px)){.header{background:var(--color-bg-frosted-dark);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%)}}
-.header__logo{font-size:20px;font-weight:700;color:var(--color-text-inverse);letter-spacing:0.02em}
-.header__logo span{color:var(--color-accent)}
-.nav{display:none;align-items:center;gap:4px}
-@media(min-width:768px){.nav{display:flex}}
-.nav__link{padding:6px 14px;border-radius:var(--radius-pill);font-size:var(--text-caption);color:rgba(255,255,255,0.55);letter-spacing:0.04em;transition:all var(--duration-fast) var(--ease-spring);white-space:nowrap;font-weight:500}
-@media(hover:hover) and (pointer:fine){.nav__link:hover{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.85)}}
-.nav__link--active{background:rgba(232,145,58,0.18);color:var(--color-accent-light);box-shadow:0 0 0 0.5px rgba(232,145,58,0.25);font-weight:600}
-
-/* ===== Section Base ===== */
-.section{min-height:100svh;display:flex;align-items:center;justify-content:center;position:relative;scroll-snap-align:start;padding:calc(56px + var(--space-lg)) var(--content-padding) var(--space-lg)}
-@media(min-width:1024px){.section--fixed{height:100vh;min-height:auto}}
-.section--no-snap{scroll-snap-align:none}
-.section__inner{width:100%;max-width:1400px;margin:0 auto}
-@media(min-width:1440px){.section__inner{max-width:1440px}}
-@media(min-width:1920px){.section__inner{max-width:1700px}}
-.section__heading{font-size:var(--text-h1);font-weight:600;color:var(--color-text-primary);text-align:center;letter-spacing:-0.01em;line-height:1.2;margin-bottom:var(--space-lg);position:relative}
-.section__heading::after{content:'';display:block;width:40px;height:2px;background:var(--color-accent);margin:var(--space-sm) auto 0;border-radius:1px;opacity:0.6}
-.section--dark .section__heading{color:var(--color-text-inverse)}
-.section--dark .section__heading::after{background:var(--color-accent-light);opacity:0.4}
-.section--dark{background:var(--color-primary-dark);color:var(--color-text-inverse)}
-.section--light{background:var(--color-bg-light)}
-.section--white{background:var(--color-bg-white)}
-
-/* Dark section radial — 意志のある光源 */
-.section--dark::before{content:'';position:absolute;inset:0;background:
-  radial-gradient(ellipse 60% 50% at 50% 35%,rgba(42,90,140,0.35) 0%,transparent 60%),
-  radial-gradient(ellipse 120% 80% at 50% 50%,rgba(232,145,58,0.06) 0%,transparent 50%);pointer-events:none}
-.section--dark::after{content:'';position:absolute;inset:0;background:
-  radial-gradient(circle at 30% 70%,rgba(42,90,140,0.12) 0%,transparent 40%),
-  radial-gradient(circle at 70% 30%,rgba(232,145,58,0.04) 0%,transparent 35%);pointer-events:none}
-
-/* ===== Animations ===== */
-.anim{opacity:0;transform:translateY(30px);transition:opacity var(--duration-slow) var(--ease-spring),transform var(--duration-slow) var(--ease-spring),filter var(--duration-slow) var(--ease-spring)}
-.anim--up{transform:translateY(20px)}
-.anim--left{transform:translateX(-40px)}
-.anim--right{transform:translateX(40px)}
-.anim--scale{transform:scale(0.9)}
-.anim--blur{filter:blur(8px)}
-.anim--visible{opacity:1;transform:translateY(0) translateX(0) scale(1);filter:blur(0)}
-.anim--half{opacity:0.5}
-
-/* ===== Focus ===== */
-:focus-visible{outline:2px solid var(--color-accent);outline-offset:3px;border-radius:var(--radius-button)}
-:focus:not(:focus-visible){outline:none}
-
-/* ===== Card Hover (Desktop) ===== */
-@media(hover:hover) and (pointer:fine){
-.layer-card,.competitor-card,.ba-card,.exai__card,.risk-list{transition:transform var(--duration-normal) var(--ease-spring),box-shadow var(--duration-normal) var(--ease-spring)}
-.layer-card:hover,.competitor-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-elevated)}
-.ba-card:hover,.exai__card:hover{transform:translateY(-2px);box-shadow:var(--shadow-elevated)}
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--color-text-primary);
+  background: #fff;
+  overflow-x: hidden;
 }
 
-/* ===== Frosted Glass Utility ===== */
-.frosted{background:var(--color-bg-frosted);border:0.5px solid var(--color-border)}
-@supports(backdrop-filter:blur(1px)){.frosted{backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%)}}
+/* ===== DESIGN TOKENS ===== */
+:root {
+  /* Colors */
+  --color-primary: #1B3A5C;
+  --color-primary-light: #2A5A8C;
+  --color-primary-dark: #0F2640;
+  --color-accent: #E8913A;
+  --color-accent-light: #F5B870;
+  --color-bg-white: #FFFFFF;
+  --color-bg-light: #F5F5F7;
+  --color-bg-frosted: rgba(255, 255, 255, 0.72);
+  --color-bg-frosted-dark: rgba(15, 38, 64, 0.88);
+  --color-text-primary: #1D1D1F;
+  --color-text-secondary: #6E6E73;
+  --color-text-inverse: #FFFFFF;
+  --color-border: rgba(0, 0, 0, 0.08);
+  --color-border-light: rgba(255, 255, 255, 0.14);
+  --color-before: #86868B;
+  --color-after: #1B3A5C;
+  --color-success: #30A46C;
+  --color-warning: #E5484D;
+  --color-info: #3B82F6;
 
-/* ===== Section Divider ===== */
-.section--dark+.section:not(.section--dark){position:relative}
-.section--dark+.section:not(.section--dark)>.section__inner{position:relative;z-index:1}
+  /* Typography — Mobile base */
+  --text-hero: clamp(28px, 6vw, 56px);
+  --text-h1: clamp(24px, 4.5vw, 40px);
+  --text-h2: clamp(20px, 3.5vw, 28px);
+  --text-body-lg: clamp(16px, 2.5vw, 22px);
+  --text-body: clamp(15px, 2vw, 18px);
+  --text-caption: clamp(12px, 1.5vw, 14px);
 
-/* ===== Reduced Motion ===== */
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important;scroll-behavior:auto !important}.anim{opacity:1;transform:none;filter:none}.exai__center::before{animation:none}.scroll-hint svg{animation:none}}
+  /* Spacing */
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 32px;
+  --space-lg: 64px;
+  --space-xl: 120px;
 
-/* ===== S1: Hero ===== */
-.hero{text-align:center;position:relative;z-index:1}
-.hero__main{font-size:var(--text-hero);font-weight:700;color:var(--color-text-inverse);line-height:1.2;letter-spacing:-0.01em;max-width:1300px;margin:0 auto}
-@media(min-width:1440px){.hero__main{max-width:1400px}}
-@media(min-width:1920px){.hero__main{max-width:1700px}}
-.hero__accent{color:var(--color-accent);text-shadow:0 0 40px rgba(232,145,58,0.25)}
-.hero__sub{font-size:var(--text-body-lg);color:rgba(255,255,255,0.55);margin-top:var(--space-md);max-width:1100px;margin-left:auto;margin-right:auto;line-height:1.6;letter-spacing:0.01em}
-@media(min-width:1440px){.hero__sub{max-width:1200px}}
-@media(min-width:1920px){.hero__sub{max-width:1400px}}
-.scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:4px}
-.scroll-hint__text{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);font-weight:500}
-.scroll-hint svg{width:20px;height:20px;stroke:var(--color-text-inverse);animation:scrollPulse 2.8s ease-in-out infinite}
-.scroll-hint svg:nth-child(3){opacity:0.3;animation-delay:0.15s}
-@keyframes scrollPulse{0%,100%{opacity:0.35;transform:translateY(0)}40%{opacity:0.7;transform:translateY(6px)}80%{opacity:0.35;transform:translateY(0)}}
+  /* Shadows */
+  --shadow-card: 0 0.5px 0 rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.06), 0 8px 32px rgba(0,0,0,0.04);
+  --shadow-elevated: 0 0.5px 0 rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.10), 0 20px 48px rgba(0,0,0,0.08);
+  --shadow-frosted: 0 0.5px 0 rgba(0,0,0,0.04), inset 0 0.5px 0 rgba(255,255,255,0.2);
 
-/* ===== S2: Layer Cards ===== */
-.layer-cards{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:var(--space-md)}
-@media(min-width:1440px){.layer-cards{max-width:1200px}}
-@media(min-width:1920px){.layer-cards{max-width:1400px}}
-.layer-card{background:var(--color-bg-white);border:0.5px solid var(--color-border);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:16px 32px;display:flex;align-items:center;gap:var(--space-md);position:relative;overflow:hidden}
-.layer-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--color-border);border-radius:3px 0 0 3px;opacity:0.5}
-.layer-card:last-child::before{background:var(--color-accent);opacity:0.8}
-@media(min-width:1440px){.layer-card{padding:32px 72px}}
-@media(min-width:1920px){.layer-card{padding:40px 80px}}
-.layer-card__num{font-family:var(--font-mono);font-size:var(--text-caption);color:var(--color-accent);font-weight:700;flex-shrink:0}
-.layer-card__body{flex:1}
-.layer-card__title{font-size:var(--text-h2);font-weight:600;color:var(--color-text-primary);line-height:1.3}
-.layer-card__products{font-size:var(--text-body);color:var(--color-text-secondary);margin-top:4px}
-.layer-card__features{font-size:var(--text-body);color:var(--color-text-secondary);margin-top:4px}
+  /* Radius */
+  --radius-card: 16px;
+  --radius-card-inner: 12px;
+  --radius-button: 10px;
+  --radius-pill: 9999px;
 
-/* ===== S3: Position ===== */
-.position{max-width:1100px;margin:0 auto}
-@media(min-width:1440px){.position{max-width:1200px}}
-@media(min-width:1920px){.position{max-width:1400px}}
-.position__card{opacity:0.5;padding:12px 32px;background:var(--color-bg-light);border:0.5px solid var(--color-border);border-radius:var(--radius-card);margin-bottom:8px;display:flex;align-items:center;gap:var(--space-sm)}
-@media(min-width:1440px){.position__card{padding:20px 48px}}
-@media(min-width:1920px){.position__card{padding:24px 64px}}
-.position__card-num{font-family:var(--font-mono);font-size:var(--text-caption);color:var(--color-text-secondary)}
-.position__card-title{font-size:var(--text-body-lg);color:var(--color-text-secondary)}
-.position__highlight{text-align:center;padding:var(--space-md) 0;margin:4px 0}
-.position__label{display:inline-block;background:rgba(232,145,58,0.08);color:var(--color-accent);font-size:var(--text-h2);font-weight:700;padding:10px 32px;border-radius:var(--radius-pill);border:1px solid rgba(232,145,58,0.15);box-shadow:0 0 20px rgba(232,145,58,0.08)}
-.position__arrows{color:var(--color-accent);font-size:24px;display:flex;flex-direction:column;align-items:center;gap:2px;margin:4px auto}
-.position__arrows svg{width:32px;height:32px;stroke:var(--color-accent)}
-.position__message{text-align:center;font-size:var(--text-body-lg);color:var(--color-primary);font-weight:600;margin-top:var(--space-lg);line-height:1.6;max-width:1100px;margin-left:auto;margin-right:auto;padding:var(--space-sm) var(--space-md);border-radius:var(--radius-card);background:rgba(27,58,92,0.02)}
-@media(min-width:1920px){.position__message{max-width:1400px}}
+  /* Font */
+  --font-mono: "SF Mono", "JetBrains Mono", "Source Code Pro", monospace;
 
-/* ===== S4: Non-substitution ===== */
-.declarations{text-align:center;position:relative;z-index:1}
-.declarations__item{font-size:var(--text-body-lg);color:rgba(255,255,255,0.65);line-height:2.2;letter-spacing:0.01em;transition:opacity var(--duration-slow)}
-.declarations__item:nth-child(2){font-size:calc(var(--text-body-lg) * 1.05);color:rgba(255,255,255,0.75)}
-.declarations__item:nth-child(3){font-size:calc(var(--text-body-lg) * 1.12);color:rgba(255,255,255,0.88)}
-.declarations__item .declarations__highlight{color:var(--color-accent);font-weight:700;text-shadow:0 0 30px rgba(232,145,58,0.2)}
+  /* Easing */
+  --ease-spring: cubic-bezier(0.2, 0.9, 0.3, 1.0);
+  --ease-smooth: cubic-bezier(0.4, 0.0, 0.2, 1.0);
+  --duration-fast: 0.25s;
+  --duration-normal: 0.4s;
+  --duration-slow: 0.6s;
+}
 
-/* ===== S5: Competitors ===== */
-.competitors{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-md)}
-@media(min-width:768px){.competitors{grid-template-columns:repeat(4,1fr)}}
-@media(min-width:1440px){.competitors{max-width:1300px}}
-@media(min-width:1920px){.competitors{max-width:1500px}}
-.competitor-card{background:var(--color-bg-white);border:0.5px solid var(--color-border);border-top:3px solid var(--color-before);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:var(--space-md) var(--space-sm);text-align:center;display:flex;flex-direction:column;align-items:center;gap:var(--space-sm);position:relative;overflow:hidden}
-@media(min-width:1920px){.competitor-card{padding:var(--space-lg) var(--space-md)}}
-.competitor-card::after{content:'';position:absolute;top:0;left:0;right:0;height:100%;background:linear-gradient(to bottom,rgba(134,134,139,0.03),transparent 40%);pointer-events:none}
-.competitor-card__icon{width:52px;height:52px;stroke:var(--color-before);fill:none;stroke-width:1.5;transition:transform var(--duration-normal) var(--ease-spring)}
-@media(min-width:768px){.competitor-card__icon{width:56px;height:56px}}
-@media(min-width:1920px){.competitor-card__icon{width:64px;height:64px}}
-@media(hover:hover) and (pointer:fine){.competitor-card:hover .competitor-card__icon{transform:scale(1.08)}}
-.competitor-card__text{font-size:var(--text-body-lg);font-weight:600;color:var(--color-text-primary);line-height:1.4}
-.competitors__message{grid-column:1/-1;text-align:center;font-size:var(--text-body-lg);color:var(--color-primary);font-weight:600;margin-top:var(--space-sm);padding:var(--space-sm) var(--space-md);border-radius:var(--radius-card);background:rgba(27,58,92,0.02)}
-.competitors__message .msg-accent{color:var(--color-accent);font-weight:700}
+/* Desktop-L overrides */
+@media (min-width: 1440px) {
+  :root {
+    --text-hero: 64px;
+    --text-h1: 48px;
+    --text-h2: 32px;
+    --text-body-lg: 24px;
+    --text-body: 20px;
+    --text-caption: 15px;
+    --space-md: 40px;
+    --space-lg: 72px;
+    --space-xl: 140px;
+  }
+}
 
-/* ===== S6: Before/After ===== */
-.ba-container{max-width:1300px;margin:0 auto}
-@media(min-width:1440px){.ba-container{max-width:1400px}}
-@media(min-width:1920px){.ba-container{max-width:1600px}}
-.ba-grid{display:flex;flex-direction:column;gap:var(--space-md);align-items:stretch}
-@media(min-width:768px){.ba-grid{flex-direction:row;gap:0;align-items:stretch}}
-.ba-card{flex:1;border-radius:var(--radius-card);overflow:hidden;border:0.5px solid var(--color-border);box-shadow:var(--shadow-card);transition:transform var(--duration-normal) var(--ease-spring),box-shadow var(--duration-normal) var(--ease-spring)}
-.ba-card--before{opacity:0.88}
-.ba-card--after{box-shadow:var(--shadow-elevated);border:0.5px solid rgba(27,58,92,0.15);position:relative}
-@media(min-width:768px){.ba-card--after{border-left:3px solid var(--color-accent)}}
-.ba-card--after::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(232,145,58,0.03),transparent 50%);pointer-events:none;z-index:0}
-.ba-card__header{padding:16px 32px;color:var(--color-text-inverse);font-size:var(--text-h2);font-weight:600}
-@media(min-width:1440px){.ba-card__header{padding:32px}}
-@media(min-width:1920px){.ba-card__header{padding:40px 80px}}
-.ba-card--before .ba-card__header{background:var(--color-before)}
-.ba-card--after .ba-card__header{background:var(--color-after)}
-.ba-card__sub{font-size:var(--text-body);font-weight:400;opacity:0.7;margin-top:4px}
-.ba-card__body{background:var(--color-bg-white)}
-.ba-row{display:flex;align-items:center;min-height:60px;padding:16px 32px;border-bottom:0.5px solid var(--color-border)}
-@media(min-width:1440px){.ba-row{min-height:80px;padding:24px 48px}}
-@media(min-width:1920px){.ba-row{min-height:96px;padding:32px 64px}}
-.ba-row:last-child{border-bottom:none}
-.ba-card--before .ba-row{font-size:var(--text-body-lg);color:var(--color-text-secondary);position:relative}
-.ba-card--before .ba-row::after{content:'';position:absolute;left:32px;right:32px;top:50%;height:1px;background:rgba(134,134,139,0.2);display:none}
-.ba-card--after .ba-row{font-size:var(--text-body-lg);color:var(--color-primary);font-weight:600;position:relative}
-.ba-arrows{display:none;flex-direction:column;justify-content:center;align-items:center;padding:0 var(--space-sm);gap:0;flex-shrink:0}
-@media(min-width:768px){.ba-arrows{display:flex}}
-.ba-arrows__spacer{height:60px;display:flex;align-items:center}
-@media(min-width:1440px){.ba-arrows__spacer{height:80px}}
-@media(min-width:1920px){.ba-arrows__spacer{height:96px}}
-.ba-arrows__spacer:first-child{height:auto;padding:16px 0}
-@media(min-width:1440px){.ba-arrows__spacer:first-child{padding:32px 0}}
-@media(min-width:1920px){.ba-arrows__spacer:first-child{padding:40px 0}}
-.ba-arrow-icon{width:24px;height:24px;stroke:var(--color-accent);fill:none}
-.ba-message{text-align:center;margin-top:var(--space-lg);padding:var(--space-md);border-radius:var(--radius-card);background:rgba(27,58,92,0.02)}
-.ba-message__main{font-size:var(--text-h2);color:var(--color-primary);font-weight:700;letter-spacing:-0.01em}
-.ba-message__sub{font-size:var(--text-body);color:var(--color-text-secondary);margin-top:var(--space-sm);line-height:1.6}
+/* Exhibition overrides */
+@media (min-width: 1920px) {
+  :root {
+    --text-hero: 80px;
+    --text-h1: 56px;
+    --text-h2: 38px;
+    --text-body-lg: 28px;
+    --text-body: 22px;
+    --text-caption: 16px;
+    --space-md: 40px;
+    --space-lg: 80px;
+    --space-xl: 160px;
+  }
+}
 
-/* ===== S7: Risk List ===== */
-.risk-list{max-width:1100px;margin:0 auto;background:var(--color-bg-white);border:0.5px solid var(--color-border);border-radius:var(--radius-card);box-shadow:var(--shadow-elevated);overflow:hidden;position:relative}
-.risk-list::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:linear-gradient(to bottom,var(--color-accent),var(--color-warning));border-radius:4px 0 0 4px}
-@media(min-width:1440px){.risk-list{max-width:1200px}}
-@media(min-width:1920px){.risk-list{max-width:1300px}}
-.risk-item{display:flex;align-items:center;gap:var(--space-md);padding:16px 32px;border-bottom:0.5px solid var(--color-border)}
-@media(min-width:1440px){.risk-item{padding:24px 48px}}
-@media(min-width:1920px){.risk-item{padding:32px 64px}}
-.risk-item:last-child{border-bottom:none}
-.risk-item__num{font-family:var(--font-mono);font-size:var(--text-caption);color:var(--color-accent);font-weight:700;flex-shrink:0;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(232,145,58,0.08)}
-.risk-item__text{font-size:var(--text-body-lg);color:var(--color-text-primary)}
-.risk-item:nth-child(3) .risk-item__num,.risk-item:nth-child(4) .risk-item__num{background:rgba(229,72,77,0.08);color:var(--color-warning)}
-.risk-item:nth-child(4) .risk-item__text{font-weight:600}
-.section__heading .heading-accent{color:var(--color-accent)}
+/* ===== ANIMATIONS ===== */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); opacity: 0.8; }
+  50% { transform: translateY(8px); opacity: 0.4; }
+}
+@keyframes flashOk {
+  0% { background: rgba(48, 164, 108, 0.25); }
+  100% { background: transparent; }
+}
+@keyframes flashWarn {
+  0% { background: rgba(229, 72, 77, 0.2); }
+  100% { background: transparent; }
+}
+@keyframes logSlide {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+@keyframes navPillSlide {
+  from { opacity: 0; transform: scaleX(0.8); }
+  to { opacity: 1; transform: scaleX(1); }
+}
 
-/* ===== S8: Excel x AI ===== */
-.exai{max-width:1300px;margin:0 auto}
-@media(min-width:1440px){.exai{max-width:1400px}}
-@media(min-width:1920px){.exai{max-width:1600px}}
-.exai__grid{display:flex;flex-direction:column;gap:var(--space-md);align-items:stretch}
-@media(min-width:768px){.exai__grid{flex-direction:row;align-items:stretch;gap:0}}
-.exai__card{flex:1;border-radius:var(--radius-card);overflow:hidden;border:0.5px solid var(--color-border);box-shadow:var(--shadow-card);background:var(--color-bg-white)}
-.exai__card-header{padding:16px 32px;font-size:var(--text-h2);font-weight:600}
-@media(min-width:1440px){.exai__card-header{padding:24px 48px}}
-@media(min-width:1920px){.exai__card-header{padding:32px 64px}}
-.exai__card--excel .exai__card-header{background:rgba(27,58,92,0.06);color:var(--color-primary);border-bottom:2px solid rgba(27,58,92,0.1)}
-.exai__card--ai .exai__card-header{background:rgba(232,145,58,0.06);color:var(--color-accent);border-bottom:2px solid rgba(232,145,58,0.1)}
-.exai__card-body{padding:16px 32px}
-@media(min-width:1440px){.exai__card-body{padding:24px 48px}}
-@media(min-width:1920px){.exai__card-body{padding:32px 64px}}
-.exai__item{font-size:var(--text-body);color:var(--color-text-primary);padding:8px 0;border-bottom:0.5px solid var(--color-border)}
-.exai__item:last-child{border-bottom:none}
-.exai__center{display:none;flex-direction:column;align-items:center;justify-content:center;padding:0 var(--space-sm);flex-shrink:0;min-width:140px;position:relative}
-@media(min-width:768px){.exai__center{display:flex}}
-.exai__center-label{font-size:var(--text-h2);color:var(--color-accent);font-weight:700;text-shadow:0 0 20px rgba(232,145,58,0.2);position:relative;z-index:1}
-.exai__center-line{width:2px;height:40px;background:linear-gradient(to bottom,transparent,var(--color-accent),transparent);margin:8px 0}
-.exai__center-arrows{display:flex;align-items:center;gap:4px}
-.exai__center-arrows svg{width:32px;height:32px;stroke:var(--color-accent);fill:none}
-.exai__center::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:90px;height:90px;background:radial-gradient(circle,rgba(232,145,58,0.12),transparent 70%);border-radius:50%;animation:connectorPulse 3s ease-in-out infinite}
-@keyframes connectorPulse{0%,100%{opacity:0.6;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.15)}}
-.exai__message{text-align:center;font-size:var(--text-body-lg);color:var(--color-primary);font-weight:600;margin-top:var(--space-lg);max-width:1100px;margin-left:auto;margin-right:auto;padding:var(--space-sm) var(--space-md);border-radius:var(--radius-card);background:rgba(27,58,92,0.02)}
-@media(min-width:1920px){.exai__message{max-width:1400px}}
+/* ===== SCROLL SNAP ===== */
+.scroll-container {
+  scroll-snap-type: y proximity;
+  overflow-y: scroll;
+  height: 100vh;
+}
 
-/* ===== S9: CTA ===== */
-.cta{text-align:center;position:relative;z-index:1}
-.cta__main{font-size:var(--text-hero);font-weight:700;color:var(--color-text-inverse);line-height:1.2;max-width:1100px;margin:0 auto;letter-spacing:-0.02em}
-@media(min-width:1920px){.cta__main{max-width:1400px}}
-.cta__action{font-size:var(--text-h1);font-weight:700;color:var(--color-accent);margin-top:var(--space-md);text-shadow:0 0 40px rgba(232,145,58,0.3);position:relative;display:inline-block}
-.cta__action::after{content:'';position:absolute;bottom:-4px;left:10%;right:10%;height:2px;background:linear-gradient(to right,transparent,var(--color-accent),transparent);opacity:0.4}
-.cta__sub{font-size:var(--text-body-lg);color:rgba(255,255,255,0.55);margin-top:var(--space-sm)}
-.cta__divider{width:40%;max-width:400px;height:0.5px;background:linear-gradient(to right,transparent,rgba(255,255,255,0.15),transparent);margin:var(--space-lg) auto}
-.cta__tagline{font-size:var(--text-body);color:rgba(255,255,255,0.4);letter-spacing:0.06em}
-.cta__company{font-size:var(--text-body);color:rgba(255,255,255,0.3);margin-top:var(--space-xs);letter-spacing:0.04em}
+/* ===== SP-BR ===== */
+.sp-br { display: none; }
+@media (max-width: 767px) { .sp-br { display: initial; } }
 
-/* ===== S10: Demo ===== */
-.demo-section{padding-top:calc(56px + var(--space-lg));padding-bottom:var(--space-xl);min-height:100vh}
-.demo-section .section__inner{max-width:1400px}
-@media(min-width:1440px){.demo-section .section__inner{max-width:1400px}}
-@media(min-width:1920px){.demo-section .section__inner{max-width:1700px}}
-.demo__intro{font-size:var(--text-body);color:var(--color-text-secondary);text-align:center;margin-bottom:var(--space-md);display:flex;align-items:center;justify-content:center;gap:8px}
-.demo__intro svg{width:20px;height:20px;stroke:var(--color-accent);fill:none;flex-shrink:0}
-.demo-toggle{display:flex;justify-content:center;margin:0 auto var(--space-md)}
-.demo-toggle__inner{display:inline-flex;background:var(--color-bg-light);border-radius:var(--radius-pill);padding:5px;border:0.5px solid var(--color-border);box-shadow:var(--shadow-card)}
-.demo-toggle__btn{padding:12px 32px;border-radius:var(--radius-pill);font-size:var(--text-body);font-weight:600;transition:all var(--duration-fast) var(--ease-spring);color:var(--color-text-secondary)}
-@media(min-width:768px){.demo-toggle__btn{padding:14px 40px}}
-@media(min-width:1440px){.demo-toggle__btn{padding:16px 48px;font-size:var(--text-body-lg)}}
-.demo-toggle__btn--active{background:var(--color-bg-white);box-shadow:0 1px 3px rgba(0,0,0,0.1),0 4px 12px rgba(0,0,0,0.06);color:var(--color-text-primary)}
-.demo-toggle__btn--active[data-mode="dbsheet"]{background:var(--color-primary);color:var(--color-text-inverse);box-shadow:0 1px 3px rgba(27,58,92,0.2),0 4px 12px rgba(27,58,92,0.15)}
-.demo-container{display:flex;flex-direction:column;border:0.5px solid rgba(0,0,0,0.08);border-radius:var(--radius-card);box-shadow:0 0.5px 0 rgba(0,0,0,0.04),0 8px 24px rgba(0,0,0,0.06),0 24px 56px rgba(0,0,0,0.06),0 0 0 0.5px rgba(0,0,0,0.03);overflow:hidden;background:var(--color-bg-white);min-height:520px}
-@media(min-width:900px){.demo-container{flex-direction:row;min-height:520px}}
-@media(min-width:1440px){.demo-container{min-height:600px}}
-@media(min-width:1920px){.demo-container{min-height:700px}}
+/* ===== HEADER ===== */
+.header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  height: 56px;
+  background: var(--color-bg-frosted-dark);
+  border-bottom: 0.5px solid var(--color-border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-md);
+}
 
-/* Spreadsheet */
-.demo-sheet{flex:1;display:flex;flex-direction:column;min-width:0}
-.demo-sheet__toolbar{display:flex;align-items:center;gap:10px;padding:11px 16px;background:linear-gradient(to bottom,#FAFAFA,#F0F0F2);border-bottom:0.5px solid var(--color-border)}
-.demo-sheet__dots{display:flex;gap:7px}
-.demo-sheet__dot{width:12px;height:12px;border-radius:50%;box-shadow:inset 0 -0.5px 1px rgba(0,0,0,0.1)}
-.demo-sheet__dot--r{background:linear-gradient(to bottom,#EC6A5E,#E14E42)}
-.demo-sheet__dot--y{background:linear-gradient(to bottom,#F4BF4F,#E6A930)}
-.demo-sheet__dot--g{background:linear-gradient(to bottom,#61C554,#4DB83D)}
-.demo-sheet__filename{font-family:var(--font-mono);font-size:13px;color:var(--color-text-secondary)}
-.demo-sheet__formula{display:flex;align-items:center;gap:8px;padding:6px 16px;background:var(--color-bg-white);border-bottom:0.5px solid var(--color-border);font-family:var(--font-mono);font-size:12px;color:var(--color-text-secondary)}
-.demo-sheet__formula-ref{background:var(--color-bg-light);padding:2px 8px;border-radius:4px;font-weight:600;color:var(--color-text-primary)}
-.demo-sheet__formula-val{margin-left:4px}
-.demo-sheet__grid{flex:1;overflow:auto}
-.demo-grid{width:100%;border-collapse:collapse;font-family:var(--font-mono);font-size:13px}
-@media(min-width:1920px){.demo-grid{font-size:15px}}
-.demo-grid th,.demo-grid td{border-right:0.5px solid var(--color-border);border-bottom:0.5px solid var(--color-border);padding:8px 12px;white-space:nowrap}
-@media(min-width:1920px){.demo-grid th,.demo-grid td{padding:12px 16px}}
-.demo-grid th{background:var(--color-bg-light);color:var(--color-text-secondary);font-weight:500;text-align:center;position:sticky;top:0;z-index:2}
-.demo-grid .row-num{background:var(--color-bg-light);color:var(--color-text-secondary);text-align:center;width:48px;font-weight:500}
-.demo-grid td.cell-name{text-align:left}
-.demo-grid td.cell-num{text-align:right}
-.demo-grid td[contenteditable]{cursor:text;transition:background 0.3s,box-shadow 0.3s}
-.demo-grid td[contenteditable]:focus{background:rgba(232,145,58,0.06);box-shadow:inset 0 0 0 2px var(--color-accent),0 0 8px rgba(232,145,58,0.12);outline:none}
-@keyframes flashOk{0%{background:rgba(48,164,108,0.25)}100%{background:transparent}}
-@keyframes flashWarn{0%{background:rgba(229,72,77,0.2)}100%{background:transparent}}
-.flash-ok{animation:flashOk 0.6s ease-out}
-.flash-warn{animation:flashWarn 0.6s ease-out}
+@supports not (backdrop-filter: blur(1px)) {
+  .header { background: rgba(15, 38, 64, 0.97); }
+}
+@supports (backdrop-filter: blur(1px)) {
+  .header { backdrop-filter: blur(20px) saturate(180%); }
+}
 
-/* Right Panel */
-.demo-panel{width:100%;border-top:0.5px solid var(--color-border);display:flex;flex-direction:column;min-height:300px}
-@media(min-width:900px){.demo-panel{width:440px;border-top:none;border-left:0.5px solid var(--color-border)}}
-@media(min-width:1920px){.demo-panel{width:520px}}
-.demo-panel__tabs{display:flex;border-bottom:0.5px solid var(--color-border);background:var(--color-bg-light);padding:2px}
-.demo-panel__tab{flex:1;padding:11px;font-size:12px;font-weight:600;text-align:center;color:var(--color-text-secondary);border-bottom:2px solid transparent;border-radius:6px 6px 0 0;transition:all var(--duration-fast);cursor:pointer}
-@media(hover:hover) and (pointer:fine){.demo-panel__tab:hover{background:rgba(0,0,0,0.02);color:var(--color-text-primary)}}
-.demo-panel__tab--active{color:var(--color-primary);border-bottom-color:var(--color-primary);background:var(--color-bg-white);box-shadow:0 -1px 3px rgba(0,0,0,0.04)}
-.demo-panel__content{flex:1;overflow-y:auto;padding:16px}
-.demo-panel__empty{color:var(--color-text-secondary);font-size:13px;text-align:center;padding:var(--space-lg) var(--space-sm);line-height:1.6}
+.header__logo {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-text-inverse);
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.header__logo span { color: var(--color-accent); }
 
-/* Log Items */
-@keyframes logSlide{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
-.demo__log-item{padding:10px 12px;margin-bottom:8px;border-radius:var(--radius-card-inner);font-size:12px;line-height:1.5;animation:logSlide 0.4s var(--ease-spring)}
-.demo__log-item--warn{background:rgba(229,72,77,0.06);border-left:3px solid var(--color-warning)}
-.demo__log-item--ok{background:rgba(48,164,108,0.06);border-left:3px solid var(--color-success)}
-.demo__log-time{font-family:var(--font-mono);font-size:11px;color:var(--color-text-secondary)}
-.demo__log-tag{display:inline-block;font-size:10px;font-weight:600;padding:2px 6px;border-radius:4px;margin-left:6px}
-.demo__log-tag--warn{background:rgba(229,72,77,0.1);color:var(--color-warning)}
-.demo__log-tag--ok{background:rgba(48,164,108,0.1);color:var(--color-success)}
-.demo__log-text{margin-top:4px;color:var(--color-text-primary)}
+.header__nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.header__nav::-webkit-scrollbar { display: none; }
 
-/* SQL Block */
-.demo__sql{background:var(--color-primary-dark);border-radius:var(--radius-card-inner);padding:12px;margin-bottom:8px;font-family:var(--font-mono);font-size:11px;line-height:1.6;color:var(--color-text-inverse);animation:logSlide 0.4s var(--ease-spring);overflow-x:auto}
-.sql-kw{color:#7CB7FF}
-.sql-val{color:#F5B870}
-.sql-ok{display:inline-block;background:rgba(48,164,108,0.15);color:var(--color-success);padding:2px 6px;border-radius:4px;margin-top:4px}
+.nav-link {
+  color: rgba(255,255,255,0.65);
+  text-decoration: none;
+  font-size: var(--text-caption);
+  font-weight: 500;
+  padding: 5px 10px;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  transition: color var(--duration-fast), background var(--duration-fast) var(--ease-spring);
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+.nav-link:hover { color: #fff; background: rgba(255,255,255,0.1); }
+.nav-link.active {
+  color: #fff;
+  background: rgba(232, 145, 58, 0.22);
+}
 
-/* DB Table */
-.demo__db{margin-top:12px;border:0.5px solid var(--color-border);border-radius:var(--radius-card-inner);overflow:hidden;animation:logSlide 0.4s var(--ease-spring)}
-.demo__db table{width:100%;border-collapse:collapse;font-family:var(--font-mono);font-size:11px}
-.demo__db th{background:var(--color-primary);color:white;padding:6px 8px;font-weight:600;text-align:center}
-.demo__db td{padding:6px 8px;text-align:center;border-bottom:0.5px solid var(--color-border)}
-.demo__db-row--flash{animation:flashOk 0.8s ease-out}
+/* ===== SECTION BASE ===== */
+.section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: calc(56px + var(--space-lg)) var(--space-sm) var(--space-lg);
+  scroll-snap-align: start;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
+}
+.section--snap-none { scroll-snap-align: none; }
+
+.section__inner {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+@media (min-width: 1440px) { .section__inner { max-width: 1440px; } }
+@media (min-width: 1920px) { .section__inner { max-width: 1700px; } }
+
+.section__heading {
+  font-size: var(--text-h1);
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin-bottom: var(--space-lg);
+}
+
+/* ===== REVEAL ANIMATIONS ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity var(--duration-slow) var(--ease-spring), transform var(--duration-slow) var(--ease-spring);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-60px);
+  transition: opacity var(--duration-slow) var(--ease-spring), transform var(--duration-slow) var(--ease-spring);
+}
+.reveal-left.visible { opacity: 1; transform: translateX(0); }
+.reveal-right {
+  opacity: 0;
+  transform: translateX(60px);
+  transition: opacity var(--duration-slow) var(--ease-spring), transform var(--duration-slow) var(--ease-spring);
+}
+.reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+/* ===== SECTION 1: 認 ===== */
+.s1 {
+  background: radial-gradient(ellipse at 50% 30%, var(--color-primary) 0%, var(--color-primary-dark) 70%);
+  text-align: center;
+}
+
+.s1__hero {
+  font-size: var(--text-hero);
+  font-weight: 700;
+  color: var(--color-text-inverse);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  max-width: 1400px;
+  opacity: 0;
+  transform: translateY(30px);
+  filter: blur(8px);
+  transition: opacity var(--duration-slow) var(--ease-spring), transform var(--duration-slow) var(--ease-spring), filter var(--duration-slow) var(--ease-spring);
+}
+.s1__hero.visible { opacity: 1; transform: translateY(0); filter: blur(0); }
+.s1__hero .accent { color: var(--color-accent); }
+
+.s1__sub {
+  font-size: var(--text-body-lg);
+  color: rgba(255,255,255,0.62);
+  margin-top: var(--space-md);
+  line-height: 1.6;
+  max-width: 900px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--duration-normal) var(--ease-smooth), transform var(--duration-normal) var(--ease-smooth);
+  transition-delay: 0.7s;
+}
+.s1__sub.visible { opacity: 1; transform: translateY(0); }
+
+.s1__scroll-hint {
+  margin-top: var(--space-xl);
+  opacity: 0;
+  transition: opacity var(--duration-normal);
+  transition-delay: 1.4s;
+}
+.s1__scroll-hint.visible { opacity: 1; }
+.s1__scroll-hint svg { animation: bounce 2.5s ease-in-out infinite; }
+
+/* ===== SECTION 2: 思 市場構造 ===== */
+.s2 { background: var(--color-bg-light); }
+.s2 .section__heading { color: var(--color-text-primary); }
+
+.layer-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 960px;
+  margin: 0 auto;
+  width: 100%;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  box-shadow: var(--shadow-elevated);
+  border: 0.5px solid var(--color-border);
+}
+@media (min-width: 1440px) { .layer-cards { max-width: 1100px; } }
+@media (min-width: 1920px) { .layer-cards { max-width: 1400px; } }
+
+.layer-card {
+  background: var(--color-bg-white);
+  border-bottom: 0.5px solid var(--color-border);
+  display: grid;
+  grid-template-columns: 6px auto 1fr;
+  align-items: stretch;
+  transition: background var(--duration-fast);
+}
+.layer-card:last-child { border-bottom: none; }
+.layer-card:hover { background: #fafafa; }
+
+.layer-card__stripe {
+  min-height: 100%;
+}
+.layer-card--erp .layer-card__stripe { background: var(--color-before); }
+.layer-card--saas .layer-card__stripe { background: var(--color-primary); }
+.layer-card--excel .layer-card__stripe { background: var(--color-accent); }
+
+.layer-card__badge-wrap {
+  display: flex;
+  align-items: flex-start;
+  padding: var(--space-md) var(--space-sm) var(--space-md) var(--space-md);
+  padding-left: 24px;
+}
+.layer-card__badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.layer-card--erp .layer-card__badge { background: rgba(134,134,139,0.12); color: var(--color-before); }
+.layer-card--saas .layer-card__badge { background: rgba(27,58,92,0.1); color: var(--color-primary); }
+.layer-card--excel .layer-card__badge { background: rgba(232,145,58,0.12); color: var(--color-accent); }
+
+.layer-card__body {
+  padding: var(--space-md) var(--space-md) var(--space-md) var(--space-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+@media (min-width: 768px) {
+  .layer-card__body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 6px 24px;
+    padding: var(--space-md) var(--space-lg) var(--space-md) var(--space-sm);
+  }
+  .layer-card__title { grid-column: 1 / -1; }
+}
+@media (min-width: 1440px) {
+  .layer-card__badge-wrap { padding-left: var(--space-lg); }
+  .layer-card__body { padding: var(--space-lg) var(--space-xl) var(--space-lg) var(--space-sm); }
+  .layer-card__badge { width: 44px; height: 44px; font-size: 20px; }
+}
+@media (min-width: 1920px) {
+  .layer-card__body { padding: 40px 80px 40px var(--space-sm); }
+}
+
+.layer-card__title {
+  font-size: var(--text-h2);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+.layer-card__products {
+  font-size: var(--text-body);
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+.layer-card__features {
+  font-size: var(--text-body);
+  color: var(--color-text-secondary);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: flex-start;
+  align-content: flex-start;
+}
+.feature-tag {
+  background: var(--color-bg-light);
+  border: 0.5px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  padding: 3px 10px;
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+/* ===== SECTION 3: 思 立ち位置 ===== */
+.s3 { background: var(--color-bg-white); }
+.s3 .section__heading { color: var(--color-text-primary); }
+
+.position-wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+  width: 100%;
+}
+@media (min-width: 1440px) { .position-wrapper { max-width: 1100px; } }
+@media (min-width: 1920px) { .position-wrapper { max-width: 1400px; } }
+
+.position-layer {
+  background: var(--color-bg-white);
+  border: 0.5px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: var(--space-sm) var(--space-md);
+  opacity: 0.4;
+}
+
+.position-connector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: 12px 0;
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-spring);
+  transition-delay: 0.8s;
+}
+.position-connector.visible { opacity: 1; }
+
+.position-dbsheet-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(232, 145, 58, 0.1);
+  border: 1px solid rgba(232, 145, 58, 0.3);
+  border-radius: var(--radius-pill);
+  padding: 8px 24px;
+  font-size: var(--text-h2);
+  font-weight: 700;
+  color: var(--color-accent);
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity var(--duration-normal) var(--ease-spring), transform var(--duration-normal) var(--ease-spring);
+  transition-delay: 0.6s;
+}
+.position-dbsheet-label.visible { opacity: 1; transform: scale(1); }
+
+.position-keymsg {
+  text-align: center;
+  margin-top: var(--space-lg);
+  font-size: var(--text-body-lg);
+  font-weight: 600;
+  color: var(--color-primary);
+  opacity: 0;
+  transition: opacity var(--duration-normal);
+  transition-delay: 1.1s;
+}
+.position-keymsg.visible { opacity: 1; }
+
+/* ===== SECTION 4: 鳴 非代替宣言 ===== */
+.s4 {
+  background: radial-gradient(ellipse at 50% 30%, var(--color-primary) 0%, var(--color-primary-dark) 70%);
+  text-align: center;
+}
+.s4 .section__heading { color: var(--color-text-inverse); }
+
+.declaration-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.declaration-item {
+  font-size: var(--text-body-lg);
+  color: rgba(255,255,255,0.82);
+  line-height: 2.0;
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity var(--duration-normal) var(--ease-spring), transform var(--duration-normal) var(--ease-spring);
+}
+.declaration-item.visible { opacity: 1; transform: translateX(0); }
+.declaration-item .accent { color: var(--color-accent); }
+
+/* ===== SECTION 5: 鳴 本当の競合 ===== */
+.s5 { background: var(--color-bg-white); }
+.s5 .section__heading { color: var(--color-text-primary); }
+
+.competitor-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+  max-width: 1000px;
+  margin: 0 auto;
+  width: 100%;
+}
+@media (min-width: 768px) { .competitor-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 1440px) { .competitor-grid { max-width: 1200px; } }
+@media (min-width: 1920px) { .competitor-grid { max-width: 1500px; } }
+
+.competitor-card {
+  background: var(--color-bg-light);
+  border: 0.5px solid var(--color-border);
+  border-top: 3px solid var(--color-before);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-sm);
+  transition: transform var(--duration-fast) var(--ease-spring), box-shadow var(--duration-fast);
+}
+.competitor-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-elevated); }
+
+.competitor-card__icon {
+  width: 48px;
+  height: 48px;
+  color: var(--color-before);
+}
+.competitor-card__text {
+  font-size: var(--text-body-lg);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  line-height: 1.4;
+}
+
+.competitor-keymsg {
+  text-align: center;
+  margin-top: var(--space-lg);
+  font-size: var(--text-body-lg);
+  font-weight: 600;
+  color: var(--color-primary);
+}
+.competitor-keymsg .accent { color: var(--color-accent); }
+
+/* ===== SECTION 6: 鳴 脱固定業務 ===== */
+.s6 { background: var(--color-bg-light); }
+.s6 .section__heading { color: var(--color-text-primary); }
+
+/* Concept diagram for 脱固定業務 */
+.concept-diagram {
+  max-width: 1000px;
+  margin: 0 auto var(--space-lg);
+  width: 100%;
+  background: var(--color-bg-white);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  border: 0.5px solid var(--color-border);
+  overflow: hidden;
+}
+@media (min-width: 1440px) { .concept-diagram { max-width: 1200px; } }
+@media (min-width: 1920px) { .concept-diagram { max-width: 1600px; } }
+
+.concept-diagram__header {
+  background: var(--color-primary-dark);
+  color: rgba(255,255,255,0.6);
+  font-size: var(--text-caption);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 10px var(--space-md);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.concept-diagram__body {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0;
+}
+
+.concept-col {
+  padding: var(--space-sm) var(--space-md);
+}
+@media (min-width: 1024px) { .concept-col { padding: var(--space-md) var(--space-lg); } }
+
+.concept-col--before { background: rgba(134,134,139,0.06); border-right: 0.5px solid var(--color-border); }
+.concept-col--after { background: rgba(27,58,92,0.04); }
+
+.concept-col__label {
+  font-size: var(--text-caption);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-sm);
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  display: inline-block;
+}
+.concept-col--before .concept-col__label {
+  color: #fff;
+  background: var(--color-before);
+}
+.concept-col--after .concept-col__label {
+  color: #fff;
+  background: var(--color-after);
+}
+
+.concept-col__subtitle {
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-md);
+}
+
+.concept-row {
+  display: flex;
+  align-items: center;
+  min-height: 56px;
+  border-top: 0.5px solid var(--color-border);
+  opacity: 0;
+  transform: translateY(15px);
+  transition: opacity var(--duration-fast) var(--ease-spring), transform var(--duration-fast) var(--ease-spring);
+}
+.concept-row.visible { opacity: 1; transform: translateY(0); }
+
+.concept-row__text {
+  font-size: var(--text-body-lg);
+  font-weight: 500;
+  padding: 12px 0;
+  line-height: 1.4;
+}
+.concept-col--before .concept-row__text { color: var(--color-text-secondary); }
+.concept-col--after .concept-row__text { color: var(--color-primary); font-weight: 700; }
+
+.concept-arrows {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  border-right: 0.5px solid var(--color-border);
+  padding: 0 16px;
+}
+
+.concept-arrow-item {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 0.5px solid var(--color-border);
+  width: 100%;
+}
+.concept-arrow-item:first-child { margin-top: calc(var(--text-caption) * 2 + var(--space-sm) * 2 + var(--text-caption) * 1.5 + var(--space-md)); }
+
+/* BA Container for standard before/after */
+.ba-container {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 80px 1fr;
+  gap: 0;
+  width: 100%;
+  align-items: stretch;
+}
+@media (min-width: 1440px) { .ba-container { max-width: 1600px; } }
+@media (min-width: 1920px) { .ba-container { max-width: 1700px; } }
+
+@media (max-width: 767px) {
+  .ba-container { grid-template-columns: 1fr; }
+  .ba-arrows { display: none; }
+}
+
+.ba-card {
+  background: var(--color-bg-white);
+  border: 0.5px solid var(--color-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+.ba-card--after {
+  box-shadow: var(--shadow-elevated);
+  border-left: 3px solid var(--color-accent);
+}
+
+.ba-card__header {
+  padding: var(--space-sm) var(--space-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+.ba-card--before .ba-card__header { background: var(--color-before); }
+.ba-card--after .ba-card__header { background: var(--color-after); }
+.ba-card__header-text {
+  font-size: var(--text-h2);
+  font-weight: 600;
+  color: #fff;
+}
+.ba-card__header-sub {
+  font-size: var(--text-caption);
+  color: rgba(255,255,255,0.65);
+}
+
+.ba-row {
+  display: flex;
+  align-items: center;
+  min-height: 60px;
+  padding: var(--space-sm) var(--space-md);
+  border-top: 0.5px solid var(--color-border);
+  font-size: var(--text-body-lg);
+  opacity: 0;
+  transform: translateY(15px);
+  transition: opacity var(--duration-fast) var(--ease-spring), transform var(--duration-fast) var(--ease-spring);
+}
+.ba-row.visible { opacity: 1; transform: translateY(0); }
+.ba-card--before .ba-row { color: var(--color-text-secondary); }
+.ba-card--after .ba-row { color: var(--color-text-primary); font-weight: 600; }
+
+@media (min-width: 1440px) {
+  .ba-row { min-height: 80px; padding: var(--space-sm) var(--space-lg); }
+}
+@media (min-width: 1920px) {
+  .ba-row { min-height: 96px; padding: var(--space-md) var(--space-xl); }
+}
+
+.ba-arrows {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 0;
+}
+.ba-arrow-row {
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-accent);
+  border-top: 0.5px solid var(--color-border);
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-spring), transform var(--duration-fast) var(--ease-spring);
+  transform: scale(0.5);
+}
+.ba-arrow-row.visible { opacity: 1; transform: scale(1); }
+.ba-arrow-row:first-child {
+  /* spacer for header */
+  border-top: none;
+  min-height: calc(60px + var(--space-sm) * 2 + var(--text-h2) + var(--text-caption));
+}
+@media (min-width: 1440px) { .ba-arrow-row { min-height: 80px; } }
+@media (min-width: 1920px) { .ba-arrow-row { min-height: 96px; } }
+
+.ba-keymsg {
+  text-align: center;
+  margin-top: var(--space-lg);
+  opacity: 0;
+  transition: opacity var(--duration-normal);
+  transition-delay: 1.4s;
+}
+.ba-keymsg.visible { opacity: 1; }
+.ba-keymsg__main {
+  font-size: var(--text-body-lg);
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: var(--space-xs);
+}
+.ba-keymsg__sub {
+  font-size: var(--text-body);
+  color: var(--color-text-secondary);
+}
+
+/* ===== SECTION 6 DIAGRAM: 脱固定業務 詳細図解 ===== */
+.fixed-biz-diagram {
+  max-width: 1300px;
+  margin: var(--space-xl) auto 0;
+  width: 100%;
+}
+@media (min-width: 1920px) { .fixed-biz-diagram { max-width: 1700px; } }
+
+.fbd-title {
+  text-align: center;
+  font-size: var(--text-h2);
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: var(--space-lg);
+}
+
+.fbd-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.fbd-row {
+  display: grid;
+  grid-template-columns: 1fr 48px 1fr;
+  gap: 0;
+  align-items: stretch;
+}
+@media (max-width: 767px) {
+  .fbd-row { grid-template-columns: 1fr; }
+  .fbd-sep { display: none; }
+}
+
+.fbd-cell {
+  padding: var(--space-sm) var(--space-md);
+  border: 0.5px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.fbd-cell:first-child {
+  border-radius: var(--radius-card) 0 0 0;
+  background: rgba(134,134,139,0.06);
+}
+.fbd-cell:last-child {
+  border-radius: 0 var(--radius-card) 0 0;
+  background: rgba(27,58,92,0.04);
+}
+
+.fbd-row:last-child .fbd-cell:first-child { border-radius: 0 0 0 var(--radius-card); }
+.fbd-row:last-child .fbd-cell:last-child { border-radius: 0 0 var(--radius-card) 0; }
+.fbd-row:not(:first-child) .fbd-cell { border-top: none; }
+.fbd-cell:first-child + .fbd-sep + .fbd-cell { border-left: none; }
+
+.fbd-cell--header-before { background: var(--color-before) !important; border-radius: var(--radius-card) 0 0 0 !important; }
+.fbd-cell--header-after { background: var(--color-after) !important; border-radius: 0 var(--radius-card) 0 0 !important; }
+
+.fbd-label {
+  font-size: var(--text-caption);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.9);
+}
+.fbd-label-sub { font-size: var(--text-caption); color: rgba(255,255,255,0.6); }
+
+.fbd-sep {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 0.5px solid var(--color-border);
+  border-bottom: 0.5px solid var(--color-border);
+}
+.fbd-row:first-child .fbd-sep { border: none; background: transparent; }
+
+.fbd-sep-arrow { color: var(--color-accent); }
+
+.fbd-item-before {
+  font-size: var(--text-body);
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.5;
+}
+.fbd-item-after {
+  font-size: var(--text-body);
+  color: var(--color-primary);
+  font-weight: 600;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.5;
+}
+.fbd-dot-before { color: var(--color-before); flex-shrink: 0; margin-top: 4px; }
+.fbd-dot-after { color: var(--color-success); flex-shrink: 0; margin-top: 4px; }
+
+/* ===== SECTION 7: 鳴 経営リスク ===== */
+.s7 { background: var(--color-bg-white); }
+.s7 .section__heading { color: var(--color-text-primary); }
+
+.risk-list {
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+  background: var(--color-bg-frosted);
+  border: 0.5px solid var(--color-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+@supports (backdrop-filter: blur(1px)) {
+  .risk-list { backdrop-filter: blur(20px) saturate(180%); }
+}
+@media (min-width: 1440px) { .risk-list { max-width: 1100px; } }
+@media (min-width: 1920px) { .risk-list { max-width: 1300px; } }
+
+.risk-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 0.5px solid var(--color-border);
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity var(--duration-normal) var(--ease-spring), transform var(--duration-normal) var(--ease-spring);
+}
+.risk-item:last-child { border-bottom: none; }
+.risk-item.visible { opacity: 1; transform: translateX(0); }
+
+@media (min-width: 1440px) { .risk-item { padding: 24px 48px; } }
+@media (min-width: 1920px) { .risk-item { padding: 32px 64px; } }
+
+.risk-item__num {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  font-weight: 700;
+  color: var(--color-accent);
+  flex-shrink: 0;
+  min-width: 32px;
+}
+.risk-item__text {
+  font-size: var(--text-body-lg);
+  color: var(--color-text-primary);
+  line-height: 1.5;
+}
+
+/* ===== SECTION 8: 示 Excel×AI ===== */
+.s8 { background: var(--color-bg-light); }
+.s8 .section__heading { color: var(--color-text-primary); }
+
+.exai-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+  max-width: 1300px;
+  margin: 0 auto;
+  width: 100%;
+}
+@media (min-width: 768px) { .exai-layout { grid-template-columns: 38% 24% 38%; } }
+@media (min-width: 1440px) { .exai-layout { max-width: 1600px; } }
+@media (min-width: 1920px) { .exai-layout { max-width: 1700px; } }
+
+.exai-card {
+  background: var(--color-bg-white);
+  border: 0.5px solid var(--color-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.exai-card__header {
+  padding: var(--space-sm) var(--space-md);
+}
+.exai-card--excel .exai-card__header { background: rgba(27,58,92,0.08); }
+.exai-card--ai .exai-card__header { background: rgba(232,145,58,0.1); }
+.exai-card__header-text {
+  font-size: var(--text-h2);
+  font-weight: 700;
+}
+.exai-card--excel .exai-card__header-text { color: var(--color-primary); }
+.exai-card--ai .exai-card__header-text { color: var(--color-accent); }
+
+.exai-list {
+  padding: var(--space-sm) var(--space-md);
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.exai-list li {
+  font-size: var(--text-body);
+  color: var(--color-text-primary);
+  padding: 6px 0;
+  border-bottom: 0.5px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.exai-list li:last-child { border-bottom: none; }
+.exai-list li::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.exai-card--excel .exai-list li::before { background: var(--color-primary); }
+.exai-card--ai .exai-list li::before { background: var(--color-accent); }
+
+.exai-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity var(--duration-normal) var(--ease-spring), transform var(--duration-normal) var(--ease-spring);
+  transition-delay: 0.7s;
+}
+.exai-center.visible { opacity: 1; transform: scale(1); }
+
+.exai-center__label {
+  font-size: var(--text-h2);
+  font-weight: 700;
+  color: var(--color-accent);
+  text-align: center;
+}
+.exai-center__line {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transition: transform var(--duration-normal) var(--ease-spring);
+  transition-delay: 0.9s;
+}
+.exai-center__line.visible { transform: scaleX(1); }
+.exai-center__arrow { color: var(--color-accent); font-size: var(--text-body-lg); }
+
+.exai-keymsg {
+  text-align: center;
+  margin-top: var(--space-lg);
+  font-size: var(--text-body-lg);
+  font-weight: 600;
+  color: var(--color-primary);
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 0;
+  transition: opacity var(--duration-normal);
+  transition-delay: 1.2s;
+}
+.exai-keymsg.visible { opacity: 1; }
+
+/* ===== SECTION 9: 示 CTA ===== */
+.s9 {
+  background: radial-gradient(ellipse at 50% 30%, var(--color-primary) 0%, var(--color-primary-dark) 70%);
+  text-align: center;
+  justify-content: center;
+}
+
+.s9__main {
+  font-size: var(--text-hero);
+  font-weight: 700;
+  color: var(--color-text-inverse);
+  margin-bottom: var(--space-md);
+  max-width: 1400px;
+  opacity: 0;
+  transform: translateY(20px);
+  filter: blur(8px);
+  transition: opacity var(--duration-slow) var(--ease-spring), transform var(--duration-slow) var(--ease-spring), filter var(--duration-slow);
+  transition-delay: 0.2s;
+}
+.s9__main.visible { opacity: 1; transform: translateY(0); filter: blur(0); }
+
+.s9__cta {
+  font-size: var(--text-h1);
+  font-weight: 700;
+  color: var(--color-accent);
+  margin-bottom: var(--space-md);
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity var(--duration-normal) var(--ease-spring), transform var(--duration-normal) var(--ease-spring);
+  transition-delay: 0.5s;
+}
+.s9__cta.visible { opacity: 1; transform: scale(1); }
+
+.s9__sub {
+  font-size: var(--text-body-lg);
+  color: rgba(255,255,255,0.62);
+  margin-bottom: var(--space-lg);
+  opacity: 0;
+  transition: opacity var(--duration-fast);
+  transition-delay: 0.8s;
+}
+.s9__sub.visible { opacity: 1; }
+
+.s9__divider {
+  width: 40%;
+  height: 0.5px;
+  background: rgba(255,255,255,0.15);
+  margin: var(--space-lg) auto;
+}
+
+.s9__tagline {
+  font-size: var(--text-body);
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.04em;
+  opacity: 0;
+  transition: opacity var(--duration-fast);
+  transition-delay: 1.1s;
+}
+.s9__tagline.visible { opacity: 1; }
+.s9__company {
+  font-size: var(--text-body);
+  color: rgba(255,255,255,0.35);
+  margin-top: 8px;
+  opacity: 0;
+  transition: opacity var(--duration-fast);
+  transition-delay: 1.1s;
+}
+.s9__company.visible { opacity: 1; }
+
+/* ===== SECTION 10: 応 Demo ===== */
+.s10 {
+  background: var(--color-bg-white);
+  scroll-snap-align: none;
+  min-height: 100vh;
+  padding: calc(56px + var(--space-lg)) var(--space-sm) var(--space-xl);
+}
+.s10 .section__heading { color: var(--color-text-primary); }
+
+.demo-intro {
+  text-align: center;
+  font-size: var(--text-body-lg);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.demo-toggle {
+  display: inline-flex;
+  background: var(--color-bg-light);
+  border-radius: var(--radius-pill);
+  padding: 4px;
+  border: 0.5px solid var(--color-border);
+  margin-bottom: var(--space-md);
+  box-shadow: var(--shadow-card);
+}
+
+.demo-toggle__btn {
+  padding: 10px 28px;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-caption);
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  color: var(--color-text-secondary);
+  transition: all var(--duration-fast) var(--ease-spring);
+  font-family: inherit;
+  white-space: nowrap;
+}
+.demo-toggle__btn--active {
+  background: var(--color-bg-white);
+  box-shadow: var(--shadow-card);
+  color: var(--color-text-primary);
+}
+.demo-toggle__btn[data-mode="dbsheet"].demo-toggle__btn--active {
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+}
+
+.demo-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 0.5px solid var(--color-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-elevated);
+  overflow: hidden;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: 520px;
+  width: 100%;
+}
+@media (min-width: 900px) { .demo-container { flex-direction: row; min-height: 600px; } }
+@media (min-width: 1440px) { .demo-container { max-width: 1400px; min-height: 650px; } }
+@media (min-width: 1920px) { .demo-container { max-width: 1700px; min-height: 700px; } }
+
+/* Left panel: spreadsheet */
+.demo-sheet {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg-white);
+}
+.demo-sheet__toolbar {
+  background: var(--color-bg-light);
+  border-bottom: 0.5px solid var(--color-border);
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.demo-sheet__dots { display: flex; gap: 6px; }
+.demo-sheet__dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+}
+.demo-sheet__dot--r { background: #FF5F57; }
+.demo-sheet__dot--y { background: #FEBC2E; }
+.demo-sheet__dot--g { background: #28C840; }
+.demo-sheet__filename {
+  font-size: var(--text-caption);
+  font-family: var(--font-mono);
+  color: var(--color-text-secondary);
+}
+.demo-sheet__formulabar {
+  background: var(--color-bg-white);
+  border-bottom: 0.5px solid var(--color-border);
+  padding: 6px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+}
+.demo-sheet__cellref { min-width: 40px; font-weight: 600; color: var(--color-primary); }
+.demo-sheet__fx { color: var(--color-text-secondary); }
+.demo-sheet__fxval { color: var(--color-text-primary); flex: 1; }
+
+.demo-grid {
+  flex: 1;
+  overflow: auto;
+  padding: 0;
+}
+.demo-grid table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+@media (min-width: 1440px) { .demo-grid table { font-size: 14px; } }
+@media (min-width: 1920px) { .demo-grid table { font-size: 15px; } }
+
+.demo-grid th, .demo-grid td {
+  border-right: 0.5px solid var(--color-border);
+  border-bottom: 0.5px solid var(--color-border);
+  padding: 8px 10px;
+  white-space: nowrap;
+}
+.demo-grid .row-num {
+  background: var(--color-bg-light);
+  text-align: center;
+  color: var(--color-text-secondary);
+  font-size: 11px;
+  width: 40px;
+  user-select: none;
+}
+.demo-grid .col-header {
+  background: var(--color-bg-light);
+  text-align: center;
+  color: var(--color-text-secondary);
+  font-size: 11px;
+  font-weight: 600;
+  user-select: none;
+}
+.demo-grid .num-cell { text-align: right; }
+.demo-grid .total-cell { text-align: right; font-weight: 600; color: var(--color-primary); }
+.demo-grid td[contenteditable="true"] {
+  cursor: text;
+  outline: none;
+}
+.demo-grid td[contenteditable="true"]:focus {
+  background: rgba(232,145,58,0.08);
+  box-shadow: inset 0 0 0 2px var(--color-accent);
+  position: relative;
+  z-index: 1;
+}
+
+.demo-result {
+  padding: var(--space-sm) var(--space-md);
+  border-top: 0.5px solid var(--color-border);
+  min-height: 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.demo-result__main {
+  font-size: var(--text-body);
+  font-weight: 600;
+  display: none;
+}
+.demo-result__sub {
+  font-size: var(--text-caption);
+  margin-top: 4px;
+  display: none;
+}
+
+/* Right panel */
+.demo-panel {
+  width: 100%;
+  border-top: 0.5px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg-white);
+  overflow: hidden;
+}
+@media (min-width: 900px) {
+  .demo-panel {
+    width: 440px;
+    border-top: none;
+    border-left: 0.5px solid var(--color-border);
+  }
+}
+
+.demo-panel__header {
+  background: var(--color-bg-light);
+  border-bottom: 0.5px solid var(--color-border);
+  padding: 8px 16px;
+  font-size: var(--text-caption);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+@supports (backdrop-filter: blur(1px)) {
+  .demo-panel__header { backdrop-filter: blur(10px); }
+}
+
+/* Excel mode panel */
+.demo-log-panel {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.demo-log-empty {
+  color: var(--color-text-secondary);
+  font-size: var(--text-caption);
+  text-align: center;
+  margin: auto;
+  padding: var(--space-lg) 0;
+}
+.demo-log-item {
+  padding: 10px 14px;
+  border-radius: var(--radius-card-inner);
+  font-size: var(--text-caption);
+  animation: logSlide 0.4s var(--ease-spring) both;
+}
+.demo-log-item--warn {
+  background: rgba(229,72,77,0.06);
+  border-left: 3px solid var(--color-warning);
+  color: var(--color-text-primary);
+}
+.demo-log-item__time {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  margin-bottom: 4px;
+}
+.demo-log-item__tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-right: 6px;
+}
+.demo-log-item--warn .demo-log-item__tag { background: rgba(229,72,77,0.12); color: var(--color-warning); }
+
+/* dbSheet tabs */
+.demo-tabs {
+  display: flex;
+  gap: 0;
+  background: var(--color-bg-light);
+  border-bottom: 0.5px solid var(--color-border);
+}
+.demo-tab {
+  padding: 10px 16px;
+  font-size: var(--text-caption);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  border: none;
+  background: none;
+  border-bottom: 2px solid transparent;
+  font-family: inherit;
+  transition: all var(--duration-fast);
+}
+.demo-tab.active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+  background: rgba(27,58,92,0.04);
+}
+
+/* SQL log panel */
+.demo-sql-panel {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.demo-sql-empty {
+  color: var(--color-text-secondary);
+  font-size: var(--text-caption);
+  text-align: center;
+  margin: auto;
+  padding: var(--space-lg) 0;
+}
+.demo-sql-block {
+  background: var(--color-primary-dark);
+  border-radius: var(--radius-card-inner);
+  padding: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.8;
+  animation: logSlide 0.4s var(--ease-spring) both;
+}
+.sql-kw { color: #7CB7FF; }
+.sql-val { color: #F5B870; }
+.sql-str { color: #F5B870; }
+.sql-cmt { color: rgba(255,255,255,0.35); }
+.sql-ok {
+  background: rgba(48,164,108,0.15);
+  color: var(--color-success);
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-top: 4px;
+  display: inline-block;
+}
+.demo-db-table {
+  margin-top: 8px;
+  border: 0.5px solid var(--color-border);
+  border-radius: var(--radius-card-inner);
+  overflow: hidden;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  animation: logSlide 0.4s var(--ease-spring) both;
+}
+.demo-db-table table { width: 100%; border-collapse: collapse; }
+.demo-db-table th {
+  background: var(--color-primary);
+  color: #fff;
+  padding: 5px 8px;
+  text-align: left;
+  font-weight: 600;
+}
+.demo-db-table td {
+  padding: 5px 8px;
+  border-top: 0.5px solid var(--color-border);
+  color: var(--color-text-primary);
+  background: var(--color-bg-white);
+}
+.demo-db-table .num { text-align: right; }
 
 /* BI Dashboard */
-.demo__bi{padding:0}
-.demo__bi-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
-.demo__bi-kpi{background:var(--color-bg-light);border-radius:var(--radius-card-inner);padding:14px 12px;text-align:center;border:0.5px solid var(--color-border);transition:border-color var(--duration-fast)}
-.demo__bi-kpi:first-child{border-color:rgba(27,58,92,0.15)}
-.demo__bi-kpi-label{font-size:10px;color:var(--color-text-secondary);font-weight:600;text-transform:uppercase;letter-spacing:0.05em}
-.demo__bi-kpi-value{font-size:20px;font-weight:700;font-family:var(--font-mono);color:var(--color-primary);margin-top:6px}
-.demo__bi-kpi-delta{font-size:11px;font-family:var(--font-mono);margin-top:3px;font-weight:600}
-.delta-up{color:var(--color-success)}
-.delta-down{color:var(--color-warning)}
-.demo__bi-chart{display:flex;align-items:flex-end;justify-content:space-around;height:120px;padding:0 8px;gap:8px;margin-bottom:12px}
-.demo__bi-bar-wrap{display:flex;flex-direction:column;align-items:center;flex:1;height:100%}
-.demo__bi-bar{width:100%;border-radius:4px 4px 0 0;transition:height 0.5s var(--ease-spring),background 0.3s;background:var(--color-primary);margin-top:auto}
-.demo__bi-bar--changed{background:var(--color-accent)}
-.demo__bi-bar-label{font-size:9px;font-family:var(--font-mono);color:var(--color-text-secondary);margin-top:4px;text-align:center}
-.demo__bi-msg{font-size:12px;color:var(--color-success);text-align:center;padding:8px;background:rgba(48,164,108,0.06);border-radius:var(--radius-card-inner)}
+.demo-bi-panel {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+.demo-kpi-row {
+  display: flex;
+  gap: 8px;
+}
+.demo-kpi-card {
+  flex: 1;
+  background: var(--color-bg-light);
+  border: 0.5px solid var(--color-border);
+  border-radius: var(--radius-card-inner);
+  padding: 10px;
+  text-align: center;
+}
+.demo-kpi-label {
+  font-size: 10px;
+  color: var(--color-text-secondary);
+  font-weight: 600;
+  margin-bottom: 4px;
+  letter-spacing: 0.04em;
+}
+.demo-kpi-val {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1;
+}
+.demo-kpi-delta {
+  font-size: 10px;
+  margin-top: 3px;
+  font-weight: 600;
+}
+.demo-kpi-delta--up { color: var(--color-success); }
+.demo-kpi-delta--down { color: var(--color-warning); }
 
-/* Knowledge */
-.demo__kn-item{padding:12px 14px;margin-bottom:10px;border-radius:var(--radius-card-inner);animation:logSlide 0.4s var(--ease-spring);border:0.5px solid transparent}
-.demo__kn-item--pattern{border-left:3px solid var(--color-info);background:rgba(59,130,246,0.03);border-color:rgba(59,130,246,0.08)}
-.demo__kn-item--suggestion{border-left:3px solid var(--color-accent);background:rgba(232,145,58,0.03);border-color:rgba(232,145,58,0.08)}
-.demo__kn-item--asset{border-left:3px solid var(--color-success);background:rgba(48,164,108,0.03);border-color:rgba(48,164,108,0.08)}
-.demo__kn-header{display:flex;align-items:center;gap:8px}
-.demo__kn-badge{font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px}
-.demo__kn-badge--pattern{background:rgba(59,130,246,0.1);color:var(--color-info)}
-.demo__kn-badge--suggestion{background:rgba(232,145,58,0.1);color:var(--color-accent)}
-.demo__kn-badge--asset{background:rgba(48,164,108,0.1);color:var(--color-success)}
-.demo__kn-title{font-size:12px;font-weight:600;color:var(--color-text-primary)}
-.demo__kn-desc{font-size:12px;color:var(--color-text-secondary);margin-top:4px;line-height:1.5}
-.demo__kn-counter{font-size:12px;color:var(--color-text-secondary);text-align:center;padding:8px;margin-top:8px;display:none}
+.demo-bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 120px;
+  padding: 0 8px;
+  border: 0.5px solid var(--color-border);
+  border-radius: var(--radius-card-inner);
+  background: var(--color-bg-white);
+  padding: 12px 12px 8px;
+}
+.demo-bar-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  height: 100%;
+  justify-content: flex-end;
+}
+.demo-bar {
+  width: 100%;
+  background: var(--color-primary);
+  border-radius: 4px 4px 0 0;
+  transition: height 0.5s var(--ease-spring), background 0.3s;
+  min-height: 4px;
+}
+.demo-bar--changed { background: var(--color-accent); }
+.demo-bar-name {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--color-text-secondary);
+  text-align: center;
+}
 
-/* Result Message */
-.demo__result{text-align:center;padding:var(--space-md);margin-top:var(--space-sm);border-radius:var(--radius-card);min-height:0;transition:all var(--duration-normal);animation:resultAppear 0.5s var(--ease-spring)}
-@keyframes resultAppear{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.demo__result--warn{background:rgba(229,72,77,0.04);border:0.5px solid rgba(229,72,77,0.12);box-shadow:0 2px 12px rgba(229,72,77,0.06)}
-.demo__result--ok{background:rgba(27,58,92,0.03);border:0.5px solid rgba(27,58,92,0.1);box-shadow:0 2px 12px rgba(27,58,92,0.04)}
-.demo__result-main{font-size:var(--text-body);font-weight:600}
-.demo__result--warn .demo__result-main{color:var(--color-warning)}
-.demo__result--ok .demo__result-main{color:var(--color-primary)}
-.demo__result-sub{font-size:14px;color:var(--color-text-secondary);margin-top:4px}
+.demo-bi-update-msg {
+  font-size: var(--text-caption);
+  color: var(--color-primary);
+  font-weight: 600;
+  text-align: center;
+  display: none;
+  padding: 8px;
+  background: rgba(27,58,92,0.06);
+  border-radius: var(--radius-card-inner);
+}
 
-.demo__guide{text-align:center;font-size:var(--text-body);color:var(--color-text-secondary);margin-top:var(--space-md)}
+/* Knowledge panel */
+.demo-kn-panel {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.demo-kn-empty {
+  color: var(--color-text-secondary);
+  font-size: var(--text-caption);
+  text-align: center;
+  margin: auto;
+  padding: var(--space-lg) 0;
+}
+.demo-kn-item {
+  border-radius: var(--radius-card-inner);
+  padding: 10px 12px;
+  border-left: 3px solid;
+  animation: logSlide 0.4s var(--ease-spring) both;
+}
+.demo-kn-item--pattern { background: rgba(59,130,246,0.06); border-left-color: var(--color-info); }
+.demo-kn-item--suggestion { background: rgba(232,145,58,0.06); border-left-color: var(--color-accent); }
+.demo-kn-item--asset { background: rgba(48,164,108,0.06); border-left-color: var(--color-success); }
+.demo-kn-header { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+.demo-kn-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.demo-kn-item--pattern .demo-kn-badge { background: rgba(59,130,246,0.1); color: var(--color-info); }
+.demo-kn-item--suggestion .demo-kn-badge { background: rgba(232,145,58,0.1); color: var(--color-accent); }
+.demo-kn-item--asset .demo-kn-badge { background: rgba(48,164,108,0.1); color: var(--color-success); }
+.demo-kn-title { font-size: var(--text-caption); font-weight: 600; color: var(--color-text-primary); }
+.demo-kn-desc { font-size: 11px; color: var(--color-text-secondary); line-height: 1.5; }
+.demo-kn-counter {
+  font-size: var(--text-caption);
+  color: var(--color-text-secondary);
+  text-align: center;
+  padding: 8px;
+  display: none;
+  font-weight: 600;
+}
+
+/* Demo footer */
+.demo-footer {
+  text-align: center;
+  margin-top: var(--space-md);
+  font-size: var(--text-body);
+  color: var(--color-text-secondary);
+}
+
+/* ===== MOBILE ADJUSTMENTS ===== */
+@media (max-width: 767px) {
+  .section { padding: calc(56px + 24px) 16px 24px; }
+  .header { padding: 0 16px; }
+  .header__nav { display: none; }
+  .ba-container { display: block; }
+  .ba-card--before { margin-bottom: var(--space-md); }
+  .exai-layout { grid-template-columns: 1fr; }
+}
+
+@media (min-width: 768px) {
+  .layer-card { padding: 24px 48px; }
+}
+
+/* ===== ACCESSIBILITY ===== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+  .reveal, .reveal-left, .reveal-right, .s1__hero, .s1__sub,
+  .s9__main, .s9__cta, .s9__sub, .s9__tagline, .s9__company,
+  .declaration-item, .ba-row, .ba-arrow-row, .risk-item,
+  .concept-row, .position-connector, .position-dbsheet-label, .position-keymsg,
+  .ba-keymsg, .exai-center, .exai-keymsg, .competitor-keymsg {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}
 </style>
 </head>
 <body>
-<a href="#main-content" class="skip-link">本文へスキップ</a>
 
+<!-- HEADER -->
 <header class="header" role="banner">
-<div class="header__logo">d<span>b</span>Sheet</div>
-<nav class="nav" aria-label="セクションナビゲーション">
-<a href="#section-1-nin" class="nav__link" data-nav="1">認</a>
-<a href="#section-2-market" class="nav__link" data-nav="2">市場</a>
-<a href="#section-3-position" class="nav__link" data-nav="3">位置</a>
-<a href="#section-4-non-substitution" class="nav__link" data-nav="4">宣言</a>
-<a href="#section-5-true-competitor" class="nav__link" data-nav="5">競合</a>
-<a href="#section-6-core-value" class="nav__link" data-nav="6">価値</a>
-<a href="#section-7-management-risk" class="nav__link" data-nav="7">リスク</a>
-<a href="#section-8-excel-ai" class="nav__link" data-nav="8">AI</a>
-<a href="#section-9-final-message" class="nav__link" data-nav="9">CTA</a>
-<a href="#section-10-taiken" class="nav__link" data-nav="10">体験</a>
-</nav>
+  <a href="#section-1-nin" class="header__logo" onclick="scrollToSection(1); return false;">db<span>Sheet</span></a>
+  <nav class="header__nav" role="navigation" aria-label="セクションナビ">
+    <button class="nav-link active" onclick="scrollToSection(1)" data-section="1">認</button>
+    <button class="nav-link" onclick="scrollToSection(2)" data-section="2">市場</button>
+    <button class="nav-link" onclick="scrollToSection(3)" data-section="3">位置</button>
+    <button class="nav-link" onclick="scrollToSection(4)" data-section="4">宣言</button>
+    <button class="nav-link" onclick="scrollToSection(5)" data-section="5">競合</button>
+    <button class="nav-link" onclick="scrollToSection(6)" data-section="6">価値</button>
+    <button class="nav-link" onclick="scrollToSection(7)" data-section="7">リスク</button>
+    <button class="nav-link" onclick="scrollToSection(8)" data-section="8">AI</button>
+    <button class="nav-link" onclick="scrollToSection(9)" data-section="9">CTA</button>
+    <button class="nav-link" onclick="scrollToSection(10)" data-section="10">体験</button>
+  </nav>
 </header>
 
-<main id="main-content">
-
-<!-- S1: 認（課題認識）-->
-<section id="section-1-nin" class="section section--dark section--fixed" aria-labelledby="heading-1">
-<div class="section__inner hero">
-<h1 id="heading-1" class="hero__main anim anim--blur" data-delay="200">Excel、まだ<span class="hero__accent">"捨てる側"</span>だと<br class="sp-br">思っていませんか？</h1>
-<p class="hero__sub anim anim--up" data-delay="700">AI時代に最初に捨てるべきものではなく、<br class="sp-br">最後まで残る"思考のインターフェイス"</p>
-</div>
-<div class="scroll-hint anim" data-delay="1400"><span class="scroll-hint__text">Scroll</span><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+<!-- SECTION 1: 認 -->
+<section class="section s1" id="section-1-nin" data-section="1">
+  <div class="section__inner" style="text-align:center;">
+    <h1 class="s1__hero" id="s1hero">
+      Excel、まだ<span class="accent">"捨てる側"</span>だと<br class="sp-br">
+      思っていませんか？
+    </h1>
+    <p class="s1__sub" id="s1sub">
+      AI時代に最初に捨てるべきものではなく、<br class="sp-br">
+      最後まで残る"思考のインターフェイス"
+    </p>
+    <div class="s1__scroll-hint" id="s1hint">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"/>
+      </svg>
+    </div>
+  </div>
 </section>
 
-<!-- S2: 思（市場構造）-->
-<section id="section-2-market" class="section section--light section--fixed" aria-labelledby="heading-2">
-<div class="section__inner">
-<h2 id="heading-2" class="section__heading anim">業界構造の三層</h2>
-<div class="layer-cards">
-<div class="layer-card anim anim--up" data-delay="300">
-<div class="layer-card__num">①</div>
-<div class="layer-card__body">
-<div class="layer-card__title">ERP・基幹層</div>
-<div class="layer-card__products">SAP / Oracle / フルスクラッチ基幹</div>
-<div class="layer-card__features">高額・重い・全体最適志向・変更コスト高</div>
-</div></div>
-<div class="layer-card anim anim--up" data-delay="500">
-<div class="layer-card__num">②</div>
-<div class="layer-card__body">
-<div class="layer-card__title">SaaS特化層</div>
-<div class="layer-card__products">Salesforce / kintone / 業務特化クラウド</div>
-<div class="layer-card__features">速い・パッケージ前提・業務を型に合わせる</div>
-</div></div>
-<div class="layer-card anim anim--up" data-delay="700">
-<div class="layer-card__num">③</div>
-<div class="layer-card__body">
-<div class="layer-card__title">現場Excel層</div>
-<div class="layer-card__products">Excel / Access / 個人管理ファイル</div>
-<div class="layer-card__features">柔軟・速い・属人化・組織に残らない</div>
-</div></div>
-</div></div>
+<!-- SECTION 2: 思 市場構造 -->
+<section class="section s2" id="section-2-market" data-section="2">
+  <div class="section__inner">
+    <h2 class="section__heading reveal" style="color:var(--color-text-primary);">業界構造の三層</h2>
+    <div class="layer-cards">
+      <div class="layer-card layer-card--erp reveal" style="transition-delay:0.3s;">
+        <div class="layer-card__stripe"></div>
+        <div class="layer-card__badge-wrap">
+          <div class="layer-card__badge">①</div>
+        </div>
+        <div class="layer-card__body">
+          <div class="layer-card__title">ERP・基幹層</div>
+          <div class="layer-card__products">SAP / Oracle / フルスクラッチ基幹</div>
+          <div class="layer-card__features">
+            <span class="feature-tag">高額</span>
+            <span class="feature-tag">重い</span>
+            <span class="feature-tag">全体最適志向</span>
+            <span class="feature-tag">変更コストが高い</span>
+          </div>
+        </div>
+      </div>
+      <div class="layer-card layer-card--saas reveal" style="transition-delay:0.5s;">
+        <div class="layer-card__stripe"></div>
+        <div class="layer-card__badge-wrap">
+          <div class="layer-card__badge">②</div>
+        </div>
+        <div class="layer-card__body">
+          <div class="layer-card__title">SaaS特化層</div>
+          <div class="layer-card__products">Salesforce / kintone / 業務特化クラウド</div>
+          <div class="layer-card__features">
+            <span class="feature-tag">速い</span>
+            <span class="feature-tag">パッケージ前提</span>
+            <span class="feature-tag">業務を型に合わせる</span>
+          </div>
+        </div>
+      </div>
+      <div class="layer-card layer-card--excel reveal" style="transition-delay:0.7s;">
+        <div class="layer-card__stripe"></div>
+        <div class="layer-card__badge-wrap">
+          <div class="layer-card__badge">③</div>
+        </div>
+        <div class="layer-card__body">
+          <div class="layer-card__title">現場Excel層</div>
+          <div class="layer-card__products">Excel / Access / 個人管理ファイル</div>
+          <div class="layer-card__features">
+            <span class="feature-tag">柔軟</span>
+            <span class="feature-tag">速い</span>
+            <span class="feature-tag">属人化</span>
+            <span class="feature-tag">組織に残らない</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- S3: 思（立ち位置）-->
-<section id="section-3-position" class="section section--white section--fixed" aria-labelledby="heading-3">
-<div class="section__inner">
-<h2 id="heading-3" class="section__heading anim">dbSheetの立ち位置</h2>
-<div class="position">
-<div class="position__card anim" data-delay="300"><span class="position__card-num">①</span><span class="position__card-title">ERP・基幹層</span></div>
-<div class="position__card anim" data-delay="400"><span class="position__card-num">②</span><span class="position__card-title">SaaS特化層</span></div>
-<div class="position__highlight anim anim--scale" data-delay="600">
-<div class="position__arrows"><svg viewBox="0 0 32 32" fill="none" stroke-width="2"><path d="M16 4v24M10 8l6-4 6 4M10 24l6 4 6-4"/></svg></div>
-<span class="position__label">dbSheetが接続する領域</span>
-<div class="position__arrows"><svg viewBox="0 0 32 32" fill="none" stroke-width="2"><path d="M16 4v24M10 8l6-4 6 4M10 24l6 4 6-4"/></svg></div>
-</div>
-<div class="position__card anim" data-delay="500"><span class="position__card-num">③</span><span class="position__card-title">現場Excel層</span></div>
-<p class="position__message anim" data-delay="1100">Excelの柔軟性を残す。属人化を止める。<br class="sp-br">SaaSのように固定しない。ERPほど重くしない。</p>
-</div></div>
+<!-- SECTION 3: 思 立ち位置 -->
+<section class="section s3" id="section-3-position" data-section="3">
+  <div class="section__inner">
+    <h2 class="section__heading reveal" style="color:var(--color-text-primary);">dbSheetの立ち位置</h2>
+    <div class="position-wrapper">
+      <div class="layer-card reveal" style="opacity:0; transition-delay:0.3s;" id="pos-erp">
+        <div class="layer-card__num" style="opacity:0.4;">①</div>
+        <div class="layer-card__body" style="opacity:0.4;">
+          <div class="layer-card__title">ERP・基幹層</div>
+          <div class="layer-card__products">SAP / Oracle</div>
+        </div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; align-items:center; padding: 8px 0; gap:4px;">
+        <div class="position-connector" id="pos-connector1">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path d="M16 4 L16 28 M8 20 L16 28 L24 20" stroke="var(--color-accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="position-dbsheet-label" id="pos-label">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="var(--color-accent)"><rect width="20" height="20" rx="4"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">db</text></svg>
+          dbSheet が接続する領域
+        </div>
+        <div class="position-connector" id="pos-connector2" style="transition-delay:0.85s;">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path d="M16 4 L16 28 M8 20 L16 28 L24 20" stroke="var(--color-accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="layer-card reveal" style="opacity:0; transition-delay:0.3s;" id="pos-saas">
+        <div class="layer-card__num" style="opacity:0.4;">②</div>
+        <div class="layer-card__body" style="opacity:0.4;">
+          <div class="layer-card__title">SaaS特化層</div>
+          <div class="layer-card__products">Salesforce / kintone</div>
+        </div>
+      </div>
+
+      <div class="layer-card reveal" style="opacity:0; transition-delay:0.4s; margin-top:var(--space-sm);" id="pos-excel">
+        <div class="layer-card__num" style="opacity:0.4;">③</div>
+        <div class="layer-card__body" style="opacity:0.4;">
+          <div class="layer-card__title">現場Excel層</div>
+          <div class="layer-card__products">Excel / Access / 個人管理ファイル</div>
+        </div>
+      </div>
+
+      <p class="position-keymsg" id="pos-keymsg">
+        Excelの柔軟性を残す。属人化を止める。SaaSのように固定しない。ERPほど重くしない。
+      </p>
+    </div>
+  </div>
 </section>
 
-<!-- S4: 鳴（非代替宣言）-->
-<section id="section-4-non-substitution" class="section section--dark section--fixed" aria-labelledby="heading-4">
-<div class="section__inner declarations">
-<h2 id="heading-4" class="section__heading anim" data-delay="0">競争しない宣言</h2>
-<div class="declarations__item anim anim--left" data-delay="400">dbSheetは、SAPの<span class="declarations__highlight">代替ではない</span></div>
-<div class="declarations__item anim anim--left" data-delay="700">dbSheetは、Salesforceの<span class="declarations__highlight">代替ではない</span></div>
-<div class="declarations__item anim anim--left" data-delay="1000">dbSheetは、kintoneの<span class="declarations__highlight">代替ではない</span></div>
-</div>
+<!-- SECTION 4: 鳴 非代替宣言 -->
+<section class="section s4" id="section-4-non-substitution" data-section="4">
+  <div class="section__inner" style="text-align:center;">
+    <h2 class="section__heading reveal" style="color:var(--color-text-inverse);">競争しない宣言</h2>
+    <div class="declaration-list" id="decl-list">
+      <p class="declaration-item" style="transition-delay:0.4s;">
+        dbSheetは、SAPの<span class="accent">代替ではない</span>
+      </p>
+      <p class="declaration-item" style="transition-delay:0.7s;">
+        dbSheetは、Salesforceの<span class="accent">代替ではない</span>
+      </p>
+      <p class="declaration-item" style="transition-delay:1.0s;">
+        dbSheetは、kintoneの<span class="accent">代替ではない</span>
+      </p>
+    </div>
+  </div>
 </section>
 
-<!-- S5: 鳴（本当の競合）-->
-<section id="section-5-true-competitor" class="section section--white section--fixed" aria-labelledby="heading-5">
-<div class="section__inner">
-<h2 id="heading-5" class="section__heading anim">本当の競合</h2>
-<div class="competitors">
-<div class="competitor-card anim anim--up" data-delay="300">
-<svg class="competitor-card__icon" viewBox="0 0 40 40" stroke-width="1.5"><rect x="6" y="6" width="28" height="28" rx="3"/><path d="M6 14h28M14 14v20"/><path d="M20 22h8M20 28h5" opacity="0.5"/></svg>
-<div class="competitor-card__text">放置されたExcel</div>
-</div>
-<div class="competitor-card anim anim--up" data-delay="500">
-<svg class="competitor-card__icon" viewBox="0 0 40 40" stroke-width="1.5"><circle cx="14" cy="20" r="8"/><circle cx="26" cy="20" r="8"/><path d="M20 15v10" opacity="0.5"/></svg>
-<div class="competitor-card__text">部署ごとの分断</div>
-</div>
-<div class="competitor-card anim anim--up" data-delay="700">
-<svg class="competitor-card__icon" viewBox="0 0 40 40" stroke-width="1.5"><rect x="8" y="8" width="24" height="24" rx="3"/><path d="M14 16h12M14 22h12M14 28h8"/><path d="M32 8l-6 6" stroke-width="2"/></svg>
-<div class="competitor-card__text">変えられない業務</div>
-</div>
-<div class="competitor-card anim anim--up" data-delay="900">
-<svg class="competitor-card__icon" viewBox="0 0 40 40" stroke-width="1.5"><circle cx="20" cy="16" r="6"/><path d="M10 34c0-6 4-10 10-10s10 4 10 10"/><path d="M28 12l4-4M30 16l4 0" opacity="0.5"/></svg>
-<div class="competitor-card__text">AIを活かせない状態</div>
-</div>
-<div class="competitors__message anim" data-delay="1200">本当の競合は、製品ではなく<span class="msg-accent">"状態"</span>である</div>
-</div></div>
+<!-- SECTION 5: 鳴 本当の競合 -->
+<section class="section s5" id="section-5-true-competitor" data-section="5">
+  <div class="section__inner">
+    <h2 class="section__heading reveal" style="color:var(--color-text-primary);">本当の競合</h2>
+    <div class="competitor-grid">
+      <div class="competitor-card reveal" style="transition-delay:0.3s;">
+        <svg class="competitor-card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="8" y="8" width="32" height="28" rx="2"/>
+          <path d="M16 20 h16 M16 26 h10"/>
+          <path d="M36 36 l-4-4 m0 4 l4-4" stroke-width="2"/>
+          <circle cx="36" cy="38" r="4" fill="currentColor" fill-opacity="0.1"/>
+        </svg>
+        <span class="competitor-card__text">放置された<br>Excel</span>
+      </div>
+      <div class="competitor-card reveal" style="transition-delay:0.5s;">
+        <svg class="competitor-card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="6" y="16" width="14" height="20" rx="2"/>
+          <rect x="28" y="16" width="14" height="20" rx="2"/>
+          <path d="M20 26 h8" stroke-width="1" stroke-dasharray="2,2"/>
+          <path d="M10 8 h8 M30 8 h8"/>
+        </svg>
+        <span class="competitor-card__text">部署ごとの<br>分断</span>
+      </div>
+      <div class="competitor-card reveal" style="transition-delay:0.7s;">
+        <svg class="competitor-card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M12 36 L12 12 L36 12"/>
+          <path d="M20 28 L26 20 L32 24 L40 14"/>
+          <line x1="12" y1="28" x2="40" y2="28" stroke-dasharray="3,3"/>
+          <line x1="38" y1="30" x2="38" y2="38" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="38" cy="36" r="2" fill="currentColor"/>
+        </svg>
+        <span class="competitor-card__text">変えられない<br>業務</span>
+      </div>
+      <div class="competitor-card reveal" style="transition-delay:0.9s;">
+        <svg class="competitor-card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="24" cy="24" r="14"/>
+          <path d="M24 16 L24 24 L30 28"/>
+          <path d="M8 12 L12 16" stroke-width="2"/>
+          <path d="M40 12 L36 16" stroke-width="2"/>
+          <line x1="24" y1="8" x2="24" y2="4" stroke-width="2"/>
+          <path d="M16 38 L32 38" stroke-dasharray="2,2" stroke-opacity="0.4"/>
+        </svg>
+        <span class="competitor-card__text">AIを活かせない<br>状態</span>
+      </div>
+    </div>
+    <p class="competitor-keymsg reveal" style="transition-delay:1.2s;">
+      本当の競合は、製品ではなく<span class="accent">"状態"</span>である
+    </p>
+  </div>
 </section>
 
-<!-- S6: 鳴（核心価値）-->
-<section id="section-6-core-value" class="section section--light section--fixed" aria-labelledby="heading-6">
-<div class="section__inner">
-<h2 id="heading-6" class="section__heading anim">"脱Excel"ではなく<span style="color:var(--color-primary)">"脱・固定業務"</span></h2>
-<div class="ba-container">
-<div class="ba-grid">
-<div class="ba-card ba-card--before anim anim--left" data-delay="300">
-<div class="ba-card__header">Before<div class="ba-card__sub">従来の認識</div></div>
-<div class="ba-card__body">
-<div class="ba-row">脱Excel</div>
-<div class="ba-row">IT刷新</div>
-<div class="ba-row">ツール導入</div>
-</div></div>
-<div class="ba-arrows">
-<div class="ba-arrows__spacer">&nbsp;</div>
-<div class="ba-arrows__spacer anim" data-delay="700"><svg class="ba-arrow-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
-<div class="ba-arrows__spacer anim" data-delay="900"><svg class="ba-arrow-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
-<div class="ba-arrows__spacer anim" data-delay="1100"><svg class="ba-arrow-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
-</div>
-<div class="ba-card ba-card--after anim anim--right" data-delay="500">
-<div class="ba-card__header">After<div class="ba-card__sub">dbSheetの価値</div></div>
-<div class="ba-card__body">
-<div class="ba-row">脱・固定業務</div>
-<div class="ba-row">変化耐性の獲得</div>
-<div class="ba-row">経営リスク低減</div>
-</div></div>
-</div>
-<div class="ba-message">
-<p class="ba-message__main anim" data-delay="1400">操作は変わらない。構造だけが変わる。</p>
-<p class="ba-message__sub anim" data-delay="1500">Excelの自由さを活かしたまま、データの蓄積・共有・改善サイクルを実現</p>
-</div>
-</div></div>
+<!-- SECTION 6: 鳴 核心価値 -->
+<section class="section s6" id="section-6-core-value" data-section="6">
+  <div class="section__inner">
+    <h2 class="section__heading reveal" style="color:var(--color-text-primary);">
+      "脱Excel"ではなく<span style="color:var(--color-primary);">"脱・固定業務"</span>
+    </h2>
+
+    <!-- Before / After Cards -->
+    <div class="ba-container">
+      <div class="ba-card ba-card--before reveal-left">
+        <div class="ba-card__header">
+          <div>
+            <div class="ba-card__header-text">Before</div>
+            <div class="ba-card__header-sub">従来の認識</div>
+          </div>
+        </div>
+        <div class="ba-row" style="transition-delay:0.7s;">脱Excel</div>
+        <div class="ba-row" style="transition-delay:0.9s;">IT刷新</div>
+        <div class="ba-row" style="transition-delay:1.1s;">ツール導入</div>
+      </div>
+
+      <div class="ba-arrows">
+        <div class="ba-arrow-row" style="transition-delay:0s; border-top:none; min-height:72px;"><!-- spacer --></div>
+        <div class="ba-arrow-row" style="transition-delay:0.75s;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="var(--color-accent)" stroke-width="2.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="ba-arrow-row" style="transition-delay:0.95s;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="var(--color-accent)" stroke-width="2.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="ba-arrow-row" style="transition-delay:1.15s;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="var(--color-accent)" stroke-width="2.5" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+
+      <div class="ba-card ba-card--after reveal-right">
+        <div class="ba-card__header">
+          <div>
+            <div class="ba-card__header-text">After</div>
+            <div class="ba-card__header-sub">dbSheetの価値</div>
+          </div>
+        </div>
+        <div class="ba-row" style="transition-delay:0.7s;">脱・固定業務</div>
+        <div class="ba-row" style="transition-delay:0.9s;">変化耐性の獲得</div>
+        <div class="ba-row" style="transition-delay:1.1s;">経営リスク低減</div>
+      </div>
+    </div>
+
+    <div class="ba-keymsg" id="ba-keymsg">
+      <div class="ba-keymsg__main">操作は変わらない。構造だけが変わる。</div>
+      <div class="ba-keymsg__sub">Excelの自由さを活かしたまま、データの蓄積・共有・改善サイクルを実現</div>
+    </div>
+
+    <!-- 脱固定業務 詳細図解 -->
+    <div class="fixed-biz-diagram">
+      <h3 class="fbd-title reveal">"脱・固定業務"とは何か — 構造で理解する</h3>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--space-md); max-width:1200px; margin:0 auto var(--space-lg);">
+        <!-- 固定業務の問題 -->
+        <div class="reveal" style="background:rgba(229,72,77,0.04); border:0.5px solid rgba(229,72,77,0.2); border-radius:var(--radius-card); padding:var(--space-md); transition-delay:0.3s;">
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:var(--space-sm);">
+            <div style="width:36px;height:36px;border-radius:50%;background:rgba(229,72,77,0.1);display:flex;align-items:center;justify-content:center;">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="var(--color-warning)"><path d="M9 2L2 16h14L9 2zm0 4v4m0 3v1" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <div style="font-size:var(--text-body);font-weight:700;color:var(--color-warning);">固定業務の問題</div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <div style="display:flex;align-items:center;gap:8px;font-size:var(--text-caption);color:var(--color-text-primary);">
+              <svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="rgba(229,72,77,0.15)"/><path d="M4.5 7h5M7 4.5v5" stroke="var(--color-warning)" stroke-width="1.5"/></svg>
+              現場の判断が個人PCの中で止まる
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:var(--text-caption);color:var(--color-text-primary);">
+              <svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="rgba(229,72,77,0.15)"/><path d="M4.5 7h5M7 4.5v5" stroke="var(--color-warning)" stroke-width="1.5"/></svg>
+              改善のたびに「誰かに聞く」が発生する
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:var(--text-caption);color:var(--color-text-primary);">
+              <svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="rgba(229,72,77,0.15)"/><path d="M4.5 7h5M7 4.5v5" stroke="var(--color-warning)" stroke-width="1.5"/></svg>
+              業務ルールが暗黙知のまま引き継がれる
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:var(--text-caption);color:var(--color-text-primary);">
+              <svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="rgba(229,72,77,0.15)"/><path d="M4.5 7h5M7 4.5v5" stroke="var(--color-warning)" stroke-width="1.5"/></svg>
+              AIを入れても「入力するだけ」で変化しない
+            </div>
+          </div>
+        </div>
+        <!-- dbSheetの解決 -->
+        <div class="reveal" style="background:rgba(27,58,92,0.04); border:0.5px solid rgba(27,58,92,0.15); border-radius:var(--radius-card); padding:var(--space-md); transition-delay:0.5s;">
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:var(--space-sm);">
+            <div style="width:36px;height:36px;border-radius:50%;background:rgba(48,164,108,0.1);display:flex;align-items:center;justify-content:center;">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 9l4 4 6-7" stroke="var(--color-success)" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+            <div style="font-size:var(--text-body);font-weight:700;color:var(--color-success);">dbSheetで変わること</div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <div style="display:flex;align-items:center;gap:8px;font-size:var(--text-caption);color:var(--color-text-primary);">
+              <svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="rgba(48,164,108,0.12)"/><path d="M4 7l2.5 2.5 4-4" stroke="var(--color-success)" stroke-width="1.5" stroke-linecap="round"/></svg>
+              Excelの操作はそのまま → DBに自動同期
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:var(--text-caption);color:var(--color-text-primary);">
+              <svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="rgba(48,164,108,0.12)"/><path d="M4 7l2.5 2.5 4-4" stroke="var(--color-success)" stroke-width="1.5" stroke-linecap="round"/></svg>
+              改善が「構造」として組織に残る
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:var(--text-caption);color:var(--color-text-primary);">
+              <svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="rgba(48,164,108,0.12)"/><path d="M4 7l2.5 2.5 4-4" stroke="var(--color-success)" stroke-width="1.5" stroke-linecap="round"/></svg>
+              暗黙知がデータとして蓄積・共有される
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:var(--text-caption);color:var(--color-text-primary);">
+              <svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="rgba(48,164,108,0.12)"/><path d="M4 7l2.5 2.5 4-4" stroke="var(--color-success)" stroke-width="1.5" stroke-linecap="round"/></svg>
+              AIが整ったデータを使って成果を出せる
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 循環図 -->
+      <div class="reveal" style="transition-delay:0.5s; max-width:900px; margin:0 auto; background:var(--color-bg-white); border:0.5px solid var(--color-border); border-radius:var(--radius-card); box-shadow:var(--shadow-card); padding:var(--space-md);">
+        <div style="text-align:center; font-size:var(--text-caption); font-weight:600; color:var(--color-text-secondary); margin-bottom:var(--space-md); letter-spacing:0.06em;">改善サイクルが"構造"に戻る</div>
+        <div style="display:flex; align-items:center; justify-content:space-around; flex-wrap:wrap; gap:var(--space-sm);">
+
+          <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
+            <div style="width:72px;height:72px;border-radius:50%;background:rgba(27,58,92,0.08);border:2px solid var(--color-primary);display:flex;align-items:center;justify-content:center;">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="6" y="6" width="20" height="14" rx="2" stroke="var(--color-primary)" stroke-width="1.5"/><path d="M10 12 h12 M10 16 h8" stroke="var(--color-primary)" stroke-width="1.5"/><path d="M16 20 v6" stroke="var(--color-primary)" stroke-width="1.5"/></svg>
+            </div>
+            <div style="font-size:var(--text-caption);font-weight:600;color:var(--color-primary);text-align:center;">Excel操作<br><span style="font-weight:400;color:var(--color-text-secondary);">(変わらない)</span></div>
+          </div>
+
+          <div style="color:var(--color-accent);font-size:22px;">→</div>
+
+          <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
+            <div style="width:72px;height:72px;border-radius:50%;background:rgba(232,145,58,0.08);border:2px solid var(--color-accent);display:flex;align-items:center;justify-content:center;">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><ellipse cx="16" cy="20" rx="10" ry="6" stroke="var(--color-accent)" stroke-width="1.5"/><path d="M6 20 v-8 M26 20 v-8" stroke="var(--color-accent)" stroke-width="1.5"/><ellipse cx="16" cy="12" rx="10" ry="4" stroke="var(--color-accent)" stroke-width="1.5"/></svg>
+            </div>
+            <div style="font-size:var(--text-caption);font-weight:600;color:var(--color-accent);text-align:center;">DB自動蓄積<br><span style="font-weight:400;color:var(--color-text-secondary);">(構造が変わる)</span></div>
+          </div>
+
+          <div style="color:var(--color-accent);font-size:22px;">→</div>
+
+          <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
+            <div style="width:72px;height:72px;border-radius:50%;background:rgba(59,130,246,0.08);border:2px solid var(--color-info);display:flex;align-items:center;justify-content:center;">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="6" y="6" width="20" height="20" rx="3" stroke="var(--color-info)" stroke-width="1.5"/><path d="M10 20 L14 14 L18 18 L22 10" stroke="var(--color-info)" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+            <div style="font-size:var(--text-caption);font-weight:600;color:var(--color-info);text-align:center;">経営判断に届く<br><span style="font-weight:400;color:var(--color-text-secondary);">(可視化・共有)</span></div>
+          </div>
+
+          <div style="color:var(--color-accent);font-size:22px;">→</div>
+
+          <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
+            <div style="width:72px;height:72px;border-radius:50%;background:rgba(48,164,108,0.08);border:2px solid var(--color-success);display:flex;align-items:center;justify-content:center;">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M16 6 C10 6, 6 10, 6 16 C6 22, 10 26, 16 26 C22 26, 26 22, 26 16" stroke="var(--color-success)" stroke-width="1.5" stroke-linecap="round"/><path d="M22 10 L26 16 L20 16" stroke="var(--color-success)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 16 l2 2 4-4" stroke="var(--color-success)" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <div style="font-size:var(--text-caption);font-weight:600;color:var(--color-success);text-align:center;">改善が構造に戻る<br><span style="font-weight:400;color:var(--color-text-secondary);">(変化耐性の獲得)</span></div>
+          </div>
+        </div>
+
+        <div style="text-align:center; margin-top:var(--space-md); font-size:var(--text-caption); color:var(--color-text-secondary);">
+          このサイクルが<strong style="color:var(--color-primary);">自動で</strong>回り続けることが"脱・固定業務"の実体
+        </div>
+      </div>
+    </div>
+
+  </div>
 </section>
 
-<!-- S7: 鳴（経営リスク）-->
-<section id="section-7-management-risk" class="section section--white section--fixed" aria-labelledby="heading-7">
-<div class="section__inner">
-<h2 id="heading-7" class="section__heading anim">放置が生む<span class="heading-accent">経営リスク</span></h2>
-<div class="risk-list">
-<div class="risk-item anim anim--left" data-delay="300"><span class="risk-item__num">01</span><span class="risk-item__text">業務が変えられなくなるリスク</span></div>
-<div class="risk-item anim anim--left" data-delay="500"><span class="risk-item__num">02</span><span class="risk-item__text">現場判断が属人化するリスク</span></div>
-<div class="risk-item anim anim--left" data-delay="700"><span class="risk-item__num">03</span><span class="risk-item__text">改善が循環しないリスク</span></div>
-<div class="risk-item anim anim--left" data-delay="900"><span class="risk-item__num">04</span><span class="risk-item__text">AI導入が成果に繋がらないリスク</span></div>
-</div></div>
+<!-- SECTION 7: 鳴 経営リスク -->
+<section class="section s7" id="section-7-management-risk" data-section="7">
+  <div class="section__inner">
+    <h2 class="section__heading reveal" style="color:var(--color-text-primary);">
+      放置が生む<span style="color:var(--color-accent);">経営リスク</span>
+    </h2>
+    <div class="risk-list">
+      <div class="risk-item" style="transition-delay:0.3s;">
+        <div class="risk-item__num">01</div>
+        <div class="risk-item__text">業務が変えられなくなるリスク</div>
+      </div>
+      <div class="risk-item" style="transition-delay:0.5s;">
+        <div class="risk-item__num">02</div>
+        <div class="risk-item__text">現場判断が属人化するリスク</div>
+      </div>
+      <div class="risk-item" style="transition-delay:0.7s;">
+        <div class="risk-item__num">03</div>
+        <div class="risk-item__text">改善が循環しないリスク</div>
+      </div>
+      <div class="risk-item" style="transition-delay:0.9s;">
+        <div class="risk-item__num">04</div>
+        <div class="risk-item__text">AI導入が成果に繋がらないリスク</div>
+      </div>
+    </div>
+    <p class="reveal" style="text-align:center; margin-top:var(--space-md); font-size:var(--text-body); color:var(--color-text-secondary); transition-delay:1.1s;">
+      これらは技術の問題ではなく、構造の問題です
+    </p>
+  </div>
 </section>
 
-<!-- S8: 示（Excel × AI）-->
-<section id="section-8-excel-ai" class="section section--light section--fixed" aria-labelledby="heading-8">
-<div class="section__inner">
-<h2 id="heading-8" class="section__heading anim">ExcelとAIは競合しない</h2>
-<div class="exai">
-<div class="exai__grid">
-<div class="exai__card exai__card--excel anim anim--left" data-delay="300">
-<div class="exai__card-header">Excelが強い領域</div>
-<div class="exai__card-body">
-<div class="exai__item">仮説構築</div>
-<div class="exai__item">条件変更</div>
-<div class="exai__item">判断途中経過</div>
-<div class="exai__item">曖昧な業務設計</div>
-</div></div>
-<div class="exai__center anim anim--scale" data-delay="700">
-<div class="exai__center-line"></div>
-<div class="exai__center-arrows"><svg viewBox="0 0 32 32" fill="none" stroke-width="2"><path d="M4 16h24M8 12l-4 4 4 4M24 12l4 4-4 4"/></svg></div>
-<div class="exai__center-label">dbSheet</div>
-<div class="exai__center-arrows"><svg viewBox="0 0 32 32" fill="none" stroke-width="2"><path d="M4 16h24M8 12l-4 4 4 4M24 12l4 4-4 4"/></svg></div>
-<div class="exai__center-line"></div>
-</div>
-<div class="exai__card exai__card--ai anim anim--right" data-delay="500">
-<div class="exai__card-header">AIが強い領域</div>
-<div class="exai__card-body">
-<div class="exai__item">パターン抽出</div>
-<div class="exai__item">大量処理</div>
-<div class="exai__item">要約</div>
-<div class="exai__item">抽象化</div>
-</div></div>
-</div>
-<p class="exai__message anim" data-delay="1200">両者は競合ではない。役割が異なる。<br class="sp-br">dbSheetは両者を繋ぐ基盤である。</p>
-</div></div>
+<!-- SECTION 8: 示 Excel×AI -->
+<section class="section s8" id="section-8-excel-ai" data-section="8">
+  <div class="section__inner">
+    <h2 class="section__heading reveal" style="color:var(--color-text-primary);">ExcelとAIは競合しない</h2>
+    <div class="exai-layout">
+      <div class="exai-card exai-card--excel reveal-left">
+        <div class="exai-card__header">
+          <div class="exai-card__header-text">Excel</div>
+        </div>
+        <ul class="exai-list">
+          <li>仮説構築</li>
+          <li>条件変更</li>
+          <li>判断途中経過</li>
+          <li>曖昧な業務設計</li>
+        </ul>
+      </div>
+
+      <div class="exai-center" id="exai-center">
+        <div style="font-size:var(--text-caption); color:var(--color-text-secondary); text-align:center;">両者を繋ぐ</div>
+        <div class="exai-center__line" id="exai-line"></div>
+        <div class="exai-center__label">dbSheet</div>
+        <div class="exai-center__line" id="exai-line2"></div>
+        <div style="font-size:var(--text-caption); color:var(--color-text-secondary); text-align:center;">基盤</div>
+      </div>
+
+      <div class="exai-card exai-card--ai reveal-right">
+        <div class="exai-card__header">
+          <div class="exai-card__header-text">AI</div>
+        </div>
+        <ul class="exai-list">
+          <li>パターン抽出</li>
+          <li>大量処理</li>
+          <li>要約</li>
+          <li>抽象化</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="exai-keymsg" id="exai-keymsg">
+      両者は競合ではない。役割が異なる。dbSheetは両者を繋ぐ基盤である。
+    </p>
+  </div>
 </section>
 
-<!-- S9: 示（CTA）-->
-<section id="section-9-final-message" class="section section--dark section--fixed" aria-labelledby="heading-9">
-<div class="section__inner cta">
-<h2 id="heading-9" class="cta__main anim anim--blur" data-delay="200">百聞は一見にしかず。</h2>
-<p class="cta__action anim anim--scale" data-delay="500">今すぐ、デモで体感</p>
-<p class="cta__sub anim" data-delay="800">お近くのスタッフにお声がけください</p>
-<div class="cta__divider anim" data-delay="1100"></div>
-<p class="cta__tagline anim" data-delay="1100">dbSheet — 業務を変え続けるための基盤</p>
-<p class="cta__company anim" data-delay="1100">株式会社NEWCOM</p>
-</div>
+<!-- SECTION 9: 示 CTA -->
+<section class="section s9" id="section-9-final-message" data-section="9">
+  <div class="section__inner" style="text-align:center;">
+    <h2 class="s9__main" id="s9main">百聞は一見にしかず。</h2>
+    <p class="s9__cta" id="s9cta">今すぐ、デモで体感</p>
+    <p class="s9__sub" id="s9sub">お近くのスタッフにお声がけください</p>
+    <div class="s9__divider"></div>
+    <p class="s9__tagline" id="s9tagline">dbSheet — 業務を変え続けるための基盤</p>
+    <p class="s9__company" id="s9company">株式会社NEWCOM</p>
+  </div>
 </section>
 
-<!-- S10: 応（クリックデモ体験）-->
-<section id="section-10-taiken" class="section section--white section--no-snap demo-section" aria-labelledby="heading-10">
-<div class="section__inner">
-<h2 id="heading-10" class="section__heading anim">触れて、体感する。</h2>
-<p class="demo__intro anim" data-delay="200"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>セルの数値を変更して、モードを切り替えてみてください</p>
-<div class="demo-toggle anim" data-delay="300">
-<div class="demo-toggle__inner" role="radiogroup" aria-label="モード切替">
-<button class="demo-toggle__btn demo-toggle__btn--active" data-mode="excel" role="radio" aria-checked="true" type="button">Excel 単体</button>
-<button class="demo-toggle__btn" data-mode="dbsheet" role="radio" aria-checked="false" type="button">dbSheet 連携</button>
-</div></div>
-<div class="demo-container anim anim--scale" data-delay="400">
-<div class="demo-sheet">
-<div class="demo-sheet__toolbar"><div class="demo-sheet__dots"><span class="demo-sheet__dot demo-sheet__dot--r"></span><span class="demo-sheet__dot demo-sheet__dot--y"></span><span class="demo-sheet__dot demo-sheet__dot--g"></span></div><span class="demo-sheet__filename">売上管理表.xlsx</span></div>
-<div class="demo-sheet__formula"><span class="demo-sheet__formula-ref" id="formulaRef">C2</span><span>fx</span><span class="demo-sheet__formula-val" id="formulaVal">120</span></div>
-<div class="demo-sheet__grid">
-<table class="demo-grid"><thead><tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th></tr></thead>
-<tbody>
-<tr><td class="row-num">1</td><td class="cell-name" style="font-weight:600">担当者</td><td class="cell-name" style="font-weight:600">商品名</td><td class="cell-num" style="font-weight:600">数量</td><td class="cell-num" style="font-weight:600">単価</td><td class="cell-num" style="font-weight:600">合計</td></tr>
-<tr data-row="2"><td class="row-num">2</td><td class="cell-name">田中</td><td class="cell-name">部品A</td><td class="cell-num" contenteditable="true" tabindex="0" data-col="qty" data-default="120">120</td><td class="cell-num" contenteditable="true" tabindex="0" data-col="price" data-default="2500">2,500</td><td class="cell-num cell-total">300,000</td></tr>
-<tr data-row="3"><td class="row-num">3</td><td class="cell-name">佐藤</td><td class="cell-name">部品B</td><td class="cell-num" contenteditable="true" tabindex="0" data-col="qty" data-default="85">85</td><td class="cell-num" contenteditable="true" tabindex="0" data-col="price" data-default="4200">4,200</td><td class="cell-num cell-total">357,000</td></tr>
-<tr data-row="4"><td class="row-num">4</td><td class="cell-name">鈴木</td><td class="cell-name">部品C</td><td class="cell-num" contenteditable="true" tabindex="0" data-col="qty" data-default="200">200</td><td class="cell-num" contenteditable="true" tabindex="0" data-col="price" data-default="1800">1,800</td><td class="cell-num cell-total">360,000</td></tr>
-<tr data-row="5"><td class="row-num">5</td><td class="cell-name">高橋</td><td class="cell-name">部品D</td><td class="cell-num" contenteditable="true" tabindex="0" data-col="qty" data-default="50">50</td><td class="cell-num" contenteditable="true" tabindex="0" data-col="price" data-default="8900">8,900</td><td class="cell-num cell-total">445,000</td></tr>
-<tr data-row="6"><td class="row-num">6</td><td class="cell-name">伊藤</td><td class="cell-name">部品E</td><td class="cell-num" contenteditable="true" tabindex="0" data-col="qty" data-default="300">300</td><td class="cell-num" contenteditable="true" tabindex="0" data-col="price" data-default="950">950</td><td class="cell-num cell-total">285,000</td></tr>
-</tbody></table>
-</div></div>
-<div class="demo-panel">
-<div class="demo-panel__tabs" id="panelTabs" style="display:none"></div>
-<div class="demo-panel__content" id="panelContent"><div class="demo-panel__empty">イベントログ<br><br>セルを編集すると、ここにログが表示されます</div></div>
-</div></div>
-<div class="demo__result" id="demoResult" style="display:none"></div>
-<p class="demo__guide anim" data-delay="700">※ 体験後、お気軽にスタッフへお声がけください</p>
-</div>
-</section>
+<!-- SECTION 10: 応 クリックデモ -->
+<section class="section s10 section--snap-none" id="section-10-taiken" data-section="10">
+  <div class="section__inner" style="display:flex; flex-direction:column; align-items:center;">
+    <h2 class="section__heading reveal" style="color:var(--color-text-primary); margin-bottom:var(--space-sm);">触れて、体感する。</h2>
+    <p class="demo-intro reveal" style="transition-delay:0.2s;">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style="flex-shrink:0;"><path d="M9 2L11.5 7.5H17L12.5 11L14.5 17L9 13.5L3.5 17L5.5 11L1 7.5H6.5L9 2Z" stroke="var(--color-accent)" stroke-width="1.5"/></svg>
+      セルの数値を変更して、モードを切り替えてみてください
+    </p>
 
-</main>
+    <div class="demo-toggle reveal" style="transition-delay:0.3s;" role="radiogroup" aria-label="モード選択">
+      <button class="demo-toggle__btn demo-toggle__btn--active" data-mode="excel"
+        onclick="switchMode('excel')" role="radio" aria-checked="true">
+        Excel 単体
+      </button>
+      <button class="demo-toggle__btn" data-mode="dbsheet"
+        onclick="switchMode('dbsheet')" role="radio" aria-checked="false">
+        dbSheet 連携
+      </button>
+    </div>
+
+    <div class="demo-container reveal" style="transition-delay:0.4s;">
+      <!-- Left: Spreadsheet -->
+      <div class="demo-sheet">
+        <div class="demo-sheet__toolbar">
+          <div class="demo-sheet__dots">
+            <div class="demo-sheet__dot demo-sheet__dot--r"></div>
+            <div class="demo-sheet__dot demo-sheet__dot--y"></div>
+            <div class="demo-sheet__dot demo-sheet__dot--g"></div>
+          </div>
+          <span class="demo-sheet__filename">売上管理表.xlsx</span>
+        </div>
+        <div class="demo-sheet__formulabar">
+          <span class="demo-sheet__cellref" id="cell-ref">—</span>
+          <span class="demo-sheet__fx">fx</span>
+          <span class="demo-sheet__fxval" id="cell-val">—</span>
+        </div>
+        <div class="demo-grid">
+          <table>
+            <thead>
+              <tr>
+                <th class="row-num"></th>
+                <th class="col-header">A</th>
+                <th class="col-header">B</th>
+                <th class="col-header">C</th>
+                <th class="col-header">D</th>
+                <th class="col-header">E</th>
+              </tr>
+              <tr>
+                <th class="row-num">1</th>
+                <th class="col-header">担当者</th>
+                <th class="col-header">商品名</th>
+                <th class="col-header">数量</th>
+                <th class="col-header">単価</th>
+                <th class="col-header">合計</th>
+              </tr>
+            </thead>
+            <tbody id="sheet-tbody">
+              <!-- Rows generated by JS -->
+            </tbody>
+          </table>
+        </div>
+        <div class="demo-result" id="demo-result">
+          <div class="demo-result__main" id="demo-result-main"></div>
+          <div class="demo-result__sub" id="demo-result-sub"></div>
+        </div>
+      </div>
+
+      <!-- Right: Panel -->
+      <div class="demo-panel" id="demo-panel">
+        <!-- Content generated by JS based on mode -->
+      </div>
+    </div>
+
+    <p class="demo-footer reveal" style="transition-delay:0.7s;">
+      ※ 体験後、お気軽にスタッフへお声がけください
+    </p>
+  </div>
+</section>
 
 <script>
-(function(){
-'use strict';
-var prefersReducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+// ===== DEMO STATE (State-Driven Architecture) =====
+// 全状態はJS変数で管理。DOMはrenderから生成。タブ切替・モード切替に依存しない。
+var mode = 'excel';
+var editCount = 0;      // resets on mode switch
+var totalEdits = 0;     // never resets
+var sqlLogs = [];       // [{html:..., isBI:bool}]
+var knowledgeItems = []; // [{type, badge, title, desc}]
+var dbTableData = null; // null = not yet shown
+var currentTab = 'sql';
 
-/* ===== Intersection Observer for Animations ===== */
-if('IntersectionObserver' in window && !prefersReducedMotion){
-var animEls=document.querySelectorAll('.anim');
-var observer=new IntersectionObserver(function(entries){
-entries.forEach(function(entry){
-if(entry.isIntersecting){
-var el=entry.target;
-var delay=parseInt(el.getAttribute('data-delay')||'0',10);
-setTimeout(function(){
-el.classList.add('anim--visible');
-if(el.classList.contains('anim--half')){el.style.opacity='0.5'}
-},delay);
-observer.unobserve(el);
-}
-});
-},{threshold:0.15});
-animEls.forEach(function(el){observer.observe(el)});
-} else {
-document.querySelectorAll('.anim').forEach(function(el){
-el.classList.add('anim--visible');
-});
-}
-
-/* ===== Nav Active State ===== */
-var sections=document.querySelectorAll('.section');
-var navLinks=document.querySelectorAll('.nav__link');
-if('IntersectionObserver' in window){
-var navObs=new IntersectionObserver(function(entries){
-entries.forEach(function(entry){
-if(entry.isIntersecting){
-var id=entry.target.id;
-navLinks.forEach(function(l){l.classList.remove('nav__link--active')});
-var active=document.querySelector('.nav__link[href="#'+id+'"]');
-if(active) active.classList.add('nav__link--active');
-}
-});
-},{threshold:0.4});
-sections.forEach(function(s){navObs.observe(s)});
-}
-
-/* ===== Keyboard Shortcuts ===== */
-var sectionIds=['section-1-nin','section-2-market','section-3-position','section-4-non-substitution','section-5-true-competitor','section-6-core-value','section-7-management-risk','section-8-excel-ai','section-9-final-message','section-10-taiken'];
-document.addEventListener('keydown',function(e){
-if(e.target.getAttribute('contenteditable')==='true') return;
-var key=e.key;
-if(key>='1'&&key<='9'){
-e.preventDefault();
-document.getElementById(sectionIds[parseInt(key)-1]).scrollIntoView({behavior:'smooth'});
-} else if(key==='0'){
-e.preventDefault();
-document.getElementById(sectionIds[9]).scrollIntoView({behavior:'smooth'});
-}
-});
-
-/* ===== Demo Section Logic ===== */
-var initialData={
-2:{name:'田中',product:'部品A',qty:120,price:2500},
-3:{name:'佐藤',product:'部品B',qty:85,price:4200},
-4:{name:'鈴木',product:'部品C',qty:200,price:1800},
-5:{name:'高橋',product:'部品D',qty:50,price:8900},
-6:{name:'伊藤',product:'部品E',qty:300,price:950}
+var initialData = {
+  2: { name:'田中', product:'部品A', qty:120, price:2500 },
+  3: { name:'佐藤', product:'部品B', qty:85,  price:4200 },
+  4: { name:'鈴木', product:'部品C', qty:200, price:1800 },
+  5: { name:'高橋', product:'部品D', qty:50,  price:8900 },
+  6: { name:'伊藤', product:'部品E', qty:300, price:950  }
 };
-var currentData=JSON.parse(JSON.stringify(initialData));
-var mode='excel';
-var editCount=0;
-var totalEdits=0;
-var knowledgeItems=[];
 
-function fmt(n){return n.toLocaleString('ja-JP')}
-function fmtYen(n){
-if(n>=1000000) return '¥'+(n/1000000).toFixed(1)+'M';
-if(n>=1000) return '¥'+Math.round(n/1000)+'K';
-return '¥'+n;
+var currentData = JSON.parse(JSON.stringify(initialData));
+
+function fmtNum(n) { return n.toLocaleString('ja-JP'); }
+function fmtYen(n) {
+  if (n >= 1000000) return '¥' + (n/1000000).toFixed(1) + 'M';
+  if (n >= 1000) return '¥' + Math.round(n/1000) + 'K';
+  return '¥' + n;
 }
-function getTime(){var d=new Date();return [d.getHours(),d.getMinutes(),d.getSeconds()].map(function(v){return ('0'+v).slice(-2)}).join(':')}
+function now() {
+  var d = new Date();
+  return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)+':'+('0'+d.getSeconds()).slice(-2);
+}
+function colName(col) { return col === 'qty' ? '数量' : '単価'; }
 
-/* Toggle */
-var toggleBtns=document.querySelectorAll('.demo-toggle__btn');
-toggleBtns.forEach(function(btn){
-btn.addEventListener('click',function(){
-var newMode=btn.getAttribute('data-mode');
-if(newMode===mode) return;
-mode=newMode;
-editCount=0;
-toggleBtns.forEach(function(b){
-b.classList.remove('demo-toggle__btn--active');
-b.setAttribute('aria-checked','false');
+
+// ===== SHEET =====
+function buildSheet() {
+  var tbody = document.getElementById('sheet-tbody');
+  tbody.innerHTML = '';
+  for (var r = 2; r <= 6; r++) {
+    var d = currentData[r];
+    var total = d.qty * d.price;
+    var tr = document.createElement('tr');
+    tr.setAttribute('data-row', r);
+    tr.innerHTML =
+      '<td class="row-num">' + r + '</td>' +
+      '<td>' + d.name + '</td>' +
+      '<td>' + d.product + '</td>' +
+      '<td class="num-cell" contenteditable="true" tabindex="0" data-col="qty" data-row="' + r + '" data-default="' + d.qty + '">' + fmtNum(d.qty) + '</td>' +
+      '<td class="num-cell" contenteditable="true" tabindex="0" data-col="price" data-row="' + r + '" data-default="' + d.price + '">' + fmtNum(d.price) + '</td>' +
+      '<td class="total-cell" id="total-' + r + '">' + fmtNum(total) + '</td>';
+    tbody.appendChild(tr);
+  }
+  attachCellEvents();
+}
+
+function attachCellEvents() {
+  document.querySelectorAll('[contenteditable="true"]').forEach(function(cell) {
+    cell.addEventListener('focus', function() {
+      var r = this.getAttribute('data-row');
+      var col = this.getAttribute('data-col');
+      document.getElementById('cell-ref').textContent = (col === 'qty' ? 'C' : 'D') + r;
+      document.getElementById('cell-val').textContent = this.textContent.replace(/,/g,'');
+      var range = document.createRange();
+      range.selectNodeContents(this);
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    });
+    cell.addEventListener('blur', function() { handleEdit(this); });
+    cell.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') { e.preventDefault(); this.blur(); }
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        var allCells = Array.from(document.querySelectorAll('[contenteditable="true"]'));
+        var idx = allCells.indexOf(this);
+        var next = e.shiftKey ? allCells[idx - 1] : allCells[idx + 1];
+        if (next) next.focus();
+      }
+    });
+  });
+}
+
+function handleEdit(cell) {
+  var row = parseInt(cell.getAttribute('data-row'));
+  var col = cell.getAttribute('data-col');
+  var raw = cell.textContent.replace(/,/g,'').replace(/\s/g,'');
+  var val = parseFloat(raw);
+  if (isNaN(val) || val < 0) {
+    val = parseFloat(cell.getAttribute('data-default'));
+    cell.textContent = fmtNum(val);
+    return;
+  }
+  val = Math.round(val);
+  cell.textContent = fmtNum(val);
+  currentData[row][col] = val;
+  var total = currentData[row].qty * currentData[row].price;
+  document.getElementById('total-' + row).textContent = fmtNum(total);
+  document.getElementById('cell-val').textContent = val;
+  editCount++;
+  totalEdits++;
+
+  if (mode === 'excel') {
+    flashCell(cell, 'flashWarn');
+    addExcelLog(row, col, val);
+    renderPanel();
+    refreshResultMessage();
+  } else {
+    flashCell(cell, 'flashOk');
+    addSqlLog(row, col, val, total);
+    addKnowledgeItem(row, col, val);
+    if (!dbTableData) dbTableData = buildDbTableSnapshot();
+    updateDbTableSnapshot(row);
+    renderPanel();
+    refreshResultMessage();
+    // Delayed BI trigger log
+    setTimeout(function() {
+      addBiTriggerLog();
+      renderPanel();
+    }, 600);
+  }
+}
+
+function flashCell(cell, anim) {
+  cell.style.animation = 'none';
+  void cell.offsetWidth;
+  cell.style.animation = anim + ' 0.6s ease-out';
+  setTimeout(function() { cell.style.animation = ''; }, 700);
+}
+
+// ===== EXCEL LOG STATE =====
+var excelLogs = [];
+
+function addExcelLog(row, col, val) {
+  var d = currentData[row];
+  var t = now();
+  // Insert newest first (unshift x3)
+  excelLogs.unshift({ tag: '履歴消失', text: '変更履歴は記録されていません', time: t });
+  excelLogs.unshift({ tag: '属人化', text: '他の担当者は最新データを参照できません', time: t });
+  excelLogs.unshift({ tag: '個人ファイル', text: 'ファイル保存（個人PC）— ' + d.name + 'のデータ更新', time: t });
+}
+
+// ===== SQL LOG STATE =====
+function addSqlLog(row, col, val, total) {
+  var d = currentData[row];
+  var colLabel = col === 'qty' ? 'qty' : 'price';
+  sqlLogs.unshift({
+    isBI: false,
+    html:
+      '<span class="sql-kw">UPDATE</span> sales_data<br>' +
+      '<span class="sql-kw">SET</span> <span class="sql-val">' + colLabel + '</span> = <span class="sql-val">' + val + '</span>,<br>' +
+      '&nbsp;&nbsp;&nbsp;&nbsp;total = <span class="sql-val">' + total + '</span>,<br>' +
+      '&nbsp;&nbsp;&nbsp;&nbsp;updated_at = <span class="sql-kw">NOW</span>(),<br>' +
+      '&nbsp;&nbsp;&nbsp;&nbsp;updated_by = <span class="sql-str">\'' + d.name + '\'</span><br>' +
+      '<span class="sql-kw">WHERE</span> id = <span class="sql-val">' + (row - 1) + '</span>;<br><br>' +
+      '<span class="sql-ok">✓ 1 row affected — COMMIT</span>'
+  });
+}
+
+function addBiTriggerLog() {
+  sqlLogs.unshift({
+    isBI: true,
+    html:
+      '<span class="sql-cmt">-- BIダッシュボード自動更新トリガー</span><br>' +
+      '<span class="sql-kw">NOTIFY</span> bi_dashboard, <span class="sql-str">\'sales_updated\'</span>;<br>' +
+      '<span class="sql-ok">✓ 経営指標を再計算</span>'
+  });
+}
+
+// ===== KNOWLEDGE STATE =====
+function addKnowledgeItem(row, col, val) {
+  var d = currentData[row];
+  var colLabel2 = col === 'qty' ? '数量' : '単価';
+  var initVal = initialData[row][col];
+  var pct = initVal > 0 ? Math.round((val - initVal) / initVal * 100) : 0;
+  var type, badge, title, desc;
+  var n = totalEdits;
+  if (n === 1) {
+    type = 'pattern'; badge = 'パターン'; title = '変更パターン検出';
+    desc = d.name + 'の' + colLabel2 + 'が変更されました（' + (pct >= 0 ? '+' : '') + pct + '%）。変更履歴をDBに自動記録。';
+  } else if (n === 2) {
+    type = 'suggestion'; badge = '改善提案'; title = '改善提案（自動生成）';
+    desc = '複数回の数値変更を検出。類似パターンの過去データと照合し、最適値の候補を算出可能です。';
+  } else if (n === 3) {
+    type = 'asset'; badge = '経営資産'; title = '経営資産化';
+    desc = '操作ログ ' + n + '件が蓄積。担当者別の判断傾向を可視化し、組織の意思決定プロセスとして構造化されました。';
+  } else if (n === 4) {
+    type = 'pattern'; badge = 'パターン'; title = 'トレンド分析';
+    desc = '継続的な変更パターンからAIが需要予測モデルを更新。次回の発注推奨数量を自動算出します。';
+  } else if (n % 2 === 1) {
+    type = 'suggestion'; badge = '改善提案'; title = '改善サイクル反映';
+    desc = '蓄積された判断データ（' + n + '件）から、業務プロセスの改善ポイントを3件検出。';
+  } else {
+    type = 'asset'; badge = '経営資産'; title = 'ナレッジ自動更新';
+    desc = '次の担当者は、蓄積された ' + n + ' 件の判断履歴を参照して意思決定できます。';
+  }
+  knowledgeItems.unshift({ type: type, badge: badge, title: title, desc: desc });
+}
+
+// ===== DB TABLE SNAPSHOT =====
+function buildDbTableSnapshot() {
+  var snap = {};
+  for (var r = 2; r <= 6; r++) {
+    var d = currentData[r];
+    snap[r] = { id: r-1, name: d.name, qty: d.qty, price: d.price, total: d.qty * d.price };
+  }
+  return snap;
+}
+
+function updateDbTableSnapshot(row) {
+  if (!dbTableData) return;
+  var d = currentData[row];
+  dbTableData[row] = { id: row-1, name: d.name, qty: d.qty, price: d.price, total: d.qty * d.price };
+}
+
+// ===== RESULT MESSAGE =====
+function refreshResultMessage() {
+  var main = document.getElementById('demo-result-main');
+  var sub = document.getElementById('demo-result-sub');
+  if (!main || !sub) return;
+  if (mode === 'excel') {
+    if (editCount >= 2) {
+      main.textContent = '操作は完了。しかしデータは個人に閉じたまま。';
+      main.style.color = 'var(--color-warning)';
+      sub.textContent = '判断は会議で消え、改善は仕組みに戻らない';
+      sub.style.color = 'var(--color-warning)';
+      main.style.display = 'block'; sub.style.display = 'block';
+    }
+  } else {
+    if (editCount === 1) {
+      main.textContent = '同じExcel操作。しかし構造が違う。';
+      main.style.color = 'var(--color-primary)';
+      sub.textContent = 'DB同期 → 経営ダッシュボード更新 → ノウハウ蓄積 — すべて自動で発生';
+      sub.style.color = 'var(--color-text-secondary)';
+      main.style.display = 'block'; sub.style.display = 'block';
+    } else if (editCount >= 3) {
+      main.textContent = 'データは蓄積され、判断は経営資産になり、改善が循環する。';
+      main.style.color = 'var(--color-primary)';
+      sub.textContent = 'これが「変化耐性」— 操作は変わらない。構造だけが変わる。';
+      sub.style.color = 'var(--color-text-secondary)';
+    }
+  }
+}
+
+// ===== PANEL RENDER (100% state-driven, zero DOM dependency) =====
+function renderPanel() {
+  var panel = document.getElementById('demo-panel');
+  if (!panel) return;
+
+  if (mode === 'excel') {
+    var logsHtml = '';
+    if (excelLogs.length === 0) {
+      logsHtml = '<div class="demo-log-empty">セルを編集すると、ここにログが表示されます</div>';
+    } else {
+      excelLogs.forEach(function(log) {
+        logsHtml +=
+          '<div class="demo-log-item demo-log-item--warn">' +
+          '<div class="demo-log-item__time">' + log.time + '</div>' +
+          '<span class="demo-log-item__tag">' + log.tag + '</span>' + log.text + '</div>';
+      });
+    }
+    panel.innerHTML =
+      '<div class="demo-panel__header">イベントログ</div>' +
+      '<div class="demo-log-panel">' + logsHtml + '</div>';
+  } else {
+    panel.innerHTML =
+      '<div class="demo-panel__header">' +
+        '<div class="demo-tabs">' +
+          '<button class="demo-tab' + (currentTab==='sql'?' active':'') + '" onclick="switchTab(\'sql\')" id="tab-sql" type="button">SQLリアルタイム同期</button>' +
+          '<button class="demo-tab' + (currentTab==='bi'?' active':'') + '" onclick="switchTab(\'bi\')" id="tab-bi" type="button">経営判断</button>' +
+          '<button class="demo-tab' + (currentTab==='knowledge'?' active':'') + '" onclick="switchTab(\'knowledge\')" id="tab-knowledge" type="button">ノウハウ蓄積</button>' +
+        '</div>' +
+      '</div>' +
+      '<div id="tab-content" style="flex:1;overflow:hidden;display:flex;flex-direction:column;">' +
+        buildTabContent(currentTab) +
+      '</div>';
+  }
+}
+
+function buildTabContent(tab) {
+  if (tab === 'sql')       return buildSqlContent();
+  if (tab === 'bi')        return buildBiContent();
+  return buildKnContent();
+}
+
+function buildSqlContent() {
+  var html = '<div class="demo-sql-panel">';
+  if (sqlLogs.length === 0) {
+    html += '<div class="demo-sql-empty">セルを編集すると、SQLクエリがリアルタイムで表示されます</div>';
+  } else {
+    if (dbTableData) html += buildDbTableHtml();
+    sqlLogs.forEach(function(log) {
+      html += '<div class="demo-sql-block">' + log.html + '</div>';
+    });
+  }
+  return html + '</div>';
+}
+
+function buildDbTableHtml() {
+  var html = '<div class="demo-db-table"><table><thead><tr><th>ID</th><th>担当者</th><th>数量</th><th>単価</th><th>合計</th></tr></thead><tbody>';
+  for (var r = 2; r <= 6; r++) {
+    var d = dbTableData[r];
+    html += '<tr><td>' + d.id + '</td><td>' + d.name + '</td>' +
+            '<td class="num">' + fmtNum(d.qty) + '</td>' +
+            '<td class="num">' + fmtNum(d.price) + '</td>' +
+            '<td class="num">' + fmtNum(d.total) + '</td></tr>';
+  }
+  return html + '</tbody></table></div>';
+}
+
+function buildBiContent() {
+  var totalSales = 0, priceSums = 0;
+  for (var r = 2; r <= 6; r++) {
+    totalSales += currentData[r].qty * currentData[r].price;
+    priceSums += currentData[r].price;
+  }
+  var avgPrice = Math.round(priceSums / 5);
+  var initTotal = 0;
+  for (var r2 = 2; r2 <= 6; r2++) initTotal += initialData[r2].qty * initialData[r2].price;
+  var delta = totalSales - initTotal;
+  var maxSales = 1;
+  for (var r3 = 2; r3 <= 6; r3++) maxSales = Math.max(maxSales, currentData[r3].qty * currentData[r3].price);
+
+  var barsHtml = '<div class="demo-chart">';
+  for (var r4 = 2; r4 <= 6; r4++) {
+    var h = Math.max(4, Math.round((currentData[r4].qty * currentData[r4].price) / maxSales * 100));
+    barsHtml += '<div class="demo-chart-col">' +
+      '<div class="demo-bar-wrap"><div class="demo-bar" style="height:' + h + '%"></div></div>' +
+      '<div class="demo-chart-label">' + currentData[r4].name + '</div></div>';
+  }
+  barsHtml += '</div>';
+
+  var msgHtml = totalEdits >= 2
+    ? '<div class="demo-bi-msg">✓ ' + totalEdits + '回の変更がリアルタイムで経営指標に反映されています</div>'
+    : '';
+
+  return '<div class="demo-bi-panel">' +
+    '<div class="demo-kpi-cards">' +
+      '<div class="demo-kpi-card"><div class="demo-kpi-label">総売上</div>' +
+        '<div class="demo-kpi-val">' + fmtYen(totalSales) + '</div>' +
+        '<div class="demo-kpi-delta ' + (delta>=0?'demo-kpi-delta--up':'demo-kpi-delta--down') + '">' + (delta>=0?'+':'') + fmtYen(delta) + '</div></div>' +
+      '<div class="demo-kpi-card"><div class="demo-kpi-label">平均単価</div><div class="demo-kpi-val">¥' + fmtNum(avgPrice) + '</div></div>' +
+      '<div class="demo-kpi-card"><div class="demo-kpi-label">更新回数</div><div class="demo-kpi-val">' + totalEdits + '</div></div>' +
+    '</div>' + barsHtml + msgHtml + '</div>';
+}
+
+function buildKnContent() {
+  var counterHtml = knowledgeItems.length > 0
+    ? '<div class="demo-kn-counter">蓄積ノウハウ: ' + knowledgeItems.length + ' 件</div>' : '';
+  var itemsHtml = '';
+  if (knowledgeItems.length === 0) {
+    itemsHtml = '<div class="demo-kn-empty">セルを編集すると、ノウハウが自動で蓄積されます</div>';
+  } else {
+    knowledgeItems.forEach(function(item) {
+      itemsHtml +=
+        '<div class="demo-kn-item demo-kn-item--' + item.type + '">' +
+          '<div class="demo-kn-header">' +
+            '<span class="demo-kn-badge demo-kn-badge--' + item.type + '">' + item.badge + '</span>' +
+            '<span class="demo-kn-title">' + item.title + '</span>' +
+          '</div>' +
+          '<div class="demo-kn-desc">' + item.desc + '</div>' +
+        '</div>';
+    });
+  }
+  return '<div class="demo-kn-panel">' + counterHtml + itemsHtml + '</div>';
+}
+
+// ===== TAB SWITCH (no classList null risk: state only) =====
+function switchTab(tab) {
+  currentTab = tab;
+  renderPanel();
+}
+
+// ===== MODE SWITCH =====
+function switchMode(newMode) {
+  mode = newMode;
+  editCount = 0;
+  excelLogs = [];
+  sqlLogs = [];
+  dbTableData = null;
+
+  document.querySelectorAll('.demo-toggle__btn').forEach(function(b) {
+    var isActive = b.getAttribute('data-mode') === newMode;
+    b.classList.toggle('demo-toggle__btn--active', isActive);
+    b.setAttribute('aria-checked', isActive ? 'true' : 'false');
+  });
+
+  var main = document.getElementById('demo-result-main');
+  var sub = document.getElementById('demo-result-sub');
+  if (main) main.style.display = 'none';
+  if (sub) sub.style.display = 'none';
+
+  renderPanel();
+}
+
+
+// ===== NAVIGATION =====
+function scrollToSection(n) {
+  var id = [null, 'section-1-nin', 'section-2-market', 'section-3-position',
+    'section-4-non-substitution', 'section-5-true-competitor', 'section-6-core-value',
+    'section-7-management-risk', 'section-8-excel-ai', 'section-9-final-message', 'section-10-taiken'];
+  var el = document.getElementById(id[n]);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+}
+
+// Keyboard shortcuts 1-0
+document.addEventListener('keydown', function(e) {
+  if (e.target.contentEditable === 'true') return;
+  if (/^[1-9]$/.test(e.key)) scrollToSection(parseInt(e.key));
+  if (e.key === '0') scrollToSection(10);
 });
-btn.classList.add('demo-toggle__btn--active');
-btn.setAttribute('aria-checked','true');
-document.getElementById('demoResult').style.display='none';
-setupPanel();
+
+// ===== INTERSECTION OBSERVER =====
+var revealObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+
+// Observer for section nav
+var sectionObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      var sec = entry.target.getAttribute('data-section');
+      document.querySelectorAll('.nav-link').forEach(function(link) {
+        link.classList.remove('active');
+        if (link.getAttribute('data-section') === sec) link.classList.add('active');
+      });
+    }
+  });
+}, { threshold: 0.4 });
+
+// S1 special animations
+setTimeout(function() {
+  var el = document.getElementById('s1hero');
+  if (el) { el.classList.add('visible'); }
+  setTimeout(function() {
+    var sub = document.getElementById('s1sub');
+    if (sub) sub.classList.add('visible');
+    setTimeout(function() {
+      var hint = document.getElementById('s1hint');
+      if (hint) hint.classList.add('visible');
+    }, 700);
+  }, 500);
+}, 300);
+
+// S9 observer
+var s9Observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      ['s9main','s9cta','s9sub','s9tagline','s9company'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.classList.add('visible');
+      });
+    }
+  });
+}, { threshold: 0.3 });
+
+// S3 connector observer
+var s3Observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      ['pos-connector1','pos-connector2','pos-label','pos-keymsg'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.classList.add('visible');
+      });
+      // Fade layers to 0.4
+      ['pos-erp','pos-saas','pos-excel'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) { el.style.opacity = '0.4'; el.classList.add('visible'); }
+      });
+    }
+  });
+}, { threshold: 0.3 });
+
+// ExAI center observer
+var exaiObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      var center = document.getElementById('exai-center');
+      if (center) center.classList.add('visible');
+      var line = document.getElementById('exai-line');
+      var line2 = document.getElementById('exai-line2');
+      if (line) line.classList.add('visible');
+      if (line2) line2.classList.add('visible');
+      var keymsg = document.getElementById('exai-keymsg');
+      if (keymsg) keymsg.classList.add('visible');
+    }
+  });
+}, { threshold: 0.3 });
+
+// BA keymsg observer
+var baObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      var el = document.getElementById('ba-keymsg');
+      if (el) el.classList.add('visible');
+    }
+  });
+}, { threshold: 0.2 });
+
+// Init
+window.addEventListener('DOMContentLoaded', function() {
+  buildSheet();
+  renderPanel();
+
+  // Observe reveal elements
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(function(el) {
+    revealObserver.observe(el);
+  });
+
+  // Observe risk items
+  document.querySelectorAll('.risk-item, .ba-row, .ba-arrow-row, .concept-row, .declaration-item').forEach(function(el) {
+    revealObserver.observe(el);
+  });
+
+  // Observe sections for nav
+  document.querySelectorAll('section[data-section]').forEach(function(el) {
+    sectionObserver.observe(el);
+  });
+
+  // Specific observers
+  var s9 = document.getElementById('section-9-final-message');
+  if (s9) s9Observer.observe(s9);
+
+  var s3 = document.getElementById('section-3-position');
+  if (s3) s3Observer.observe(s3);
+
+  var s8 = document.getElementById('section-8-excel-ai');
+  if (s8) exaiObserver.observe(s8);
+
+  var s6 = document.getElementById('section-6-core-value');
+  if (s6) baObserver.observe(s6);
 });
-});
-
-function setupPanel(){
-var tabs=document.getElementById('panelTabs');
-var content=document.getElementById('panelContent');
-if(mode==='excel'){
-tabs.style.display='none';
-content.innerHTML='<div class="demo-panel__empty">イベントログ<br><br>セルを編集すると、ここにログが表示されます</div>';
-} else {
-tabs.style.display='flex';
-tabs.innerHTML='<button class="demo-panel__tab demo-panel__tab--active" data-tab="sql" type="button">DB同期</button><button class="demo-panel__tab" data-tab="bi" type="button">経営判断</button><button class="demo-panel__tab" data-tab="knowledge" type="button">ノウハウ蓄積</button>';
-content.innerHTML='<div class="demo-panel__empty">SQLリアルタイム同期<br><br>セルを編集すると、SQLクエリがリアルタイムで表示されます</div>';
-var tabBtns=tabs.querySelectorAll('.demo-panel__tab');
-tabBtns.forEach(function(tb){
-tb.addEventListener('click',function(){
-tabBtns.forEach(function(t){t.classList.remove('demo-panel__tab--active')});
-tb.classList.add('demo-panel__tab--active');
-showTabContent(tb.getAttribute('data-tab'));
-});
-});
-}
-}
-
-var sqlLogs=[];
-var dbTableShown=false;
-
-function showTabContent(tab){
-var content=document.getElementById('panelContent');
-if(tab==='sql'){
-content.innerHTML='';
-if(sqlLogs.length===0){
-content.innerHTML='<div class="demo-panel__empty">SQLリアルタイム同期<br><br>セルを編集すると、SQLクエリがリアルタイムで表示されます</div>';
-} else {
-sqlLogs.forEach(function(h){content.insertAdjacentHTML('beforeend',h)});
-if(dbTableShown) content.insertAdjacentHTML('beforeend',buildDBTable());
-}
-content.scrollTop=content.scrollHeight;
-} else if(tab==='bi'){
-content.innerHTML=buildBI();
-} else if(tab==='knowledge'){
-content.innerHTML='';
-if(knowledgeItems.length===0){
-content.innerHTML='<div class="demo-panel__empty">ノウハウ蓄積・改善サイクル<br><br>編集操作が蓄積されると、パターンと改善提案が自動生成されます</div>';
-} else {
-knowledgeItems.forEach(function(h){content.insertAdjacentHTML('beforeend',h)});
-content.insertAdjacentHTML('beforeend','<div class="demo__kn-counter" style="display:block">蓄積ノウハウ: '+knowledgeItems.length+' 件</div>');
-}
-}
-}
-
-function buildDBTable(){
-var h='<div class="demo__db"><table><thead><tr><th style="width:60px">ID</th><th>担当者</th><th style="width:80px">数量</th><th style="width:80px">単価</th><th style="width:100px">合計</th></tr></thead><tbody>';
-for(var r=2;r<=6;r++){
-var d=currentData[r];
-h+='<tr id="dbrow-'+r+'"><td>'+(r-1)+'</td><td>'+d.name+'</td><td>'+fmt(d.qty)+'</td><td>'+fmt(d.price)+'</td><td>'+fmt(d.qty*d.price)+'</td></tr>';
-}
-h+='</tbody></table></div>';
-return h;
-}
-
-function buildBI(){
-var totalSales=0,totalPrice=0,maxSales=0;
-var salesByPerson={};
-for(var r=2;r<=6;r++){
-var d=currentData[r];
-var s=d.qty*d.price;
-totalSales+=s;
-totalPrice+=d.price;
-salesByPerson[r]={name:d.name,sales:s,changed:d.qty!==initialData[r].qty||d.price!==initialData[r].price};
-if(s>maxSales) maxSales=s;
-}
-var initTotal=0;for(var r2=2;r2<=6;r2++){var id2=initialData[r2];initTotal+=id2.qty*id2.price}
-var delta=totalSales-initTotal;
-var deltaStr=delta>=0?'+'+fmtYen(delta):'-'+fmtYen(Math.abs(delta));
-var deltaClass=delta>=0?'delta-up':'delta-down';
-
-var h='<div class="demo__bi">';
-h+='<div class="demo__bi-kpis">';
-h+='<div class="demo__bi-kpi"><div class="demo__bi-kpi-label">総売上</div><div class="demo__bi-kpi-value">'+fmtYen(totalSales)+'</div>'+(delta!==0?'<div class="demo__bi-kpi-delta '+deltaClass+'">'+deltaStr+'</div>':'')+'</div>';
-h+='<div class="demo__bi-kpi"><div class="demo__bi-kpi-label">平均単価</div><div class="demo__bi-kpi-value">'+fmtYen(Math.round(totalPrice/5))+'</div></div>';
-h+='<div class="demo__bi-kpi"><div class="demo__bi-kpi-label">更新回数</div><div class="demo__bi-kpi-value">'+totalEdits+'</div></div>';
-h+='</div>';
-h+='<div class="demo__bi-chart">';
-for(var r3=2;r3<=6;r3++){
-var sp=salesByPerson[r3];
-var pct=Math.max(4,Math.round((sp.sales/maxSales)*100));
-h+='<div class="demo__bi-bar-wrap"><div class="demo__bi-bar'+(sp.changed?' demo__bi-bar--changed':'')+'" style="height:'+pct+'%"></div><div class="demo__bi-bar-label">'+sp.name+'</div></div>';
-}
-h+='</div>';
-if(totalEdits>=2){h+='<div class="demo__bi-msg">✓ '+totalEdits+'回の変更がリアルタイムで経営指標に反映されています</div>'}
-h+='</div>';
-return h;
-}
-
-/* Cell Edit Handler */
-var editableCells=document.querySelectorAll('td[contenteditable]');
-editableCells.forEach(function(cell){
-cell.addEventListener('focus',function(){
-var row=cell.parentElement.getAttribute('data-row');
-var col=cell.getAttribute('data-col');
-var colLetter=col==='qty'?'C':'D';
-document.getElementById('formulaRef').textContent=colLetter+row;
-document.getElementById('formulaVal').textContent=cell.textContent.replace(/,/g,'');
-try{var range=document.createRange();range.selectNodeContents(cell);var sel=window.getSelection();sel.removeAllRanges();sel.addRange(range)}catch(e){}
-});
-cell.addEventListener('keydown',function(e){
-if(e.key==='Enter'){e.preventDefault();cell.blur()}
-if(e.key==='Tab'){
-e.preventDefault();
-cell.blur();
-var allEditable=Array.from(editableCells);
-var idx=allEditable.indexOf(cell);
-var next=e.shiftKey?idx-1:idx+1;
-if(next>=0&&next<allEditable.length) allEditable[next].focus();
-}
-});
-cell.addEventListener('blur',function(){
-var row=parseInt(cell.parentElement.getAttribute('data-row'));
-var col=cell.getAttribute('data-col');
-var raw=cell.textContent.replace(/[,\s]/g,'');
-var val=parseInt(raw,10);
-if(isNaN(val)||val<0){val=parseInt(cell.getAttribute('data-default'),10)}
-currentData[row][col]=val;
-cell.textContent=col==='qty'?String(val):fmt(val);
-var total=currentData[row].qty*currentData[row].price;
-var totalCell=cell.parentElement.querySelector('.cell-total');
-if(totalCell) totalCell.textContent=fmt(total);
-document.getElementById('formulaVal').textContent=String(val);
-editCount++;
-totalEdits++;
-
-if(mode==='excel') handleExcelEdit(row,col,val);
-else handleDbsheetEdit(row,col,val);
-});
-});
-
-function handleExcelEdit(row,col,val){
-var cell=document.querySelector('tr[data-row="'+row+'"] td[data-col="'+col+'"]');
-cell.classList.remove('flash-warn');
-void cell.offsetWidth;
-cell.classList.add('flash-warn');
-var content=document.getElementById('panelContent');
-if(editCount===1){content.innerHTML=''}
-var name=currentData[row].name;
-var logs=[
-{text:'ファイル保存（個人PC）— '+name+'のデータ更新',tag:'個人ファイル'},
-{text:'他の担当者は最新データを参照できません',tag:'属人化'},
-{text:'変更履歴は記録されていません',tag:'履歴消失'}
-];
-logs.forEach(function(log,i){
-setTimeout(function(){
-var html='<div class="demo__log-item demo__log-item--warn"><div><span class="demo__log-time">['+getTime()+']</span><span class="demo__log-tag demo__log-tag--warn">'+log.tag+'</span></div><div class="demo__log-text">'+log.text+'</div></div>';
-content.insertAdjacentHTML('beforeend',html);
-content.scrollTop=content.scrollHeight;
-},i*400);
-});
-if(editCount>=2) showResult('warn','操作は完了。しかしデータは個人に閉じたまま。','判断は会議で消え、改善は仕組みに戻らない');
-}
-
-function handleDbsheetEdit(row,col,val){
-var cell=document.querySelector('tr[data-row="'+row+'"] td[data-col="'+col+'"]');
-cell.classList.remove('flash-ok');
-void cell.offsetWidth;
-cell.classList.add('flash-ok');
-var name=currentData[row].name;
-var colName=col==='qty'?'quantity':'unit_price';
-var total=currentData[row].qty*currentData[row].price;
-
-var activeTab=document.querySelector('.demo-panel__tab--active');
-var currentTab=activeTab?activeTab.getAttribute('data-tab'):'sql';
-
-// SQL log
-var sqlHtml='<div class="demo__sql"><span class="sql-kw">UPDATE</span> sales_data<br><span class="sql-kw">SET</span> '+colName+' = <span class="sql-val">'+val+'</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;total = <span class="sql-val">'+total+'</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;updated_at = <span class="sql-kw">NOW</span>(),<br>&nbsp;&nbsp;&nbsp;&nbsp;updated_by = <span class="sql-val">\''+name+'\'</span><br><span class="sql-kw">WHERE</span> id = <span class="sql-val">'+(row-1)+'</span>;<br><br><span class="sql-ok">✓ 1 row affected — COMMIT</span></div>';
-sqlLogs.push(sqlHtml);
-
-setTimeout(function(){
-var biSql='<div class="demo__sql"><span style="color:#6E6E73">-- BIダッシュボード自動更新トリガー</span><br><span class="sql-kw">NOTIFY</span> bi_dashboard, <span class="sql-val">\'sales_updated\'</span>;<br><span class="sql-ok">✓ 経営指標を再計算</span></div>';
-sqlLogs.push(biSql);
-if(currentTab==='sql') showTabContent('sql');
-},600);
-
-dbTableShown=true;
-if(currentTab==='sql') showTabContent('sql');
-
-// Update BI
-setTimeout(function(){
-if(document.querySelector('.demo-panel__tab--active')&&document.querySelector('.demo-panel__tab--active').getAttribute('data-tab')==='bi'){
-showTabContent('bi');
-}
-},700);
-
-// Update Knowledge
-updateKnowledge(row,col,val);
-
-// DB row flash
-setTimeout(function(){
-var dbRow=document.getElementById('dbrow-'+row);
-if(dbRow){dbRow.classList.remove('demo__db-row--flash');void dbRow.offsetWidth;dbRow.classList.add('demo__db-row--flash')}
-},100);
-
-if(editCount===1) showResult('ok','同じExcel操作。しかし構造が違う。','DB同期 → 経営ダッシュボード更新 → ノウハウ蓄積 — すべて自動で発生');
-if(editCount>=3) showResult('ok','データは蓄積され、判断は経営資産になり、改善が循環する。','これが「変化耐性」— 操作は変わらない。構造だけが変わる。');
-}
-
-function updateKnowledge(row,col,val){
-var name=currentData[row].name;
-var colLabel=col==='qty'?'数量':'単価';
-var origVal=initialData[row][col];
-var pctChange=origVal!==0?Math.round(((val-origVal)/origVal)*100):0;
-var item;
-if(totalEdits===1){item={type:'pattern',title:'変更パターン検出',desc:name+'の'+colLabel+'が変更されました（'+(pctChange>=0?'+':'')+pctChange+'%）。変更履歴をDBに自動記録。'}}
-else if(totalEdits===2){item={type:'suggestion',title:'改善提案（自動生成）',desc:'複数回の数値変更を検出。類似パターンの過去データと照合し、最適値の候補を算出可能です。'}}
-else if(totalEdits===3){item={type:'asset',title:'経営資産化',desc:'操作ログ '+totalEdits+'件が蓄積。担当者別の判断傾向を可視化し、組織の意思決定プロセスとして構造化されました。'}}
-else if(totalEdits===4){item={type:'pattern',title:'トレンド分析',desc:'継続的な変更パターンからAIが需要予測モデルを更新。次回の発注推奨数量を自動算出します。'}}
-else if(totalEdits%2===1){item={type:'suggestion',title:'改善サイクル反映',desc:'蓄積された判断データ（'+totalEdits+'件）から、業務プロセスの改善ポイントを3件検出。ルール化して全担当者に展開可能です。'}}
-else{item={type:'asset',title:'ナレッジ自動更新',desc:'改善が構造に戻りました。次の担当者は、蓄積された '+totalEdits+' 件の判断履歴を参照して意思決定できます。'}}
-
-var html='<div class="demo__kn-item demo__kn-item--'+item.type+'"><div class="demo__kn-header"><span class="demo__kn-badge demo__kn-badge--'+item.type+'">'+(item.type==='pattern'?'パターン':item.type==='suggestion'?'改善提案':'経営資産')+'</span><span class="demo__kn-title">'+item.title+'</span></div><div class="demo__kn-desc">'+item.desc+'</div></div>';
-knowledgeItems.unshift(html);
-
-var activeTab2=document.querySelector('.demo-panel__tab--active');
-if(activeTab2&&activeTab2.getAttribute('data-tab')==='knowledge'){
-showTabContent('knowledge');
-}
-}
-
-function showResult(type,main,sub){
-var el=document.getElementById('demoResult');
-el.style.display='block';
-el.className='demo__result demo__result--'+type;
-el.innerHTML='<div class="demo__result-main">'+main+'</div><div class="demo__result-sub">'+sub+'</div>';
-}
-
-/* Scroll snap */
-document.documentElement.style.scrollSnapType='y proximity';
-
-})();
 </script>
 </body>
 </html>
