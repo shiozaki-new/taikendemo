@@ -364,11 +364,15 @@ ul,ol{list-style:none}
 @keyframes logSlide{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes flashOk{0%{background:rgba(48,164,108,0.25)}100%{background:transparent}}
 @keyframes flashWarn{0%{background:rgba(229,72,77,0.2)}100%{background:transparent}}
+.flash-ok{animation:flashOk 0.6s ease-out}
+.flash-warn{animation:flashWarn 0.6s ease-out}
 
 /* Demo SQL */
 .demo__sql{background:var(--color-primary-dark);border-radius:var(--radius-card-inner);padding:10px 12px;margin-bottom:8px;font-family:var(--font-mono);font-size:11px;line-height:1.6;overflow-x:auto;animation:logSlide 0.4s var(--ease-spring)}
 .demo__sql .kw{color:#7CB7FF}.demo__sql .val{color:#F5B870}.demo__sql .cm{color:rgba(255,255,255,0.35)}
 .demo__sql .ok{display:inline-block;padding:2px 6px;background:rgba(48,164,108,0.15);color:var(--color-success);border-radius:4px;margin-top:4px;font-size:10px}
+.sql-kw{color:#7CB7FF}.sql-val{color:#F5B870}
+.sql-ok{display:inline-block;background:rgba(48,164,108,0.15);color:var(--color-success);padding:2px 6px;border-radius:4px;margin-top:4px}
 
 /* Demo DB Table */
 .demo__db{margin:8px 0;border:0.5px solid var(--color-border);border-radius:var(--radius-card-inner);overflow:hidden;animation:logSlide 0.4s var(--ease-spring)}
@@ -386,12 +390,15 @@ ul,ol{list-style:none}
 .demo__bi-delta{font-size:11px;font-weight:600;margin-top:2px}
 .demo__bi-delta--up{color:var(--color-success)}
 .demo__bi-delta--down{color:var(--color-warning)}
+.demo__bi-kpi-delta{font-size:11px;font-family:var(--font-mono);margin-top:3px;font-weight:600}
+.delta-up{color:var(--color-success)}
+.delta-down{color:var(--color-warning)}
 .demo__bi-chart{display:flex;align-items:flex-end;justify-content:space-around;height:120px;padding:8px;background:var(--color-bg-light);border-radius:var(--radius-card-inner)}
 @media(min-width:1440px){.demo__bi-chart{height:140px}}
-.demo__bi-bar-wrap{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1}
-.demo__bi-bar{width:70%;border-radius:4px 4px 0 0;background:var(--color-primary);transition:height 0.5s var(--ease-spring),background 0.3s;min-height:4px}
+.demo__bi-bar-wrap{display:flex;flex-direction:column;align-items:center;flex:1;height:100%}
+.demo__bi-bar{width:100%;border-radius:4px 4px 0 0;background:var(--color-primary);transition:height 0.5s var(--ease-spring),background 0.3s;margin-top:auto;min-height:4px}
 .demo__bi-bar--changed{background:var(--color-accent)}
-.demo__bi-bar-label{font-size:9px;font-family:var(--font-mono);color:var(--color-text-secondary);white-space:nowrap}
+.demo__bi-bar-label{font-size:9px;font-family:var(--font-mono);color:var(--color-text-secondary);white-space:nowrap;margin-top:4px;text-align:center}
 
 /* Demo BI Update Message */
 .demo__bi-msg{text-align:center;margin-top:var(--space-sm);font-size:12px;color:var(--color-success);font-weight:500}
@@ -705,86 +712,38 @@ ul,ol{list-style:none}
   </div>
 </section>
 
-<!-- S10: 応（デモ体験） -->
+<!-- S10: 応（クリックデモ体験）-->
 <section id="section-10-taiken" class="section section--white section--no-snap demo-section" aria-labelledby="heading-10">
-  <div class="section__inner">
-    <h2 id="heading-10" class="section__heading anim">触れて、体感する。</h2>
-    <p class="demo__intro anim" data-delay="200">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-      セルの数値を変更して、モードを切り替えてみてください
-    </p>
-    <div class="demo-toggle anim" data-delay="300">
-      <div class="demo-toggle__inner" role="radiogroup" aria-label="モード切替">
-        <button class="demo-toggle__btn demo-toggle__btn--active" data-mode="excel" role="radio" aria-checked="true" type="button">Excel 単体</button>
-        <button class="demo-toggle__btn" data-mode="dbsheet" role="radio" aria-checked="false" type="button">dbSheet 連携</button>
-      </div>
-    </div>
-    <div class="demo-container anim anim--scale" data-delay="400">
-      <!-- Spreadsheet -->
-      <div class="demo-sheet">
-        <div class="demo-sheet__toolbar">
-          <div class="demo-sheet__dots"><span class="demo-sheet__dot demo-sheet__dot--r"></span><span class="demo-sheet__dot demo-sheet__dot--y"></span><span class="demo-sheet__dot demo-sheet__dot--g"></span></div>
-          <span class="demo-sheet__filename">売上管理表.xlsx</span>
-        </div>
-        <div class="demo-sheet__formula">
-          <span class="demo-sheet__formula-ref" id="formulaRef">C2</span>
-          <span style="opacity:0.5">fx</span>
-          <span class="demo-sheet__formula-val" id="formulaVal">120</span>
-        </div>
-        <div style="overflow-x:auto">
-          <table class="demo-grid" id="demoGrid">
-            <thead><tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th></tr></thead>
-            <tbody>
-              <tr><td class="row-num">1</td><td class="cell-header">担当者</td><td class="cell-header">商品名</td><td class="cell-header cell-num">数量</td><td class="cell-header cell-num">単価</td><td class="cell-header cell-num">合計</td></tr>
-              <tr data-row="2"><td class="row-num">2</td><td class="cell-name">田中</td><td class="cell-name">部品A</td><td class="cell-num" contenteditable="true" tabindex="0" data-col="qty" data-default="120">120</td><td class="cell-num" contenteditable="true" tabindex="0" data-col="price" data-default="2500">2,500</td><td class="cell-num cell-total">300,000</td></tr>
-              <tr data-row="3"><td class="row-num">3</td><td class="cell-name">佐藤</td><td class="cell-name">部品B</td><td class="cell-num" contenteditable="true" tabindex="0" data-col="qty" data-default="85">85</td><td class="cell-num" contenteditable="true" tabindex="0" data-col="price" data-default="4200">4,200</td><td class="cell-num cell-total">357,000</td></tr>
-              <tr data-row="4"><td class="row-num">4</td><td class="cell-name">鈴木</td><td class="cell-name">部品C</td><td class="cell-num" contenteditable="true" tabindex="0" data-col="qty" data-default="200">200</td><td class="cell-num" contenteditable="true" tabindex="0" data-col="price" data-default="1800">1,800</td><td class="cell-num cell-total">360,000</td></tr>
-              <tr data-row="5"><td class="row-num">5</td><td class="cell-name">高橋</td><td class="cell-name">部品D</td><td class="cell-num" contenteditable="true" tabindex="0" data-col="qty" data-default="50">50</td><td class="cell-num" contenteditable="true" tabindex="0" data-col="price" data-default="8900">8,900</td><td class="cell-num cell-total">445,000</td></tr>
-              <tr data-row="6"><td class="row-num">6</td><td class="cell-name">伊藤</td><td class="cell-name">部品E</td><td class="cell-num" contenteditable="true" tabindex="0" data-col="qty" data-default="300">300</td><td class="cell-num" contenteditable="true" tabindex="0" data-col="price" data-default="950">950</td><td class="cell-num cell-total">285,000</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <!-- Panel -->
-      <div class="demo-panel">
-        <div class="demo-panel__tabs" id="panelTabs" style="display:none">
-          <button class="demo-panel__tab demo-panel__tab--active" data-tab="sql" type="button">DB同期</button>
-          <button class="demo-panel__tab" data-tab="bi" type="button">経営判断</button>
-          <button class="demo-panel__tab" data-tab="knowledge" type="button">ノウハウ蓄積</button>
-        </div>
-        <div class="demo-panel__content" id="panelContent">
-          <div class="demo-panel__view demo-panel__view--active" id="view-excel">
-            <div class="demo-panel__empty" id="excelEmpty">イベントログ<br><br>セルを編集すると、ここにログが表示されます</div>
-            <div id="excelLogs"></div>
-          </div>
-          <div class="demo-panel__view" id="view-sql">
-            <div class="demo-panel__empty" id="sqlEmpty">SQLリアルタイム同期<br><br>セルを編集すると、SQLクエリがリアルタイムで表示されます</div>
-            <div id="sqlLogs"></div>
-            <div id="dbTableWrap"></div>
-          </div>
-          <div class="demo-panel__view" id="view-bi">
-            <div id="biDashboard" style="display:none">
-              <div class="demo__bi-kpis">
-                <div class="demo__bi-kpi"><div class="demo__bi-kpi-label">総売上</div><div class="demo__bi-kpi-value" id="kpiTotal">¥1,747K</div><div class="demo__bi-delta" id="kpiDelta"></div></div>
-                <div class="demo__bi-kpi"><div class="demo__bi-kpi-label">平均単価</div><div class="demo__bi-kpi-value" id="kpiAvg">¥3,670</div></div>
-                <div class="demo__bi-kpi"><div class="demo__bi-kpi-label">更新回数</div><div class="demo__bi-kpi-value" id="kpiEdits">0</div></div>
-              </div>
-              <div class="demo__bi-chart" id="biChart"></div>
-              <div class="demo__bi-msg" id="biMsg"></div>
-            </div>
-            <div class="demo-panel__empty" id="biEmpty">経営ダッシュボード<br><br>データの変更がリアルタイムで経営指標に反映されます</div>
-          </div>
-          <div class="demo-panel__view" id="view-knowledge">
-            <div class="demo-panel__empty" id="knEmpty">ノウハウ蓄積・改善サイクル<br><br>編集操作が蓄積されると、パターンと改善提案が自動生成されます</div>
-            <div id="knList"></div>
-            <div class="demo__kn-counter" id="knCounter" style="display:none">蓄積ノウハウ: <span id="knCount">0</span> 件</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div id="demoResult" style="display:none"></div>
-    <p class="demo__guide anim" data-delay="700">※ 体験後、お気軽にスタッフへお声がけください</p>
-  </div>
+<div class="section__inner">
+<h2 id="heading-10" class="section__heading anim">触れて、体感する。</h2>
+<p class="demo__intro anim" data-delay="200"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>セルの数値を変更して、モードを切り替えてみてください</p>
+<div class="demo-toggle anim" data-delay="300">
+<div class="demo-toggle__inner" role="radiogroup" aria-label="モード切替">
+<button class="demo-toggle__btn demo-toggle__btn--active" data-mode="excel" role="radio" aria-checked="true" type="button">Excel 単体</button>
+<button class="demo-toggle__btn" data-mode="dbsheet" role="radio" aria-checked="false" type="button">dbSheet 連携</button>
+</div></div>
+<div class="demo-container anim anim--scale" data-delay="400">
+<div class="demo-sheet">
+<div class="demo-sheet__toolbar"><div class="demo-sheet__dots"><span class="demo-sheet__dot demo-sheet__dot--r"></span><span class="demo-sheet__dot demo-sheet__dot--y"></span><span class="demo-sheet__dot demo-sheet__dot--g"></span></div><span class="demo-sheet__filename">売上管理表.xlsx</span></div>
+<div class="demo-sheet__formula"><span class="demo-sheet__formula-ref" id="formulaRef">C2</span><span>fx</span><span class="demo-sheet__formula-val" id="formulaVal">120</span></div>
+<div class="demo-sheet__grid">
+<table class="demo-grid"><thead><tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th></tr></thead>
+<tbody>
+<tr><td class="row-num">1</td><td class="cell-name" style="font-weight:600">担当者</td><td class="cell-name" style="font-weight:600">商品名</td><td class="cell-num" style="font-weight:600">数量</td><td class="cell-num" style="font-weight:600">単価</td><td class="cell-num" style="font-weight:600">合計</td></tr>
+<tr data-row="2"><td class="row-num">2</td><td class="cell-name">田中</td><td class="cell-name">部品A</td><td class="cell-num" contenteditable="true" tabindex="0" data-col="qty" data-default="120">120</td><td class="cell-num" contenteditable="true" tabindex="0" data-col="price" data-default="2500">2,500</td><td class="cell-num cell-total">300,000</td></tr>
+<tr data-row="3"><td class="row-num">3</td><td class="cell-name">佐藤</td><td class="cell-name">部品B</td><td class="cell-num" contenteditable="true" tabindex="0" data-col="qty" data-default="85">85</td><td class="cell-num" contenteditable="true" tabindex="0" data-col="price" data-default="4200">4,200</td><td class="cell-num cell-total">357,000</td></tr>
+<tr data-row="4"><td class="row-num">4</td><td class="cell-name">鈴木</td><td class="cell-name">部品C</td><td class="cell-num" contenteditable="true" tabindex="0" data-col="qty" data-default="200">200</td><td class="cell-num" contenteditable="true" tabindex="0" data-col="price" data-default="1800">1,800</td><td class="cell-num cell-total">360,000</td></tr>
+<tr data-row="5"><td class="row-num">5</td><td class="cell-name">高橋</td><td class="cell-name">部品D</td><td class="cell-num" contenteditable="true" tabindex="0" data-col="qty" data-default="50">50</td><td class="cell-num" contenteditable="true" tabindex="0" data-col="price" data-default="8900">8,900</td><td class="cell-num cell-total">445,000</td></tr>
+<tr data-row="6"><td class="row-num">6</td><td class="cell-name">伊藤</td><td class="cell-name">部品E</td><td class="cell-num" contenteditable="true" tabindex="0" data-col="qty" data-default="300">300</td><td class="cell-num" contenteditable="true" tabindex="0" data-col="price" data-default="950">950</td><td class="cell-num cell-total">285,000</td></tr>
+</tbody></table>
+</div></div>
+<div class="demo-panel">
+<div class="demo-panel__tabs" id="panelTabs" style="display:none"></div>
+<div class="demo-panel__content" id="panelContent"><div class="demo-panel__empty">イベントログ<br><br>セルを編集すると、ここにログが表示されます</div></div>
+</div></div>
+<div class="demo__result" id="demoResult" style="display:none"></div>
+<p class="demo__guide anim" data-delay="700">※ 体験後、お気軽にスタッフへお声がけください</p>
+</div>
 </section>
 
 </main>
@@ -805,9 +764,7 @@ var currentData = JSON.parse(JSON.stringify(initialData));
 var mode = 'excel';
 var editCount = 0;
 var totalEdits = 0;
-var changedRows = {};
-var dbTableCreated = false;
-var biInitialized = false;
+var knowledgeItems = [];
 var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ========== Utilities ========== */
@@ -817,7 +774,7 @@ function fmtYen(n){
   if(n>=1000) return '¥'+Math.round(n/1000)+'K';
   return '¥'+n;
 }
-function now(){var d=new Date();return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)+':'+('0'+d.getSeconds()).slice(-2)}
+function getTime(){var d=new Date();return [d.getHours(),d.getMinutes(),d.getSeconds()].map(function(v){return ('0'+v).slice(-2)}).join(':')}
 
 /* ========== Intersection Observer (Animations) ========== */
 var io = new IntersectionObserver(function(entries){
@@ -850,7 +807,8 @@ sections.forEach(function(s){navIO.observe(s)});
 
 /* Keyboard shortcuts */
 document.addEventListener('keydown',function(e){
-  if(e.target.contentEditable==='true') return;
+  var target=e.target;
+  if((target&&target.isContentEditable)||(target&&target.closest&&target.closest('input, textarea, select, [contenteditable="true"]'))) return;
   var key = parseInt(e.key);
   if(key>=0 && key<=9 && !e.ctrlKey && !e.metaKey && !e.altKey){
     e.preventDefault();
@@ -860,279 +818,246 @@ document.addEventListener('keydown',function(e){
   }
 });
 
-/* ========== Demo: Mode Toggle ========== */
-var toggleBtns = document.querySelectorAll('.demo-toggle__btn');
-var panelTabs = document.getElementById('panelTabs');
-var views = {
-  excel: document.getElementById('view-excel'),
-  sql: document.getElementById('view-sql'),
-  bi: document.getElementById('view-bi'),
-  knowledge: document.getElementById('view-knowledge')
-};
-
-function setMode(newMode){
-  mode = newMode;
-  editCount = 0;
-  document.getElementById('demoResult').style.display='none';
-  toggleBtns.forEach(function(b){
-    var isActive = b.getAttribute('data-mode')===newMode;
-    b.classList.toggle('demo-toggle__btn--active', isActive);
-    b.setAttribute('aria-checked', isActive?'true':'false');
-  });
-  if(newMode==='excel'){
-    panelTabs.style.display='none';
-    showView('excel');
-  } else {
-    panelTabs.style.display='flex';
-    showView('sql');
-    setActiveTab('sql');
-    if(!biInitialized) initBI();
-  }
-}
-
-function showView(name){
-  Object.keys(views).forEach(function(k){
-    views[k].classList.toggle('demo-panel__view--active', k===name);
-  });
-}
-
-function setActiveTab(tab){
-  document.querySelectorAll('.demo-panel__tab').forEach(function(t){
-    t.classList.toggle('demo-panel__tab--active', t.getAttribute('data-tab')===tab);
-  });
-  showView(tab);
-}
-
+/* Toggle */
+var toggleBtns=document.querySelectorAll('.demo-toggle__btn');
+toggleBtns.forEach(function(btn){
+btn.addEventListener('click',function(){
+var newMode=btn.getAttribute('data-mode');
+if(newMode===mode) return;
+mode=newMode;
+editCount=0;
 toggleBtns.forEach(function(b){
-  b.addEventListener('click',function(){setMode(b.getAttribute('data-mode'))});
+b.classList.remove('demo-toggle__btn--active');
+b.setAttribute('aria-checked','false');
+});
+btn.classList.add('demo-toggle__btn--active');
+btn.setAttribute('aria-checked','true');
+document.getElementById('demoResult').style.display='none';
+setupPanel();
+});
 });
 
-document.querySelectorAll('.demo-panel__tab').forEach(function(t){
-  t.addEventListener('click',function(){setActiveTab(t.getAttribute('data-tab'))});
+function setupPanel(){
+var tabs=document.getElementById('panelTabs');
+var content=document.getElementById('panelContent');
+if(mode==='excel'){
+tabs.style.display='none';
+content.innerHTML='<div class="demo-panel__empty">イベントログ<br><br>セルを編集すると、ここにログが表示されます</div>';
+} else {
+tabs.style.display='flex';
+tabs.innerHTML='<button class="demo-panel__tab demo-panel__tab--active" data-tab="sql" type="button">DB同期</button><button class="demo-panel__tab" data-tab="bi" type="button">経営判断</button><button class="demo-panel__tab" data-tab="knowledge" type="button">ノウハウ蓄積</button>';
+content.innerHTML='<div class="demo-panel__empty">SQLリアルタイム同期<br><br>セルを編集すると、SQLクエリがリアルタイムで表示されます</div>';
+var tabBtns=tabs.querySelectorAll('.demo-panel__tab');
+tabBtns.forEach(function(tb){
+tb.addEventListener('click',function(){
+tabBtns.forEach(function(t){t.classList.remove('demo-panel__tab--active')});
+tb.classList.add('demo-panel__tab--active');
+showTabContent(tb.getAttribute('data-tab'));
 });
+});
+}
+}
 
-/* ========== Demo: Cell Editing ========== */
-var grid = document.getElementById('demoGrid');
-var editableCells = grid.querySelectorAll('td[contenteditable]');
+var sqlLogs=[];
+var dbTableShown=false;
 
+function showTabContent(tab){
+var content=document.getElementById('panelContent');
+if(tab==='sql'){
+content.innerHTML='';
+if(sqlLogs.length===0){
+content.innerHTML='<div class="demo-panel__empty">SQLリアルタイム同期<br><br>セルを編集すると、SQLクエリがリアルタイムで表示されます</div>';
+} else {
+sqlLogs.forEach(function(h){content.insertAdjacentHTML('beforeend',h)});
+if(dbTableShown) content.insertAdjacentHTML('beforeend',buildDBTable());
+}
+content.scrollTop=content.scrollHeight;
+} else if(tab==='bi'){
+content.innerHTML=buildBI();
+} else if(tab==='knowledge'){
+content.innerHTML='';
+if(knowledgeItems.length===0){
+content.innerHTML='<div class="demo-panel__empty">ノウハウ蓄積・改善サイクル<br><br>編集操作が蓄積されると、パターンと改善提案が自動生成されます</div>';
+} else {
+knowledgeItems.forEach(function(h){content.insertAdjacentHTML('beforeend',h)});
+content.insertAdjacentHTML('beforeend','<div class="demo__kn-counter" style="display:block">蓄積ノウハウ: '+knowledgeItems.length+' 件</div>');
+}
+}
+}
+
+function buildDBTable(){
+var h='<div class="demo__db"><table><thead><tr><th style="width:60px">ID</th><th>担当者</th><th style="width:80px">数量</th><th style="width:80px">単価</th><th style="width:100px">合計</th></tr></thead><tbody>';
+for(var r=2;r<=6;r++){
+var d=currentData[r];
+h+='<tr id="dbrow-'+r+'"><td>'+(r-1)+'</td><td>'+d.name+'</td><td>'+fmt(d.qty)+'</td><td>'+fmt(d.price)+'</td><td>'+fmt(d.qty*d.price)+'</td></tr>';
+}
+h+='</tbody></table></div>';
+return h;
+}
+
+function buildBI(){
+var totalSales=0,totalPrice=0,maxSales=0;
+var salesByPerson={};
+for(var r=2;r<=6;r++){
+var d=currentData[r];
+var s=d.qty*d.price;
+totalSales+=s;
+totalPrice+=d.price;
+salesByPerson[r]={name:d.name,sales:s,changed:d.qty!==initialData[r].qty||d.price!==initialData[r].price};
+if(s>maxSales) maxSales=s;
+}
+var initTotal=0;for(var r2=2;r2<=6;r2++){var id2=initialData[r2];initTotal+=id2.qty*id2.price}
+var delta=totalSales-initTotal;
+var deltaStr=delta>=0?'+'+fmtYen(delta):'-'+fmtYen(Math.abs(delta));
+var deltaClass=delta>=0?'delta-up':'delta-down';
+var h='<div class="demo__bi">';
+h+='<div class="demo__bi-kpis">';
+h+='<div class="demo__bi-kpi"><div class="demo__bi-kpi-label">総売上</div><div class="demo__bi-kpi-value">'+fmtYen(totalSales)+'</div>'+(delta!==0?'<div class="demo__bi-kpi-delta '+deltaClass+'">'+deltaStr+'</div>':'')+'</div>';
+h+='<div class="demo__bi-kpi"><div class="demo__bi-kpi-label">平均単価</div><div class="demo__bi-kpi-value">'+fmtYen(Math.round(totalPrice/5))+'</div></div>';
+h+='<div class="demo__bi-kpi"><div class="demo__bi-kpi-label">更新回数</div><div class="demo__bi-kpi-value">'+totalEdits+'</div></div>';
+h+='</div>';
+h+='<div class="demo__bi-chart">';
+for(var r3=2;r3<=6;r3++){
+var sp=salesByPerson[r3];
+var pct=Math.max(4,Math.round((sp.sales/maxSales)*100));
+h+='<div class="demo__bi-bar-wrap"><div class="demo__bi-bar'+(sp.changed?' demo__bi-bar--changed':'')+'" style="height:'+pct+'%"></div><div class="demo__bi-bar-label">'+sp.name+'</div></div>';
+}
+h+='</div>';
+if(totalEdits>=2){h+='<div class="demo__bi-msg">✓ '+totalEdits+'回の変更がリアルタイムで経営指標に反映されています</div>'}
+h+='</div>';
+return h;
+}
+
+/* Cell Edit Handler */
+var editableCells=document.querySelectorAll('td[contenteditable]');
 editableCells.forEach(function(cell){
-  cell.addEventListener('focus',function(){
-    var row = cell.parentElement.getAttribute('data-row');
-    var col = cell.getAttribute('data-col');
-    var colLetter = col==='qty'?'C':'D';
-    document.getElementById('formulaRef').textContent = colLetter + row;
-    document.getElementById('formulaVal').textContent = cell.textContent.replace(/,/g,'');
-    try{document.execCommand('selectAll',false,null)}catch(e){}
-  });
-
-  cell.addEventListener('blur',function(){
-    var row = parseInt(cell.parentElement.getAttribute('data-row'));
-    var col = cell.getAttribute('data-col');
-    var raw = cell.textContent.replace(/[,\s]/g,'');
-    var num = parseInt(raw,10);
-    if(isNaN(num)||num<0) num = parseInt(cell.getAttribute('data-default'),10);
-    currentData[row][col] = num;
-    cell.textContent = fmt(num);
-    var total = currentData[row].qty * currentData[row].price;
-    var totalCell = cell.parentElement.querySelector('.cell-total');
-    if(totalCell) totalCell.textContent = fmt(total);
-    document.getElementById('formulaVal').textContent = String(num);
-    editCount++;
-    totalEdits++;
-    changedRows[row] = true;
-    if(mode==='excel') handleExcel(row, col, num);
-    else handleDbsheet(row, col, num);
-  });
-
-  cell.addEventListener('keydown',function(e){
-    if(e.key==='Enter'){e.preventDefault();cell.blur()}
-  });
+cell.addEventListener('focus',function(){
+var row=cell.parentElement.getAttribute('data-row');
+var col=cell.getAttribute('data-col');
+var colLetter=col==='qty'?'C':'D';
+document.getElementById('formulaRef').textContent=colLetter+row;
+document.getElementById('formulaVal').textContent=cell.textContent.replace(/,/g,'');
+try{var range=document.createRange();range.selectNodeContents(cell);var sel=window.getSelection();sel.removeAllRanges();sel.addRange(range)}catch(e){}
+});
+cell.addEventListener('keydown',function(e){
+if(e.key==='Enter'){e.preventDefault();cell.blur()}
+if(e.key==='Tab'){
+e.preventDefault();
+cell.blur();
+var allEditable=Array.from(editableCells);
+var idx=allEditable.indexOf(cell);
+var next=e.shiftKey?idx-1:idx+1;
+if(next>=0&&next<allEditable.length) allEditable[next].focus();
+}
+});
+cell.addEventListener('blur',function(){
+var row=parseInt(cell.parentElement.getAttribute('data-row'));
+var col=cell.getAttribute('data-col');
+var raw=cell.textContent.replace(/[,\s]/g,'');
+var val=parseInt(raw,10);
+if(isNaN(val)||val<0){val=parseInt(cell.getAttribute('data-default'),10)}
+currentData[row][col]=val;
+cell.textContent=col==='qty'?String(val):fmt(val);
+var total=currentData[row].qty*currentData[row].price;
+var totalCell=cell.parentElement.querySelector('.cell-total');
+if(totalCell) totalCell.textContent=fmt(total);
+document.getElementById('formulaVal').textContent=String(val);
+editCount++;
+totalEdits++;
+if(mode==='excel') handleExcelEdit(row,col,val);
+else handleDbsheetEdit(row,col,val);
+});
 });
 
-/* ========== Excel Mode Handler ========== */
-function handleExcel(row, col, val){
-  var cell = grid.querySelector('tr[data-row="'+row+'"] td[data-col="'+col+'"]');
-  if(cell){cell.style.animation='none';void cell.offsetWidth;cell.style.animation='flashWarn 0.6s var(--ease-smooth)'}
-  document.getElementById('excelEmpty').style.display='none';
-  var logArea = document.getElementById('excelLogs');
-  var name = currentData[row].name;
-  var logs = [
-    {tag:'個人ファイル',msg:'ファイル保存（個人PC）— '+name+'のデータ更新'},
-    {tag:'属人化',msg:'他の担当者は最新データを参照できません'},
-    {tag:'履歴消失',msg:'変更履歴は記録されていません'}
-  ];
-  logs.forEach(function(l,i){
-    setTimeout(function(){
-      var div = document.createElement('div');
-      div.className='demo__log-item demo__log-item--warn';
-      div.innerHTML='<span class="demo__log-tag demo__log-tag--warn">'+l.tag+'</span><span class="demo__log-time">['+now()+']</span><br>'+l.msg;
-      logArea.insertBefore(div, logArea.firstChild);
-      logArea.parentElement.scrollTop=0;
-    }, i*400);
-  });
-  if(editCount>=2) showResult('warn','操作は完了。しかしデータは個人に閉じたまま。','判断は会議で消え、改善は仕組みに戻らない');
+function handleExcelEdit(row,col,val){
+var cell=document.querySelector('tr[data-row="'+row+'"] td[data-col="'+col+'"]');
+cell.classList.remove('flash-warn');
+void cell.offsetWidth;
+cell.classList.add('flash-warn');
+var content=document.getElementById('panelContent');
+if(editCount===1){content.innerHTML=''}
+var name=currentData[row].name;
+var logs=[
+{text:'ファイル保存（個人PC）— '+name+'のデータ更新',tag:'個人ファイル'},
+{text:'他の担当者は最新データを参照できません',tag:'属人化'},
+{text:'変更履歴は記録されていません',tag:'履歴消失'}
+];
+logs.forEach(function(log,i){
+setTimeout(function(){
+var html='<div class="demo__log-item demo__log-item--warn"><div><span class="demo__log-time">['+getTime()+']</span><span class="demo__log-tag demo__log-tag--warn">'+log.tag+'</span></div><div class="demo__log-text">'+log.text+'</div></div>';
+content.insertAdjacentHTML('beforeend',html);
+content.scrollTop=content.scrollHeight;
+},i*400);
+});
+if(editCount>=2) showResult('warn','操作は完了。しかしデータは個人に閉じたまま。','判断は会議で消え、改善は仕組みに戻らない');
 }
 
-/* ========== dbSheet Mode Handler ========== */
-function handleDbsheet(row, col, val){
-  var cell = grid.querySelector('tr[data-row="'+row+'"] td[data-col="'+col+'"]');
-  if(cell){cell.style.animation='none';void cell.offsetWidth;cell.style.animation='flashOk 0.6s var(--ease-smooth)'}
-  var name = currentData[row].name;
-  var total = currentData[row].qty * currentData[row].price;
-  var colName = col==='qty'?'quantity':'unit_price';
-
-  /* SQL Log */
-  document.getElementById('sqlEmpty').style.display='none';
-  var sqlArea = document.getElementById('sqlLogs');
-  var sqlDiv = document.createElement('div');
-  sqlDiv.className='demo__sql';
-  sqlDiv.innerHTML='<span class="kw">UPDATE</span> <span class="val">sales_data</span><br>'+
-    '<span class="kw">SET</span> '+colName+' = <span class="val">'+val+'</span>,<br>'+
-    '    total = <span class="val">'+fmt(total)+'</span>,<br>'+
-    '    updated_at = <span class="kw">NOW</span>(),<br>'+
-    '    updated_by = <span class="val">\''+name+'\'</span><br>'+
-    '<span class="kw">WHERE</span> id = <span class="val">'+(row-1)+'</span>;<br>'+
-    '<span class="ok">✓ 1 row affected — COMMIT</span>';
-  sqlArea.insertBefore(sqlDiv, sqlArea.firstChild);
-
-  /* BI Trigger (delayed) */
-  setTimeout(function(){
-    var trigDiv = document.createElement('div');
-    trigDiv.className='demo__sql';
-    trigDiv.innerHTML='<span class="cm">-- BIダッシュボード自動更新トリガー</span><br>'+
-      '<span class="kw">NOTIFY</span> bi_dashboard, <span class="val">\'sales_updated\'</span>;<br>'+
-      '<span class="ok">✓ 経営指標を再計算</span>';
-    sqlArea.insertBefore(trigDiv, sqlArea.children[1]||null);
-  },600);
-
-  /* DB Table */
-  updateDBTable(row);
-
-  /* BI Dashboard */
-  updateBI();
-
-  /* Knowledge */
-  updateKnowledge(row, col, val);
-
-  /* Result Message */
-  if(editCount===1) showResult('ok','同じExcel操作。しかし構造が違う。','DB同期 → 経営ダッシュボード更新 → 情報蓄積 — 改善が構造に戻る');
-  else if(editCount>=3) showResult('ok','データは蓄積され、判断は経営資産になり、改善が循環する。','これが「変化耐性」— 操作は変わらない。構造だけが変わる。');
+function handleDbsheetEdit(row,col,val){
+var cell=document.querySelector('tr[data-row="'+row+'"] td[data-col="'+col+'"]');
+cell.classList.remove('flash-ok');
+void cell.offsetWidth;
+cell.classList.add('flash-ok');
+var name=currentData[row].name;
+var colName=col==='qty'?'quantity':'unit_price';
+var total=currentData[row].qty*currentData[row].price;
+var activeTab=document.querySelector('.demo-panel__tab--active');
+var currentTab=activeTab?activeTab.getAttribute('data-tab'):'sql';
+/* SQL log */
+var sqlHtml='<div class="demo__sql"><span class="sql-kw">UPDATE</span> sales_data<br><span class="sql-kw">SET</span> '+colName+' = <span class="sql-val">'+val+'</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;total = <span class="sql-val">'+total+'</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;updated_at = <span class="sql-kw">NOW</span>(),<br>&nbsp;&nbsp;&nbsp;&nbsp;updated_by = <span class="sql-val">\''+name+'\'</span><br><span class="sql-kw">WHERE</span> id = <span class="sql-val">'+(row-1)+'</span>;<br><br><span class="sql-ok">✓ 1 row affected — COMMIT</span></div>';
+sqlLogs.push(sqlHtml);
+setTimeout(function(){
+var biSql='<div class="demo__sql"><span style="color:#6E6E73">-- BIダッシュボード自動更新トリガー</span><br><span class="sql-kw">NOTIFY</span> bi_dashboard, <span class="sql-val">\'sales_updated\'</span>;<br><span class="sql-ok">✓ 経営指標を再計算</span></div>';
+sqlLogs.push(biSql);
+if(currentTab==='sql') showTabContent('sql');
+},600);
+dbTableShown=true;
+if(currentTab==='sql') showTabContent('sql');
+/* Update BI */
+setTimeout(function(){
+if(document.querySelector('.demo-panel__tab--active')&&document.querySelector('.demo-panel__tab--active').getAttribute('data-tab')==='bi'){
+showTabContent('bi');
+}
+},700);
+/* Update Knowledge */
+updateKnowledge(row,col,val);
+/* DB row flash */
+setTimeout(function(){
+var dbRow=document.getElementById('dbrow-'+row);
+if(dbRow){dbRow.classList.remove('demo__db-row--flash');void dbRow.offsetWidth;dbRow.classList.add('demo__db-row--flash')}
+},100);
+if(editCount===1) showResult('ok','同じExcel操作。しかし構造が違う。','DB同期 → 経営ダッシュボード更新 → ノウハウ蓄積 — すべて自動で発生');
+if(editCount>=3) showResult('ok','データは蓄積され、判断は経営資産になり、改善が循環する。','これが「変化耐性」— 操作は変わらない。構造だけが変わる。');
 }
 
-/* ========== DB Table ========== */
-function updateDBTable(highlightRow){
-  var wrap = document.getElementById('dbTableWrap');
-  if(!dbTableCreated){
-    var html='<div class="demo__db"><table><thead><tr><th>ID</th><th>担当者</th><th>数量</th><th>単価</th><th>合計</th></tr></thead><tbody>';
-    for(var r=2;r<=6;r++){
-      var d=currentData[r];
-      html+='<tr id="dbRow'+r+'"><td>'+(r-1)+'</td><td>'+d.name+'</td><td>'+fmt(d.qty)+'</td><td>'+fmt(d.price)+'</td><td>'+fmt(d.qty*d.price)+'</td></tr>';
-    }
-    html+='</tbody></table></div>';
-    wrap.innerHTML=html;
-    dbTableCreated=true;
-  }
-  for(var r=2;r<=6;r++){
-    var tr=document.getElementById('dbRow'+r);
-    if(!tr)continue;
-    var d=currentData[r];
-    var cells=tr.children;
-    cells[2].textContent=fmt(d.qty);
-    cells[3].textContent=fmt(d.price);
-    cells[4].textContent=fmt(d.qty*d.price);
-    if(r===highlightRow){
-      tr.classList.remove('demo__db-row--flash');
-      void tr.offsetWidth;
-      tr.classList.add('demo__db-row--flash');
-    }
-  }
-}
-
-/* ========== BI Dashboard ========== */
-function initBI(){
-  biInitialized=true;
-  document.getElementById('biDashboard').style.display='block';
-  document.getElementById('biEmpty').style.display='none';
-  var chartArea = document.getElementById('biChart');
-  chartArea.innerHTML='';
-  for(var r=2;r<=6;r++){
-    var d=initialData[r];
-    var h=Math.max(4,Math.round((d.qty*d.price)/445000*100));
-    chartArea.innerHTML+='<div class="demo__bi-bar-wrap"><div class="demo__bi-bar" id="bar'+r+'" style="height:'+h+'%"></div><div class="demo__bi-bar-label">'+d.name+'</div></div>';
-  }
-  updateBI();
-}
-
-function updateBI(){
-  if(!biInitialized) return;
-  var totalSales=0, totalPrice=0, maxSale=0;
-  for(var r=2;r<=6;r++){
-    var s=currentData[r].qty*currentData[r].price;
-    totalSales+=s;
-    totalPrice+=currentData[r].price;
-    if(s>maxSale)maxSale=s;
-  }
-  document.getElementById('kpiTotal').textContent=fmtYen(totalSales);
-  document.getElementById('kpiAvg').textContent=fmtYen(Math.round(totalPrice/5));
-  document.getElementById('kpiEdits').textContent=String(totalEdits);
-  var initTotal=0;
-  for(var r=2;r<=6;r++) initTotal+=initialData[r].qty*initialData[r].price;
-  var delta=totalSales-initTotal;
-  var deltaEl=document.getElementById('kpiDelta');
-  if(delta!==0){
-    deltaEl.textContent=(delta>0?'+':'')+fmtYen(delta);
-    deltaEl.className='demo__bi-delta '+(delta>0?'demo__bi-delta--up':'demo__bi-delta--down');
-  } else deltaEl.textContent='';
-  for(var r=2;r<=6;r++){
-    var bar=document.getElementById('bar'+r);
-    if(!bar)continue;
-    var s=currentData[r].qty*currentData[r].price;
-    bar.style.height=Math.max(4,Math.round(s/maxSale*100))+'%';
-    bar.classList.toggle('demo__bi-bar--changed',!!changedRows[r]);
-  }
-  if(totalEdits>=2){
-    document.getElementById('biMsg').textContent='✓ '+totalEdits+'回の変更がリアルタイムで経営指標に反映されています';
-  }
-}
-
-/* ========== Knowledge ========== */
 function updateKnowledge(row,col,val){
-  document.getElementById('knEmpty').style.display='none';
-  document.getElementById('knCounter').style.display='block';
-  var list=document.getElementById('knList');
-  var name=currentData[row].name;
-  var colJa=col==='qty'?'数量':'単価';
-  var items=[
-    {n:1,type:'pattern',title:'変更パターン検出',desc:name+'の'+colJa+'が変更されました。変更履歴をDBに自動記録。'},
-    {n:2,type:'suggestion',title:'改善提案（自動生成）',desc:'複数回の数値変更を検出。類似パターンの過去データと照合し、最適値の候補を算出可能です。'},
-    {n:3,type:'asset',title:'経営資産化',desc:'操作ログ '+totalEdits+'件が蓄積。担当者別の判断傾向を可視化し、組織の意思決定プロセスとして構造化されました。'},
-    {n:4,type:'pattern',title:'トレンド分析',desc:'継続的な変更パターンからAIが需要予測モデルを更新。次回の発注推奨数量を自動算出します。'}
-  ];
-  var item;
-  if(totalEdits<=4) item=items[totalEdits-1];
-  else if(totalEdits%2===1) item={type:'suggestion',title:'改善サイクル反映',desc:'蓄積された判断データ（'+totalEdits+'件）から、業務プロセスの改善ポイントを3件検出。ルール化して全担当者に展開可能です。'};
-  else item={type:'asset',title:'ナレッジ自動更新',desc:'改善が構造に戻りました。次の担当者は、蓄積された '+totalEdits+' 件の判断履歴を参照して意思決定できます。'};
-
-  var badgeLabels={pattern:'パターン',suggestion:'改善提案',asset:'経営資産'};
-  var div=document.createElement('div');
-  div.className='demo__kn-item demo__kn-item--'+item.type;
-  div.innerHTML='<div class="demo__kn-header"><span class="demo__kn-badge demo__kn-badge--'+item.type+'">'+badgeLabels[item.type]+'</span><span class="demo__kn-title">'+item.title+'</span></div><div class="demo__kn-desc">'+item.desc+'</div>';
-  list.insertBefore(div, list.firstChild);
-  document.getElementById('knCount').textContent=String(totalEdits);
+var name=currentData[row].name;
+var colLabel=col==='qty'?'数量':'単価';
+var origVal=initialData[row][col];
+var pctChange=origVal!==0?Math.round(((val-origVal)/origVal)*100):0;
+var item;
+if(totalEdits===1){item={type:'pattern',title:'変更パターン検出',desc:name+'の'+colLabel+'が変更されました（'+(pctChange>=0?'+':'')+pctChange+'%）。変更履歴をDBに自動記録。'}}
+else if(totalEdits===2){item={type:'suggestion',title:'改善提案（自動生成）',desc:'複数回の数値変更を検出。類似パターンの過去データと照合し、最適値の候補を算出可能です。'}}
+else if(totalEdits===3){item={type:'asset',title:'経営資産化',desc:'操作ログ '+totalEdits+'件が蓄積。担当者別の判断傾向を可視化し、組織の意思決定プロセスとして構造化されました。'}}
+else if(totalEdits===4){item={type:'pattern',title:'トレンド分析',desc:'継続的な変更パターンからAIが需要予測モデルを更新。次回の発注推奨数量を自動算出します。'}}
+else if(totalEdits%2===1){item={type:'suggestion',title:'改善サイクル反映',desc:'蓄積された判断データ（'+totalEdits+'件）から、業務プロセスの改善ポイントを3件検出。ルール化して全担当者に展開可能です。'}}
+else{item={type:'asset',title:'ナレッジ自動更新',desc:'改善が構造に戻りました。次の担当者は、蓄積された '+totalEdits+' 件の判断履歴を参照して意思決定できます。'}}
+var html='<div class="demo__kn-item demo__kn-item--'+item.type+'"><div class="demo__kn-header"><span class="demo__kn-badge demo__kn-badge--'+item.type+'">'+(item.type==='pattern'?'パターン':item.type==='suggestion'?'改善提案':'経営資産')+'</span><span class="demo__kn-title">'+item.title+'</span></div><div class="demo__kn-desc">'+item.desc+'</div></div>';
+knowledgeItems.unshift(html);
+var activeTab2=document.querySelector('.demo-panel__tab--active');
+if(activeTab2&&activeTab2.getAttribute('data-tab')==='knowledge'){
+showTabContent('knowledge');
+}
 }
 
-/* ========== Result Message ========== */
 function showResult(type,main,sub){
-  var el=document.getElementById('demoResult');
-  el.style.display='block';
-  el.className='demo__result demo__result--'+type;
-  el.innerHTML='<div class="demo__result-main">'+main+'</div><div class="demo__result-sub">'+sub+'</div>';
+var el=document.getElementById('demoResult');
+el.style.display='block';
+el.className='demo__result demo__result--'+type;
+el.innerHTML='<div class="demo__result-main">'+main+'</div><div class="demo__result-sub">'+sub+'</div>';
 }
 
-/* ========== Init ========== */
-document.addEventListener('DOMContentLoaded',function(){
-  setMode('excel');
-});
+/* Scroll snap */
+document.documentElement.style.scrollSnapType='y proximity';
 
 })();
 </script>
