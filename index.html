@@ -106,6 +106,13 @@ ul,ol{list-style:none}
 @media(min-width:1024px){.section--fixed{height:100vh;min-height:auto}}
 /* Fix PC overflow in Section 5 (true competitor): allow content height */
 @media(min-width:1024px){#section-5-true-competitor.section--fixed{height:auto;min-height:100vh}}
+/* Fix PC overflow in Sections 2, 3, 7, 8: allow content height */
+@media(min-width:1024px){
+  #section-2-market.section--fixed,
+  #section-3-position.section--fixed,
+  #section-7-management-risk.section--fixed,
+  #section-8-excel-ai.section--fixed{height:auto;min-height:100vh}
+}
 .section--dark{background:var(--color-primary-dark);color:var(--color-text-inverse)}
 .section--dark::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 40%,rgba(42,90,140,0.15) 0%,transparent 60%),radial-gradient(ellipse at 70% 80%,rgba(232,145,58,0.06) 0%,transparent 50%);pointer-events:none}
 .section--light{background:var(--color-bg-light)}
