@@ -301,8 +301,17 @@ ul,ol{list-style:none}
   .exai__center{flex-direction:row;gap:8px}
   .exai__center-line,.exai__center-arrows{display:none}
   .exai__center-label{display:inline-flex;align-items:center;gap:8px}
-  .exai__center-label::before,.exai__center-label::after{content:'\2195'; /* ↕ */
+  .exai__center-label::before,.exai__center-label::after{content:'\2195\FE0E'; /* ↕ (text presentation) */
     color:var(--color-accent);font-weight:700;opacity:0.9}
+  /* Improve legibility of items on mobile */
+  .exai__item{color:var(--color-text-primary)}
+}
+
+/* Mobile-only: increase tap targets and raise contrast on key texts */
+@media(max-width:767px){
+  .demo-panel__tab{min-height:44px;padding-top:12px;padding-bottom:12px}
+  .demo-toggle__btn{min-height:44px;padding-top:12px;padding-bottom:12px}
+  .ba-message__sub,.fbd__list-item,.cycle__note,.demo__intro{color:var(--color-text-primary)}
 }
 
 /* S9: CTA */
@@ -753,7 +762,7 @@ ul,ol{list-style:none}
         <div class="exai__center anim anim--scale" data-delay="700">
           <div class="exai__center-line"></div>
           <div class="exai__center-arrows"><svg viewBox="0 0 32 32" fill="none" stroke-width="2"><path d="M4 16h24M8 12l-4 4 4 4M24 12l4 4-4 4"/></svg></div>
-          <div class="exai__center-label">dbSheet</div>
+          <div class="exai__center-label" aria-label="双方向連携">dbSheet</div>
           <div class="exai__center-arrows"><svg viewBox="0 0 32 32" fill="none" stroke-width="2"><path d="M4 16h24M8 12l-4 4 4 4M24 12l4 4-4 4"/></svg></div>
           <div class="exai__center-line"></div>
         </div>
@@ -811,8 +820,8 @@ ul,ol{list-style:none}
 </div>
 </div>
 <div class="demo-panel">
-<div class="demo-panel__tabs" id="panelTabs" style="display:none"></div>
-<div class="demo-panel__content" id="panelContent"><div class="demo-panel__empty">イベントログ<br><br>セルを編集すると、ここにログが表示されます</div></div>
+<div class="demo-panel__tabs" id="panelTabs" style="display:none" role="tablist" aria-label="dbSheet 連携パネル"></div>
+<div class="demo-panel__content" id="panelContent" role="tabpanel" aria-live="polite" aria-label="dbSheet パネル内容"><div class="demo-panel__empty">イベントログ<br><br>セルを編集すると、ここにログが表示されます</div></div>
 </div>
 <div class="demo-roles demo-roles--left" aria-hidden="true">
   <span class="role-chip role-chip--green">現場</span>
@@ -849,6 +858,7 @@ var editCount = 0;
 var totalEdits = 0;
 var knowledgeItems = [];
 var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var isMobile = window.matchMedia('(max-width: 767px)').matches;
 
 /* ========== Utilities ========== */
 function fmt(n){return n.toLocaleString('ja-JP')}
@@ -858,6 +868,26 @@ function fmtYen(n){
   return '¥'+n;
 }
 function getTime(){var d=new Date();return [d.getHours(),d.getMinutes(),d.getSeconds()].map(function(v){return ('0'+v).slice(-2)}).join(':')}
+
+/* Tune mobile animation delays slightly faster for key elements */
+try{
+  if(isMobile && !prefersReducedMotion){
+    var speedUpSelectors=[
+      '#section-8-excel-ai .exai__center',
+      '#section-8-excel-ai .exai__message',
+      '.section__heading',
+      '#section-9-final-message .cta__main',
+      '#section-9-final-message .cta__action',
+      '.demo__intro'
+    ];
+    speedUpSelectors.forEach(function(sel){
+      document.querySelectorAll(sel).forEach(function(el){
+        var d=parseInt(el.getAttribute('data-delay')||'0',10);
+        if(!isNaN(d)) el.setAttribute('data-delay', String(Math.max(0, d-150)));
+      });
+    });
+  }
+}catch(e){}
 
 /* ========== Intersection Observer (Animations) ========== */
 var io = new IntersectionObserver(function(entries){
@@ -930,15 +960,29 @@ tabs.style.display='none';
 content.innerHTML='<div class="demo-panel__empty">イベントログ<br><br>セルを編集すると、ここにログが表示されます</div>';
 } else {
 tabs.style.display='flex';
-tabs.innerHTML='<button class="demo-panel__tab demo-tab demo-tab--sql demo-panel__tab--active" data-tab="sql" type="button">DB同期</button>'+
-               '<button class="demo-panel__tab demo-tab demo-tab--bi" data-tab="bi" type="button">経営判断</button>'+
-               '<button class="demo-panel__tab demo-tab demo-tab--knowledge" data-tab="knowledge" type="button">ノウハウ蓄積</button>';
-content.innerHTML='<div class="demo-panel__empty">SQLリアルタイム同期<br><br>セルを編集すると、SQLクエリがリアルタイムで表示されます</div>';
+tabs.innerHTML='<button class="demo-panel__tab demo-tab demo-tab--sql demo-panel__tab--active" data-tab="sql" type="button" role="tab" aria-selected="true" aria-controls="panelContent">DB同期</button>'+
+               '<button class="demo-panel__tab demo-tab demo-tab--bi" data-tab="bi" type="button" role="tab" aria-selected="false" aria-controls="panelContent">経営判断</button>'+
+               '<button class="demo-panel__tab demo-tab demo-tab--knowledge" data-tab="knowledge" type="button" role="tab" aria-selected="false" aria-controls="panelContent">ノウハウ蓄積</button>';
+
+/* 初期表示: DB同期に現在データを表示 */
+sqlLogs = [];
+dbTableShown = true;
+var initialRowCount = 5; /* ID: 1-5 */
+var initialSql = '<div class="demo__sql">'
+  + '<span class="sql-kw">SELECT</span> id, name, quantity, unit_price, total<br>'
+  + '<span class="sql-kw">FROM</span> sales_data<br>'
+  + '<span class="sql-kw">ORDER BY</span> id;<br>'
+  + '<span class="sql-ok">✓ ' + initialRowCount + ' rows loaded</span>'
+  + '</div>';
+sqlLogs.push(initialSql);
+showTabContent('sql');
 var tabBtns=tabs.querySelectorAll('.demo-panel__tab');
 tabBtns.forEach(function(tb){
 tb.addEventListener('click',function(){
 tabBtns.forEach(function(t){t.classList.remove('demo-panel__tab--active')});
 tb.classList.add('demo-panel__tab--active');
+ tabBtns.forEach(function(t){t.setAttribute('aria-selected','false')});
+ tb.setAttribute('aria-selected','true');
 showTabContent(tb.getAttribute('data-tab'));
 });
 });
