@@ -75,6 +75,9 @@ ul,ol{list-style:none}
 /* Tablet-only manual line break (768px–1023px) */
 .tb-br{display:none}
 @media(min-width:768px) and (max-width:1023px){.tb-br{display:initial}}
+/* Narrow-desktop manual line break (1024px–1439px) */
+.md-br{display:none}
+@media(min-width:1024px) and (max-width:1439px){.md-br{display:initial}}
 .sp-flex-br{display:none}
 @media(max-width:767px){.sp-flex-br{display:block;flex-basis:100%;height:0}}
 .skip-link{position:absolute;top:-100%;left:50%;transform:translateX(-50%);background:var(--color-accent);color:#fff;padding:var(--space-xs) var(--space-sm);border-radius:var(--radius-button);z-index:200;font-size:var(--text-caption)}
@@ -540,7 +543,7 @@ ul,ol{list-style:none}
 <!-- S1: 認（課題認識） -->
 <section id="section-1-nin" class="section section--dark section--fixed" aria-labelledby="heading-1">
   <div class="section__inner hero">
-    <h1 id="heading-1" class="hero__main anim anim--blur" data-delay="200">Excel、まだ<span class="hero__accent">"捨てる側"</span>だと<br class="sp-br"><br class="tb-br">思っていませんか？</h1>
+    <h1 id="heading-1" class="hero__main anim anim--blur" data-delay="200">Excel、まだ<span class="hero__accent">"捨てる側"</span>だと<br class="sp-br"><br class="tb-br"><br class="md-br">思っていませんか？</h1>
     <p class="hero__sub anim anim--up" data-delay="700">AI時代に最初に捨てるべきものではなく、<br class="sp-br">最後まで残る"思考のインターフェイス"</p>
   </div>
   <div class="scroll-hint anim" data-delay="1400">
