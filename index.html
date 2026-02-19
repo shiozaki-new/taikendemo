@@ -98,6 +98,8 @@ ul,ol{list-style:none}
 /* Sections */
 .section{min-height:100svh;display:flex;align-items:center;justify-content:center;position:relative;padding:calc(56px + var(--space-lg)) var(--content-padding) var(--space-lg)}
 @media(min-width:1024px){.section--fixed{height:100vh;min-height:auto}}
+/* Fix PC overflow in Section 5 (true competitor): allow content height */
+@media(min-width:1024px){#section-5-true-competitor.section--fixed{height:auto;min-height:100vh}}
 .section--dark{background:var(--color-primary-dark);color:var(--color-text-inverse)}
 .section--dark::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 40%,rgba(42,90,140,0.15) 0%,transparent 60%),radial-gradient(ellipse at 70% 80%,rgba(232,145,58,0.06) 0%,transparent 50%);pointer-events:none}
 .section--light{background:var(--color-bg-light)}
@@ -171,7 +173,7 @@ ul,ol{list-style:none}
 .declarations__highlight{color:var(--color-accent);font-weight:700;text-shadow:0 0 30px rgba(232,145,58,0.2)}
 
 /* S5: Competitors */
-.competitors{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-sm)}
+.competitors{max-width:1100px;width:100%;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-sm)}
 @media(min-width:768px){.competitors{gap:var(--space-md)}}
 @media(min-width:1440px){.competitors{max-width:1300px}}
 @media(min-width:1920px){.competitors{max-width:1500px}}
