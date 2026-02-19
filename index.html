@@ -72,10 +72,14 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 ul,ol{list-style:none}
 .sp-br{display:none}
 @media(max-width:767px){.sp-br{display:initial}}
+.sp-flex-br{display:none}
+@media(max-width:767px){.sp-flex-br{display:block;flex-basis:100%;height:0}}
 .skip-link{position:absolute;top:-100%;left:50%;transform:translateX(-50%);background:var(--color-accent);color:#fff;padding:var(--space-xs) var(--space-sm);border-radius:var(--radius-button);z-index:200;font-size:var(--text-caption)}
 .skip-link:focus{top:var(--space-xs)}
 :focus-visible{outline:2px solid var(--color-accent);outline-offset:3px;border-radius:var(--radius-button)}
 :focus:not(:focus-visible){outline:none}
+/* Prevent mid-phrase breaks for Japanese */
+.nowrap-ja{white-space:nowrap}
 
 /* Header */
 .header{position:fixed;top:0;left:0;right:0;height:56px;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 var(--content-padding);background:rgba(15,38,64,0.92);transition:background var(--duration-fast)}
@@ -236,6 +240,10 @@ ul,ol{list-style:none}
 .cycle__label{text-align:center;font-size:var(--text-caption);font-weight:600;color:var(--color-text-secondary);margin-bottom:var(--space-md)}
 .cycle__steps{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:var(--space-sm)}
 @media(min-width:768px){.cycle__steps{flex-wrap:nowrap;gap:var(--space-md)}}
+@media(max-width:767px){
+  .cycle__steps{display:grid;grid-template-columns:1fr;justify-items:center;row-gap:8px}
+  .sp-flex-br{display:none!important}
+}
 .cycle__step{display:flex;flex-direction:column;align-items:center;gap:8px;flex:0 0 auto;text-align:center}
 .cycle__icon{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center}
 @media(min-width:1440px){.cycle__icon{width:56px;height:56px}}
@@ -247,7 +255,9 @@ ul,ol{list-style:none}
 .cycle__step-label{font-size:var(--text-caption);font-weight:600;color:var(--color-text-primary)}
 .cycle__step-sub{font-size:11px;color:var(--color-text-secondary)}
 @media(min-width:1440px){.cycle__step-sub{font-size:13px}}
-.cycle__arrow{color:var(--color-text-secondary);font-size:18px;flex-shrink:0}
+.cycle__arrow{color:var(--color-text-secondary);flex-shrink:0;position:relative;font-size:0;line-height:1}
+.cycle__arrow::before{content:'\2192';font-size:18px}
+@media(max-width:767px){.cycle__arrow::before{content:'\2193'}}
 .cycle__note{text-align:center;margin-top:var(--space-md);font-size:var(--text-caption);color:var(--color-text-secondary)}
 .cycle__note strong{color:var(--color-primary)}
 
@@ -283,7 +293,17 @@ ul,ol{list-style:none}
 .exai__center-label{font-size:var(--text-h2);color:var(--color-accent);font-weight:700;text-shadow:0 0 20px rgba(232,145,58,0.2)}
 .exai__center-line{width:2px;height:40px;background:linear-gradient(to bottom,transparent,var(--color-accent),transparent);margin:8px 0}
 .exai__center-arrows svg{width:32px;height:32px;stroke:var(--color-accent);fill:none}
+@media(max-width:767px){.exai__center-arrows svg{transform:rotate(90deg)}}
 .exai__message{text-align:center;font-size:var(--text-body-lg);color:var(--color-primary);font-weight:600;margin-top:var(--space-lg);line-height:1.6}
+
+/* Mobile-only: center marker becomes "↕︎dbSheet↕︎" */
+@media(max-width:767px){
+  .exai__center{flex-direction:row;gap:8px}
+  .exai__center-line,.exai__center-arrows{display:none}
+  .exai__center-label{display:inline-flex;align-items:center;gap:8px}
+  .exai__center-label::before,.exai__center-label::after{content:'\2195'; /* ↕ */
+    color:var(--color-accent);font-weight:700;opacity:0.9}
+}
 
 /* S9: CTA */
 .cta{text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh}
@@ -562,7 +582,7 @@ ul,ol{list-style:none}
         <div class="position__arrows"><svg viewBox="0 0 32 32" fill="none" stroke-width="2"><path d="M16 4v24M10 8l6-4 6 4M10 24l6 4 6-4"/></svg></div>
       </div>
       <div class="position__card anim" data-delay="500"><span class="position__card-num">③</span><span class="position__card-title">現場Excel層</span></div>
-      <p class="position__message anim" data-delay="1100">Excelの柔軟性を残す。属人化を止める。<br class="sp-br">SaaSのように固定しない。ERPほど重くしない。</p>
+      <p class="position__message anim" data-delay="1100">Excelの柔軟性を残す。属人化を止める。<br class="sp-br">SaaSのように固定しない。<span class="nowrap-ja">ERPほど重くしない。</span></p>
     </div>
   </div>
 </section>
@@ -633,7 +653,7 @@ ul,ol{list-style:none}
       </div>
       <div class="ba-message">
         <p class="ba-message__main anim" data-delay="1400">操作は変わらない。構造だけが変わる。</p>
-        <p class="ba-message__sub anim" data-delay="1500">Excelの自由さを活かしたまま、データの蓄積・共有・改善サイクルを実現</p>
+        <p class="ba-message__sub anim" data-delay="1500">Excelの自由さを活かしたまま<br class="sp-br">データの蓄積・共有・改善サイクルを実現</p>
       </div>
     </div>
 
@@ -688,6 +708,7 @@ ul,ol{list-style:none}
             <div class="cycle__step-label">経営判断に届く</div>
             <div class="cycle__step-sub">可視化・共有</div>
           </div>
+          <span class="sp-flex-br"></span>
           <div class="cycle__arrow">→</div>
           <div class="cycle__step">
             <div class="cycle__icon cycle__icon--loop"><svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg></div>
