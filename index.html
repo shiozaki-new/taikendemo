@@ -43,6 +43,11 @@
 --color-border:rgba(0,0,0,0.06);--color-border-light:rgba(255,255,255,0.12);
 --color-before:#86868B;--color-after:#1B3A5C;
 --color-success:#30A46C;--color-warning:#E5484D;--color-info:#3B82F6;
+/* Visual accents for dbSheet mode */
+--color-sky:#38BDF8;      /* DB同期（水色） */
+--color-yellow:#EAB308;   /* 経営判断（黄色） */
+--color-violet:#A78BFA;   /* ノウハウ蓄積（薄い紫） */
+--role-bg-alpha:0.12;
 --font-primary:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue','Noto Sans JP','Hiragino Kaku Gothic ProN','Hiragino Sans','Yu Gothic','Meiryo',sans-serif;
 --font-mono:'SF Mono','JetBrains Mono','Source Code Pro','Menlo','Consolas',monospace;
 --text-hero:clamp(28px,6vw,56px);--text-h1:clamp(24px,4.5vw,40px);--text-h2:clamp(20px,3.5vw,28px);
@@ -341,6 +346,31 @@ ul,ol{list-style:none}
 .demo-panel__view{display:none}
 .demo-panel__view--active{display:block}
 
+/* Demo: Visual cues for dbSheet mode */
+.mode-dbsheet .demo-sheet{border-top:3px solid var(--color-success)}
+.mode-dbsheet .demo-sheet__filename{color:var(--color-success);background:rgba(48,164,108,var(--role-bg-alpha));border:1px solid rgba(48,164,108,0.25);padding:2px 8px;border-radius:10px}
+
+/* Color-coded tabs */
+.demo-tab{position:relative}
+.demo-tab::before{content:'';position:absolute;left:8px;top:50%;transform:translateY(-50%);width:6px;height:6px;border-radius:50%;opacity:0.8}
+.mode-dbsheet .demo-tab--sql::before{background:var(--color-sky)}
+.mode-dbsheet .demo-tab--bi::before{background:var(--color-yellow)}
+.mode-dbsheet .demo-tab--knowledge::before{background:var(--color-violet)}
+.mode-dbsheet .demo-panel__tab.demo-tab--sql.demo-panel__tab--active{color:#05577a;border-bottom-color:var(--color-sky);background:rgba(56,189,248,var(--role-bg-alpha))}
+.mode-dbsheet .demo-panel__tab.demo-tab--bi.demo-panel__tab--active{color:#7a5a05;border-bottom-color:var(--color-yellow);background:rgba(234,179,8,var(--role-bg-alpha))}
+.mode-dbsheet .demo-panel__tab.demo-tab--knowledge.demo-panel__tab--active{color:#4f3b87;border-bottom-color:var(--color-violet);background:rgba(167,139,250,var(--role-bg-alpha))}
+
+/* Role labels under blocks */
+.demo-roles{display:none;gap:6px;align-items:center;flex-wrap:wrap;margin-top:8px}
+.demo-roles--left{justify-content:flex-end}
+.demo-roles--right{justify-content:flex-end}
+.mode-dbsheet .demo-roles{display:flex}
+.role-chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:9999px;font-size:12px;font-weight:700;letter-spacing:0.02em;border:1px solid transparent}
+.role-chip--green{color:var(--color-success);background:rgba(48,164,108,var(--role-bg-alpha));border-color:rgba(48,164,108,0.25)}
+.role-chip--blue{color:var(--color-sky);background:rgba(56,189,248,var(--role-bg-alpha));border-color:rgba(56,189,248,0.25)}
+.role-chip--yellow{color:var(--color-yellow);background:rgba(234,179,8,var(--role-bg-alpha));border-color:rgba(234,179,8,0.25)}
+.role-chip--purple{color:var(--color-violet);background:rgba(167,139,250,var(--role-bg-alpha));border-color:rgba(167,139,250,0.25)}
+
 /* Demo Layout Tuning: align edges, responsive spacing */
 @media(min-width:900px){
   /* Switch to grid for equal-height columns and clearer gap */
@@ -351,6 +381,20 @@ ul,ol{list-style:none}
 }
 @media(min-width:1440px){
   .demo-container{grid-template-columns:minmax(0,1fr) clamp(360px,28vw,520px)}
+}
+
+/* Role placement / ordering for mobile */
+@media(max-width:899px){
+  #demoContainer{display:flex;flex-direction:column}
+  #demoContainer .demo-roles--left{order:2}
+  #demoContainer .demo-panel{order:3}
+  #demoContainer .demo-roles--right{order:4}
+}
+
+/* Role placement for desktop grid */
+@media(min-width:900px){
+  #demoContainer .demo-roles--left{grid-column:1}
+  #demoContainer .demo-roles--right{grid-column:2}
 }
 
 /* Demo Logs */
@@ -396,8 +440,15 @@ ul,ol{list-style:none}
 .demo__bi-chart{display:flex;align-items:flex-end;justify-content:space-around;height:120px;padding:8px;background:var(--color-bg-light);border-radius:var(--radius-card-inner)}
 @media(min-width:1440px){.demo__bi-chart{height:140px}}
 .demo__bi-bar-wrap{display:flex;flex-direction:column;align-items:center;flex:1;height:100%}
-.demo__bi-bar{width:100%;border-radius:4px 4px 0 0;background:var(--color-primary);transition:height 0.5s var(--ease-spring),background 0.3s;margin-top:auto;min-height:4px}
-.demo__bi-bar--changed{background:var(--color-accent)}
+.demo__bi-bar{width:100%;border-radius:4px 4px 0 0;transition:height 0.5s var(--ease-spring),background 0.3s;margin-top:auto;min-height:4px}
+/* BI palette (roles' colors are NOT used) */
+.bi-red{background:#FCA5A5}
+.bi-yellow{background:#FDE68A}
+.bi-green{background:#86EFAC}
+.bi-blue{background:#93C5FD}
+.bi-purple{background:#C4B5FD}
+/* keep color on change; add subtle emphasis if needed */
+.demo__bi-bar--changed{box-shadow:inset 0 0 0 1px rgba(0,0,0,0.04)}
 .demo__bi-bar-label{font-size:9px;font-family:var(--font-mono);color:var(--color-text-secondary);white-space:nowrap;margin-top:4px;text-align:center}
 
 /* Demo BI Update Message */
@@ -722,7 +773,7 @@ ul,ol{list-style:none}
 <button class="demo-toggle__btn demo-toggle__btn--active" data-mode="excel" role="radio" aria-checked="true" type="button">Excel 単体</button>
 <button class="demo-toggle__btn" data-mode="dbsheet" role="radio" aria-checked="false" type="button">dbSheet 連携</button>
 </div></div>
-<div class="demo-container anim anim--scale" data-delay="400">
+<div id="demoContainer" class="demo-container anim anim--scale" data-delay="400">
 <div class="demo-sheet">
 <div class="demo-sheet__toolbar"><div class="demo-sheet__dots"><span class="demo-sheet__dot demo-sheet__dot--r"></span><span class="demo-sheet__dot demo-sheet__dot--y"></span><span class="demo-sheet__dot demo-sheet__dot--g"></span></div><span class="demo-sheet__filename">売上管理表.xlsx</span></div>
 <div class="demo-sheet__formula"><span class="demo-sheet__formula-ref" id="formulaRef">C2</span><span>fx</span><span class="demo-sheet__formula-val" id="formulaVal">120</span></div>
@@ -736,11 +787,22 @@ ul,ol{list-style:none}
 <tr data-row="5"><td class="row-num">5</td><td class="cell-name">高橋</td><td class="cell-name">部品D</td><td class="cell-num" contenteditable="true" tabindex="0" data-col="qty" data-default="50">50</td><td class="cell-num" contenteditable="true" tabindex="0" data-col="price" data-default="8900">8,900</td><td class="cell-num cell-total">445,000</td></tr>
 <tr data-row="6"><td class="row-num">6</td><td class="cell-name">伊藤</td><td class="cell-name">部品E</td><td class="cell-num" contenteditable="true" tabindex="0" data-col="qty" data-default="300">300</td><td class="cell-num" contenteditable="true" tabindex="0" data-col="price" data-default="950">950</td><td class="cell-num cell-total">285,000</td></tr>
 </tbody></table>
-</div></div>
+</div>
+</div>
 <div class="demo-panel">
 <div class="demo-panel__tabs" id="panelTabs" style="display:none"></div>
 <div class="demo-panel__content" id="panelContent"><div class="demo-panel__empty">イベントログ<br><br>セルを編集すると、ここにログが表示されます</div></div>
-</div></div>
+</div>
+<div class="demo-roles demo-roles--left" aria-hidden="true">
+  <span class="role-chip role-chip--green">現場</span>
+  
+</div>
+<div class="demo-roles demo-roles--right" aria-hidden="true">
+  <span class="role-chip role-chip--blue">技術者</span>
+  <span class="role-chip role-chip--yellow">経営者</span>
+  <span class="role-chip role-chip--purple">データ資産</span>
+</div>
+</div>
 <div class="demo__result" id="demoResult" style="display:none"></div>
 <p class="demo__guide anim" data-delay="700">※ 体験後、お気軽にスタッフへお声がけください</p>
 </div>
@@ -826,6 +888,8 @@ var newMode=btn.getAttribute('data-mode');
 if(newMode===mode) return;
 mode=newMode;
 editCount=0;
+var dc=document.getElementById('demoContainer');
+if(dc){dc.classList.toggle('mode-dbsheet',mode==='dbsheet');}
 toggleBtns.forEach(function(b){
 b.classList.remove('demo-toggle__btn--active');
 b.setAttribute('aria-checked','false');
@@ -845,7 +909,9 @@ tabs.style.display='none';
 content.innerHTML='<div class="demo-panel__empty">イベントログ<br><br>セルを編集すると、ここにログが表示されます</div>';
 } else {
 tabs.style.display='flex';
-tabs.innerHTML='<button class="demo-panel__tab demo-panel__tab--active" data-tab="sql" type="button">DB同期</button><button class="demo-panel__tab" data-tab="bi" type="button">経営判断</button><button class="demo-panel__tab" data-tab="knowledge" type="button">ノウハウ蓄積</button>';
+tabs.innerHTML='<button class="demo-panel__tab demo-tab demo-tab--sql demo-panel__tab--active" data-tab="sql" type="button">DB同期</button>'+
+               '<button class="demo-panel__tab demo-tab demo-tab--bi" data-tab="bi" type="button">経営判断</button>'+
+               '<button class="demo-panel__tab demo-tab demo-tab--knowledge" data-tab="knowledge" type="button">ノウハウ蓄積</button>';
 content.innerHTML='<div class="demo-panel__empty">SQLリアルタイム同期<br><br>セルを編集すると、SQLクエリがリアルタイムで表示されます</div>';
 var tabBtns=tabs.querySelectorAll('.demo-panel__tab');
 tabBtns.forEach(function(tb){
@@ -917,10 +983,12 @@ h+='<div class="demo__bi-kpi"><div class="demo__bi-kpi-label">平均単価</div>
 h+='<div class="demo__bi-kpi"><div class="demo__bi-kpi-label">更新回数</div><div class="demo__bi-kpi-value">'+totalEdits+'</div></div>';
 h+='</div>';
 h+='<div class="demo__bi-chart">';
+var colorClassMap={'田中':'bi-red','佐藤':'bi-yellow','鈴木':'bi-green','高橋':'bi-blue','伊藤':'bi-purple'};
 for(var r3=2;r3<=6;r3++){
-var sp=salesByPerson[r3];
-var pct=Math.max(4,Math.round((sp.sales/maxSales)*100));
-h+='<div class="demo__bi-bar-wrap"><div class="demo__bi-bar'+(sp.changed?' demo__bi-bar--changed':'')+'" style="height:'+pct+'%"></div><div class="demo__bi-bar-label">'+sp.name+'</div></div>';
+  var sp=salesByPerson[r3];
+  var pct=Math.max(4,Math.round((sp.sales/maxSales)*100));
+  var cClass=colorClassMap[sp.name]||'bi-blue';
+  h+='<div class="demo__bi-bar-wrap"><div class="demo__bi-bar '+cClass+(sp.changed?' demo__bi-bar--changed':'')+'" style="height:'+pct+'%"></div><div class="demo__bi-bar-label">'+sp.name+'</div></div>';
 }
 h+='</div>';
 if(totalEdits>=2){h+='<div class="demo__bi-msg">✓ '+totalEdits+'回の変更がリアルタイムで経営指標に反映されています</div>'}
